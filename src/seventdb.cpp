@@ -3,8 +3,8 @@
 #include "tags.h"
 #include "sevent.h"
 
+#include <QJsonObject>
 #include <QJsonValue>
-#include <QDebug>
 
 SEventDB::SEventDB()
 {
@@ -20,25 +20,23 @@ void SEventDB::clear()
     mEvents.clear();
 }
 
-QJsonObject SEventDB::toJson() const
+QJsonArray SEventDB::toJson() const
 {
-    QJsonObject result;
+    QJsonArray result;
     if (mEvents.isEmpty())
         return result;
 
     for (const SEventPtr &event: qAsConst(mEvents)) {
-        result.insert(Tags::event, event->toJson());
+        result.append(event->toJson());
     }
 
     return result;
 }
 
-void SEventDB::fromJson(const QJsonObject &json)
+void SEventDB::fromJson(const QJsonArray &json)
 {
     if (mEvents.isEmpty() == false)
         clear();
-
-    qDebug() << "Events count:" << json.size();
 
     for (const QJsonValue &event: json) {
         mEvents.append(SEventPtr::create(event.toObject()));

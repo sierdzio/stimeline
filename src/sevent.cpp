@@ -113,9 +113,7 @@ void SEvent::fromJson(const QJsonObject &json)
     mParentId = json.value(Tags::parent).toString().toLatin1();
     mName = json.value(Tags::name).toString();
 
-    // TODO: temp, for testing only. Remove for production.
-    qCDebug(sevent).noquote() << "Event loaded from JSON. Data:\n"
-                              << toString();
+    //qCDebug(sevent).noquote() << "Event loaded from JSON. Data:\n" << toString();
 }
 
 QString SEvent::toString() const

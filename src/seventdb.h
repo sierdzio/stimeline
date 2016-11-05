@@ -1,7 +1,7 @@
 #ifndef SEVENTDB_H
 #define SEVENTDB_H
 
-#include <QJsonObject>
+#include <QJsonArray>
 
 #include "seventptr.h"
 
@@ -12,8 +12,8 @@ public:
 
     void clear();
 
-    QJsonObject toJson() const;
-    void fromJson(const QJsonObject &json);
+    QJsonArray toJson() const;
+    void fromJson(const QJsonArray &json);
 
 private:
     SEventVector mEvents;
