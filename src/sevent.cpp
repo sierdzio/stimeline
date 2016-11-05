@@ -96,13 +96,6 @@ QJsonObject SEvent::toJson() const
 
     result.insert(Tags::id, QJsonValue(QLatin1String(mId)));
     result.insert(Tags::parent, QJsonValue(QLatin1String(mParentId)));
-
-//    QJsonArray children;
-//    for (const QByteArray &value: qAsConst(mChildrenIds)) {
-//        children += QJsonValue(QLatin1String(value));
-//    }
-
-//    result.insert(Tags::children, QJsonValue(children));
     result.insert(Tags::name, QJsonValue(mName));
 
     return result;
@@ -118,12 +111,6 @@ void SEvent::fromJson(const QJsonObject &json)
 
     mId = json.value(Tags::id).toString().toLatin1();
     mParentId = json.value(Tags::parent).toString().toLatin1();
-
-//    const QJsonArray children = json.value(Tags::children).toArray();
-//    for (const QJsonValue &value: children) {
-//        mChildrenIds.append(value.toString().toLatin1());
-//    }
-
     mName = json.value(Tags::name).toString();
 
     // TODO: temp, for testing only. Remove for production.
