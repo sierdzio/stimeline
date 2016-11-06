@@ -11,6 +11,12 @@ Q_LOGGING_CATEGORY(scalendar, "SCalendar")
 SCalendar::SCalendar()
 {
     qCDebug(scalendar) << "Initializing default (Gregorian) calendar";
+    checkValidity();
+}
+
+bool SCalendar::isValid() const
+{
+    return mIsValid;
 }
 
 QJsonArray SCalendar::toJson() const
@@ -65,6 +71,21 @@ void SCalendar::fromJson(const QJsonArray &json)
     mMinutesInHour = uint(obj.value(Tags::minutesInHour).toInt());
     mHoursInDay = uint(obj.value(Tags::hoursInDay).toInt());
 
-    qCDebug(scalendar()) << mName << "calendar loaded";
+    checkValidity();
+    qCDebug(scalendar()) << mName << "calendar loaded. Valid:" << mIsValid;
+}
+
+void SCalendar::checkValidity()
+{
+    mIsValid = true;
+    uint daysInYear = 0;
+    for (const SMonth &month: qAsConst(mMonths)) {
+        daysInYear += month.second;
+    }
+
+    if (daysInYear != mDaysInYear) {
+        qCDebug(scalendar) << "Days in year don't match!" << mDaysInYear
+                           << "vs" << daysInYear;
+    }
 }
 

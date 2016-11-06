@@ -2,6 +2,7 @@
 #define SEVENT_H
 
 #include "seventptr.h"
+#include "sdatetime.h"
 
 #include <QVector>
 #include <QByteArray>
@@ -18,6 +19,9 @@ class SEvent
 
     Q_PROPERTY(QByteArray id MEMBER mId)
     Q_PROPERTY(QString name MEMBER mName)
+    Q_PROPERTY(QString description MEMBER mDescription)
+    Q_PROPERTY(SDateTime from MEMBER mFrom)
+    Q_PROPERTY(SDateTime to MEMBER mTo)
 
 public:
     SEvent();
@@ -41,6 +45,9 @@ public:
 private:
     QByteArray mId;
     QString mName;
+    QString mDescription;
+    SDateTime mFrom;
+    SDateTime mTo;
 
     QByteArray mParentId;
     QVector<QByteArray> mChildrenIds;

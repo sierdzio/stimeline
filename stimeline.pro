@@ -10,13 +10,15 @@ HEADERS += \
     src/tags.h \
     src/stimeline.h \
     src/scalendar.h \
-    src/seventdb.h
+    src/seventdb.h \
+    src/sdatetime.h
 
 SOURCES += src/main.cpp \
     src/sevent.cpp \
     src/stimeline.cpp \
     src/scalendar.cpp \
-    src/seventdb.cpp
+    src/seventdb.cpp \
+    src/sdatetime.cpp
 
 RESOURCES += qml.qrc \
     defaults.qrc

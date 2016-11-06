@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 
 #include "stimeline.h"
+#include "sdatetime.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +14,8 @@ int main(int argc, char *argv[])
     app.setOrganizationName("sierdzio");
     app.setOrganizationName("sierdzio"); // TODO: proper domain
     app.setQuitOnLastWindowClosed(true);
+
+    qRegisterMetaType<SDateTime>();
 
     // Just a quick test
     STimeline timeline;

@@ -96,6 +96,9 @@ QJsonObject SEvent::toJson() const
     result.insert(Tags::id, QJsonValue(QLatin1String(mId)));
     result.insert(Tags::parent, QJsonValue(QLatin1String(mParentId)));
     result.insert(Tags::name, QJsonValue(mName));
+    result.insert(Tags::description, QJsonValue(mDescription));
+    result.insert(Tags::from, QJsonValue(mFrom.toString()));
+    result.insert(Tags::to, QJsonValue(mTo.toString()));
 
     return result;
 }
@@ -111,6 +114,9 @@ void SEvent::fromJson(const QJsonObject &json)
     mId = json.value(Tags::id).toString().toLatin1();
     mParentId = json.value(Tags::parent).toString().toLatin1();
     mName = json.value(Tags::name).toString();
+    mDescription = json.value(Tags::description).toString();
+    mFrom.fromString(json.value(Tags::from).toString());
+    mTo.fromString(json.value(Tags::to).toString());
 
     //qCDebug(sevent).noquote() << "Event loaded from JSON. Data:\n" << toString();
 }

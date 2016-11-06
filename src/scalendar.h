@@ -18,11 +18,16 @@ class SCalendar
 
 public:
     SCalendar();
+    bool isValid() const;
 
     QJsonArray toJson() const;
     void fromJson(const QJsonArray &json);
 
 private:
+    void checkValidity();
+
+    bool mIsValid = false;
+
     QString mName = "Gregorian";
     // Date
     uint mDaysInWeek = 7;
