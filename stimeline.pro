@@ -27,7 +27,8 @@ DISTFILES += .gitignore \
     README.md \
     LICENSE.md \
     stimeline.doxyfile \
-    defaults/calendar/dynyghtian.json
+    defaults/calendar/dynyghtian.json \
+    todo.md
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
