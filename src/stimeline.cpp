@@ -49,7 +49,7 @@ void STimeline::load(const QString &path)
     }
 
     QJsonObject mainObj(doc.object());
-    //mCalendar->fromJson(mainObj.value(Tags::calendar).toObject()); // TODO: plug in calendar::fromJson()
+    mCalendar->fromJson(mainObj.value(Tags::calendar).toArray());
     mEventDB->fromJson(mainObj.value(Tags::events).toArray());
     // TODO: plug in all other objects
 }
@@ -70,12 +70,17 @@ void STimeline::save(const QString &path) const
     mainObj.insert(Tags::timestamp, QDateTime::currentDateTimeUtc().toString(Qt::ISODate));
     mainObj.insert(Tags::author, "Testing Tom"); // TODO: plug in author from app settings
 
-    //mainObj.insert(Tags::calendar, mCalendar->toJson());
+    mainObj.insert(Tags::calendar, mCalendar->toJson());
     mainObj.insert(Tags::events, mEventDB->toJson());
     // TODO: plug in all other objects
 
     // TODO: check if all data was written successfully
-    file.write(QJsonDocument(mainObj).toJson(QJsonDocument::Indented));
+    const QByteArray data(QJsonDocument(mainObj).toJson(QJsonDocument::Indented));
+    const qint64 bytesWritten = file.write(data);
+    if (bytesWritten != data.size()) {
+        qCDebug(stimeline) << "File saving: something went wrong. Data size:"
+                           << data.size() << "Bytes written:" << bytesWritten;
+    }
     file.close();
 }
 

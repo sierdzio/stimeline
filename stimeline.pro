@@ -18,12 +18,14 @@ SOURCES += src/main.cpp \
     src/scalendar.cpp \
     src/seventdb.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    defaults.qrc
 
 DISTFILES += .gitignore \
     README.md \
     LICENSE.md \
-    stimeline.doxyfile
+    stimeline.doxyfile \
+    defaults/calendar/dynyghtian.json
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

@@ -7,6 +7,7 @@
 
 #include <QLoggingCategory>
 #include <QDebug>
+Q_LOGGING_CATEGORY(sevent, "SEvent")
 
 /*!
  * \class sEvent
@@ -16,8 +17,6 @@
  * Base class for all events. Events can be chained into Plots using their IDs
  * and parent-child hierarchy.
  */
-
-Q_LOGGING_CATEGORY(sevent, "SEvent")
 
 SEvent::SEvent()
 {

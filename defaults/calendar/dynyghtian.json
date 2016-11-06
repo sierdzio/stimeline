@@ -1,0 +1,25 @@
+{
+    "name": "Dynyghtian",
+    "daysInWeek": 7,
+    "daysInYear": 480,
+    "monthsInYear": 12,
+    "leapDayPerYear": 0.0,
+    "leapDayAddsToMonthNumber": 1,
+    "Months": [
+        {"January": 40},
+        {"February": 40},
+        {"March": 40},
+        {"April": 40},
+        {"May": 40},
+        {"June": 40},
+        {"July": 40},
+        {"August": 40},
+        {"September": 40},
+        {"October": 40},
+        {"November": 40},
+        {"December": 40}
+    ],
+    "secondsInMinute": 60,
+    "minutesInHour": 60,
+    "hoursInDay": 24
+}

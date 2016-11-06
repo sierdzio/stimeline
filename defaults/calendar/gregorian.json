@@ -1,0 +1,25 @@
+{
+    "name": "Gregorian",
+    "daysInWeek": 7,
+    "daysInYear": 365,
+    "monthsInYear": 12,
+    "leapDayPerYear": 0.25,
+    "leapDayAddsToMonthNumber": 2,
+    "Months": [
+        {"January": 31},
+        {"February": 28},
+        {"March": 31},
+        {"April": 30},
+        {"May": 31},
+        {"June": 30},
+        {"July": 31},
+        {"August": 31},
+        {"September": 30},
+        {"October": 31},
+        {"November": 30},
+        {"December": 31}
+    ],
+    "secondsInMinute": 60,
+    "minutesInHour": 60,
+    "hoursInDay": 24
+}

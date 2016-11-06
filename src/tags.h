@@ -16,6 +16,15 @@ static const QLatin1String events("Events");
 static const QLatin1String name("name");
 // Calendar:
 static const QLatin1String calendar("Calendar");
+static const QLatin1String daysInWeek("daysInWeek");
+static const QLatin1String daysInYear("daysInYear");
+static const QLatin1String monthsInYear("monthsInYear");
+static const QLatin1String leapDayPerYear("leapDayPerYear");
+static const QLatin1String leapDayAddsToMonthNumber("leapDayAddsToMonthNumber");
+static const QLatin1String months("Months");
+static const QLatin1String secondsInMinute("secondsInMinute");
+static const QLatin1String minutesInHour("minutesInHour");
+static const QLatin1String hoursInDay("hoursInDay");
 }
 
 #endif // TAGS_H

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>defaults/calendar/gregorian.json</file>
+        <file>defaults/calendar/dynyghtian.json</file>
+    </qresource>
+</RCC>
