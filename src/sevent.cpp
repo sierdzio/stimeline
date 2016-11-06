@@ -2,8 +2,6 @@
 #include "tags.h"
 
 #include <QJsonValue>
-#include <QJsonArray>
-#include <QJsonDocument>
 
 #include <QLoggingCategory>
 #include <QDebug>
@@ -41,52 +39,6 @@ bool SEvent::isValid() const
     return true;
 }
 
-bool SEvent::isRoot() const
-{
-    if (isValid() == false)
-        return false;
-
-    return mParentId.isEmpty();
-}
-
-SEventPtr SEvent::parent() const
-{
-    return mParent;
-}
-
-SEventVector SEvent::children() const
-{
-    return mChildren;
-}
-
-/*!
- * Returns parent event ID if present.
- *
- * This is useful when first constructing event hierarchy from JSON - we don't
- * have all objects created yet so parent() is not available, but parent's ID is
- * already known.
- *
- * \sa parent, fromJson, childrenIds
- */
-QByteArray SEvent::parentId() const
-{
-    return mParentId;
-}
-
-/*!
- * Returns parent event ID if present.
- *
- * This is useful when first constructing event hierarchy from JSON - we don't
- * have all objects created yet so children() is empty, but children IDs are
- * already known.
- *
- * \sa children, fromJson, parentId
- */
-QVector<QByteArray> SEvent::childrenIds() const
-{
-    return mChildrenIds;
-}
-
 QJsonObject SEvent::toJson() const
 {
     // NOTE: to speed up this method (and thus file saving), it is possible to
@@ -94,7 +46,6 @@ QJsonObject SEvent::toJson() const
     QJsonObject result;
 
     result.insert(Tags::id, QJsonValue(QLatin1String(mId)));
-    result.insert(Tags::parent, QJsonValue(QLatin1String(mParentId)));
     result.insert(Tags::name, QJsonValue(mName));
     result.insert(Tags::description, QJsonValue(mDescription));
     result.insert(Tags::from, QJsonValue(mFrom.toString()));
@@ -105,23 +56,11 @@ QJsonObject SEvent::toJson() const
 
 void SEvent::fromJson(const QJsonObject &json)
 {
-    // Clear previous values if any:
-    mParent.clear();
-    for (SEventPtr ptr: qAsConst(mChildren)) {
-        ptr.clear();
-    }
-
     mId = json.value(Tags::id).toString().toLatin1();
-    mParentId = json.value(Tags::parent).toString().toLatin1();
     mName = json.value(Tags::name).toString();
     mDescription = json.value(Tags::description).toString();
     mFrom.fromString(json.value(Tags::from).toString());
     mTo.fromString(json.value(Tags::to).toString());
 
     //qCDebug(sevent).noquote() << "Event loaded from JSON. Data:\n" << toString();
-}
-
-QString SEvent::toString() const
-{
-    return QJsonDocument(toJson()).toJson();
 }
