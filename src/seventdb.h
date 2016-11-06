@@ -12,6 +12,8 @@ public:
 
     void clear();
 
+    SEventVector events() const;
+
     QJsonArray toJson() const;
     void fromJson(const QJsonArray &json);
 

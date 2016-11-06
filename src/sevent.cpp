@@ -16,7 +16,7 @@ Q_LOGGING_CATEGORY(sevent, "SEvent")
  * and parent-child hierarchy.
  */
 
-SEvent::SEvent()
+SEvent::SEvent() : QObject(nullptr)
 {
 }
 

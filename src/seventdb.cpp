@@ -20,6 +20,11 @@ void SEventDB::clear()
     mEvents.clear();
 }
 
+SEventVector SEventDB::events() const
+{
+    return mEvents;
+}
+
 QJsonArray SEventDB::toJson() const
 {
     QJsonArray result;

@@ -1,6 +1,8 @@
 #include "stimeline.h"
 #include "scalendar.h"
 #include "seventdb.h"
+#include "sevent.h"
+#include "ssettings.h"
 #include "tags.h"
 
 #include <QJsonDocument>
@@ -13,7 +15,8 @@
 
 Q_LOGGING_CATEGORY(stimeline, "STimeline")
 
-STimeline::STimeline(QObject *parent) : QObject (parent)
+STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
+    mSettings(settings)
 {
     init();
 }
@@ -28,15 +31,20 @@ void STimeline::load(const QString &path)
     //if (reinit)
     //    init();
 
-    QFile file(path);
+    QString parsedPath(path);
+    if (parsedPath.startsWith("file://")) {
+        parsedPath = path.mid(7);
+    }
+
+    QFile file(parsedPath);
 
     if (file.exists() == false) {
-        reportError("File does not exist: " + path);
+        reportError("File does not exist: " + parsedPath);
         return;
     }
 
     if (file.open(QFile::ReadOnly | QFile::Text) == false) {
-        reportError("Could not open file for reading: " + path);
+        reportError("Could not open file for reading: " + parsedPath);
         return;
     }
 
@@ -44,8 +52,12 @@ void STimeline::load(const QString &path)
     QJsonDocument doc(QJsonDocument::fromJson(file.readAll()));
 
     if (doc.isEmpty() || doc.isNull() || doc.isArray()) {
-        reportError("Invalid JSON file, could not read. Path: " + path);
+        reportError("Invalid JSON file, could not read. Path: " + parsedPath);
         return;
+    }
+
+    if (mSettings) {
+        mSettings->lastOpenFilePath = parsedPath;
     }
 
     QJsonObject mainObj(doc.object());
@@ -82,6 +94,23 @@ void STimeline::save(const QString &path) const
                            << data.size() << "Bytes written:" << bytesWritten;
     }
     file.close();
+}
+
+SEvent* STimeline::events() const
+{
+//    QString result;
+
+//    const SEventVector events = mEventDB->events();
+//    for (const SEventPtr &event: events) {
+//        result.append("Event: " + event->(Tags::id) + ", name: "
+//                      + event->property(Tags::name) + ", description: "
+//                      + event->property(Tags::description));
+//    }
+
+//    return result;
+    const SEventVector events(mEventDB->events());
+    qDebug() << events.first()->id();
+    return /*events.isEmpty()? new SEvent : */events.first().data();
 }
 
 void STimeline::init()

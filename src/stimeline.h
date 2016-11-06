@@ -1,6 +1,8 @@
 #ifndef STIMELINE_H
 #define STIMELINE_H
 
+#include "seventptr.h"
+
 #include <QString>
 #include <QSharedPointer>
 #include <QObject>
@@ -10,16 +12,23 @@ Q_DECLARE_LOGGING_CATEGORY(stimeline)
 
 class SCalendar;
 class SEventDB;
+class SSettings;
 
 class STimeline : public QObject
 {
     Q_OBJECT
 
-public:
-    STimeline(QObject *parent = nullptr);
+    //Q_PROPERTY(QByteArray id MEMBER mId)
 
+public:
+    STimeline(SSettings *settings = nullptr, QObject *parent = nullptr);
+
+public slots:
     void load(const QString &path);
     void save(const QString &path) const;
+
+    // TODO: TEMP
+    SEvent *events() const;
 
 signals:
     void error(const QString &message) const;
@@ -27,6 +36,8 @@ signals:
 private:
     void init();
     void reportError(const QString &message) const;
+
+    SSettings *mSettings = nullptr;
 
     QSharedPointer<SCalendar> mCalendar;
     QSharedPointer<SEventDB> mEventDB;

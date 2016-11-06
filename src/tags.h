@@ -27,6 +27,9 @@ static const QLatin1String hoursInDay("hoursInDay");
 // DateTime
 static const QLatin1String from("from");
 static const QLatin1String to("to");
+// Settings
+static const QLatin1String autoLoadLastFile("autoLoadLastFile");
+static const QLatin1String lastOpenFilePath("lastOpenFilePath");
 // Misc
 static const QLatin1String dateSeparator("-");
 static const QLatin1String timeSeparator(":");

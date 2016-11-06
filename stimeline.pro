@@ -11,14 +11,18 @@ HEADERS += \
     src/stimeline.h \
     src/scalendar.h \
     src/seventdb.h \
-    src/sdatetime.h
+    src/sdatetime.h \
+    src/ssettings.h \
+    src/qmlcontroller.h
 
 SOURCES += src/main.cpp \
     src/sevent.cpp \
     src/stimeline.cpp \
     src/scalendar.cpp \
     src/seventdb.cpp \
-    src/sdatetime.cpp
+    src/sdatetime.cpp \
+    src/ssettings.cpp \
+    src/qmlcontroller.cpp
 
 RESOURCES += qml.qrc \
     defaults.qrc
