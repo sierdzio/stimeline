@@ -28,10 +28,11 @@ int main(int argc, char *argv[])
     app.setOrganizationName("sierdzio"); // TODO: proper domain
     app.setQuitOnLastWindowClosed(true);
 
-    qRegisterMetaType<SDateTime>();
-    qRegisterMetaType<SEvent*>();
-    qRegisterMetaType<SEventPtr>();
-    qRegisterMetaType<SEventVector>();
+//    qRegisterMetaType<SDateTime>();
+    qRegisterMetaType<SEvent>();
+//    qRegisterMetaType<SEventPtr>();
+//    qRegisterMetaType<SEventVector>();
+
     SSettings settings;
     STimeline timeline(&settings);
 

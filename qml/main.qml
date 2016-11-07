@@ -45,8 +45,7 @@ ApplicationWindow {
                 Label {
                     id: mainLabel
                     text: {
-                        console.log(JSON.stringify(Timeline.events()));
-                        return Timeline.events().name;
+                        return Timeline.eventA().name + Timeline.eventA().description;
                     }
                 }
             }

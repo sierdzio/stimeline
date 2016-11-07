@@ -11,9 +11,9 @@
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(sevent)
 
-class SEvent: public QObject
+class SEvent
 {
-    Q_OBJECT
+    Q_GADGET
 
     Q_PROPERTY(QByteArray id MEMBER mId)
     Q_PROPERTY(QString name MEMBER mName)
@@ -38,8 +38,5 @@ private:
     SDateTime mFrom;
     SDateTime mTo;
 };
-
-//Q_DECLARE_METATYPE(SEvent)
-Q_DECLARE_METATYPE(SEvent*)
 
 #endif // SEVENT_H

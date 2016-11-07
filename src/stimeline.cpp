@@ -96,7 +96,7 @@ void STimeline::save(const QString &path) const
     file.close();
 }
 
-SEvent* STimeline::events() const
+SEvent STimeline::eventA() const
 {
 //    QString result;
 
@@ -109,8 +109,8 @@ SEvent* STimeline::events() const
 
 //    return result;
     const SEventVector events(mEventDB->events());
-    qDebug() << events.first()->id();
-    return /*events.isEmpty()? new SEvent : */events.first().data();
+    //qDebug() << events.first()->id();
+    return /*events.isEmpty()? new SEvent : */ *events.first().data();
 }
 
 void STimeline::init()

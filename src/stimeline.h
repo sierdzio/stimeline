@@ -1,7 +1,7 @@
 #ifndef STIMELINE_H
 #define STIMELINE_H
 
-#include "seventptr.h"
+#include "sevent.h"
 
 #include <QString>
 #include <QSharedPointer>
@@ -28,7 +28,7 @@ public slots:
     void save(const QString &path) const;
 
     // TODO: TEMP
-    SEvent *events() const;
+    SEvent eventA() const;
 
 signals:
     void error(const QString &message) const;
