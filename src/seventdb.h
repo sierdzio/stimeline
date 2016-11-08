@@ -15,9 +15,9 @@ public:
     SEventVector events() const;
 
     QJsonArray toJson() const;
-    void fromJson(const QJsonArray &json);
+    virtual void fromJson(const QJsonArray &json);
 
-private:
+protected:
     SEventVector mEvents;
 };
 

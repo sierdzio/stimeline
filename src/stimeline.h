@@ -40,7 +40,6 @@ private:
     SEventModel *mEventModel;
 
     QSharedPointer<SCalendar> mCalendar;
-    QSharedPointer<SEventDB> mEventDB;
     // TODO: add:
     // People
     // Objects

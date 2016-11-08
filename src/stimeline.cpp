@@ -63,7 +63,7 @@ void STimeline::load(const QString &path)
 
     QJsonObject mainObj(doc.object());
     mCalendar->fromJson(mainObj.value(Tags::calendar).toArray());
-    mEventDB->fromJson(mainObj.value(Tags::events).toArray());
+    mEventModel->fromJson(mainObj.value(Tags::events).toArray());
     // TODO: plug in all other objects
 }
 
@@ -84,7 +84,7 @@ void STimeline::save(const QString &path) const
     mainObj.insert(Tags::author, "Testing Tom"); // TODO: plug in author from app settings
 
     mainObj.insert(Tags::calendar, mCalendar->toJson());
-    mainObj.insert(Tags::events, mEventDB->toJson());
+    mainObj.insert(Tags::events, mEventModel->toJson());
     // TODO: plug in all other objects
 
     // TODO: check if all data was written successfully
@@ -101,8 +101,7 @@ void STimeline::init()
 {
     qCDebug(stimeline) << "Initializing default timeline...";
     mCalendar = QSharedPointer<SCalendar>::create();
-    mEventDB = QSharedPointer<SEventDB>::create();
-    mEventModel = new SEventModel(mEventDB, this);
+    mEventModel = new SEventModel(this);
 }
 
 void STimeline::reportError(const QString &message) const

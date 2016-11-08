@@ -2,10 +2,10 @@
 #include "seventdb.h"
 #include "sevent.h"
 
-SEventModel::SEventModel(const QSharedPointer<SEventDB> &eventDb, QObject *parent)
-    : QAbstractListModel(parent), mEventDb(eventDb)
-{
+#include <QModelIndex>
 
+SEventModel::SEventModel(QObject *parent) : QAbstractListModel(parent)
+{
 }
 
 QHash<int, QByteArray> SEventModel::roleNames() const {
@@ -22,14 +22,14 @@ QHash<int, QByteArray> SEventModel::roleNames() const {
 int SEventModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return mEventDb->events().count();
+    return mEvents.count();
 }
 
 QVariant SEventModel::data(const QModelIndex &index, int role) const
 {
     const int row = index.row();
     const int roles = Qt::UserRole + 1;
-    const SEvent *event = mEventDb->events().at(row).data();
+    const SEvent *event = mEvents.at(row).data();
 
     switch (role) {
     case roles: return event->mId;
@@ -39,4 +39,11 @@ QVariant SEventModel::data(const QModelIndex &index, int role) const
     case roles+4: return event->mTo.toString();
     default: return QVariant();
     }
+}
+
+void SEventModel::fromJson(const QJsonArray &json)
+{
+    beginResetModel();
+    SEventDB::fromJson(json);
+    endResetModel();
 }
