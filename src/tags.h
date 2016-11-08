@@ -1,38 +1,38 @@
 #ifndef TAGS_H
 #define TAGS_H
 
-#include <QLatin1String>
+#include <QByteArray>
 
 namespace Tags {
 // Metadata:
-static const QLatin1String version("version");
-static const QLatin1String timestamp("timestamp");
-static const QLatin1String author("author");
+static const QByteArray version("version");
+static const QByteArray timestamp("timestamp");
+static const QByteArray author("author");
 // Events:
-static const QLatin1String id("id");
-static const QLatin1String events("Events");
-static const QLatin1String name("name");
-static const QLatin1String description("description");
+static const QByteArray id("id");
+static const QByteArray events("Events");
+static const QByteArray name("name");
+static const QByteArray description("description");
 // Calendar:
-static const QLatin1String calendar("Calendar");
-static const QLatin1String daysInWeek("daysInWeek");
-static const QLatin1String daysInYear("daysInYear");
-static const QLatin1String monthsInYear("monthsInYear");
-static const QLatin1String leapDayPerYear("leapDayPerYear");
-static const QLatin1String leapDayAddsToMonthNumber("leapDayAddsToMonthNumber");
-static const QLatin1String months("Months");
-static const QLatin1String secondsInMinute("secondsInMinute");
-static const QLatin1String minutesInHour("minutesInHour");
-static const QLatin1String hoursInDay("hoursInDay");
+static const QByteArray calendar("Calendar");
+static const QByteArray daysInWeek("daysInWeek");
+static const QByteArray daysInYear("daysInYear");
+static const QByteArray monthsInYear("monthsInYear");
+static const QByteArray leapDayPerYear("leapDayPerYear");
+static const QByteArray leapDayAddsToMonthNumber("leapDayAddsToMonthNumber");
+static const QByteArray months("Months");
+static const QByteArray secondsInMinute("secondsInMinute");
+static const QByteArray minutesInHour("minutesInHour");
+static const QByteArray hoursInDay("hoursInDay");
 // DateTime
-static const QLatin1String from("from");
-static const QLatin1String to("to");
+static const QByteArray from("from");
+static const QByteArray to("to");
 // Settings
-static const QLatin1String autoLoadLastFile("autoLoadLastFile");
-static const QLatin1String lastOpenFilePath("lastOpenFilePath");
+static const QByteArray autoLoadLastFile("autoLoadLastFile");
+static const QByteArray lastOpenFilePath("lastOpenFilePath");
 // Misc
-static const QLatin1String dateSeparator("-");
-static const QLatin1String timeSeparator(":");
+static const QByteArray dateSeparator("-");
+static const QByteArray timeSeparator(":");
 }
 
 #endif // TAGS_H

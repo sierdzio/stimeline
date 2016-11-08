@@ -13,7 +13,8 @@ HEADERS += \
     src/seventdb.h \
     src/sdatetime.h \
     src/ssettings.h \
-    src/qmlcontroller.h
+    src/qmlcontroller.h \
+    src/seventmodel.h
 
 SOURCES += src/main.cpp \
     src/sevent.cpp \
@@ -22,17 +23,22 @@ SOURCES += src/main.cpp \
     src/seventdb.cpp \
     src/sdatetime.cpp \
     src/ssettings.cpp \
-    src/qmlcontroller.cpp
+    src/qmlcontroller.cpp \
+    src/seventmodel.cpp
 
 RESOURCES += qml.qrc \
     defaults.qrc
 
-DISTFILES += .gitignore \
+DISTFILES += \
     README.md \
     LICENSE.md \
-    stimeline.doxyfile \
     defaults/calendar/dynyghtian.json \
     todo.md
+
+OTHER_FILES += \
+    .gitignore \
+    stimeline.doxyfile \
+    exampleData/example1.json
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

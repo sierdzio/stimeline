@@ -17,13 +17,9 @@ ApplicationWindow {
         onAccepted: {
             console.log("You chose: " + fileDialog.fileUrls)
             Timeline.load(fileDialog.fileUrl)
-            console.log(JSON.stringify(Timeline.events()))
-            mainLabel.text = Timeline.events().name
-            //Qt.quit()
         }
         onRejected: {
-            console.log("Canceled")
-            //Qt.quit()
+            console.log("File loading canceled")
         }
     }
 
@@ -34,27 +30,25 @@ ApplicationWindow {
 
         Page {
             Column {
-                anchors.centerIn: parent
-                Label {
-                    text: qsTr("First page")
-                }
+                anchors.fill: parent
                 Button {
                     text: qsTr("Load timeline")
                     onClicked: fileDialog.visible = true
-                }
-                Label {
-                    id: mainLabel
-                    text: {
-                        return Timeline.eventA().name + Timeline.eventA().description;
-                    }
                 }
             }
         }
 
         Page {
-            Label {
-                text: qsTr("Second page")
-                anchors.centerIn: parent
+            ListView {
+                spacing: 15
+                anchors.fill: parent
+                model: Timeline.eventModel
+                delegate: Text {
+                    text: name + "\n\t" + description + "\n\t" + from
+                     + "\n\t" + to
+                    width: 150
+                    height: 60
+                }
             }
         }
     }

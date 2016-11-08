@@ -1,7 +1,7 @@
 #include "stimeline.h"
 #include "scalendar.h"
 #include "seventdb.h"
-#include "sevent.h"
+#include "seventmodel.h"
 #include "ssettings.h"
 #include "tags.h"
 
@@ -18,6 +18,7 @@ Q_LOGGING_CATEGORY(stimeline, "STimeline")
 STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
     mSettings(settings)
 {
+    qRegisterMetaType<SEventModel*>();
     init();
 }
 
@@ -96,28 +97,12 @@ void STimeline::save(const QString &path) const
     file.close();
 }
 
-SEvent STimeline::eventA() const
-{
-//    QString result;
-
-//    const SEventVector events = mEventDB->events();
-//    for (const SEventPtr &event: events) {
-//        result.append("Event: " + event->(Tags::id) + ", name: "
-//                      + event->property(Tags::name) + ", description: "
-//                      + event->property(Tags::description));
-//    }
-
-//    return result;
-    const SEventVector events(mEventDB->events());
-    //qDebug() << events.first()->id();
-    return /*events.isEmpty()? new SEvent : */ *events.first().data();
-}
-
 void STimeline::init()
 {
     qCDebug(stimeline) << "Initializing default timeline...";
     mCalendar = QSharedPointer<SCalendar>::create();
     mEventDB = QSharedPointer<SEventDB>::create();
+    mEventModel = new SEventModel(mEventDB, this);
 }
 
 void STimeline::reportError(const QString &message) const

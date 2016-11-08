@@ -11,6 +11,8 @@
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(sevent)
 
+class SEventModel;
+
 class SEvent
 {
     Q_GADGET
@@ -20,6 +22,8 @@ class SEvent
     Q_PROPERTY(QString description MEMBER mDescription)
     Q_PROPERTY(SDateTime from MEMBER mFrom)
     Q_PROPERTY(SDateTime to MEMBER mTo)
+
+    friend class SEventModel;
 
 public:
     SEvent();

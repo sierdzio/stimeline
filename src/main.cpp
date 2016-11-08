@@ -1,8 +1,5 @@
 #include "stimeline.h"
-#include "sdatetime.h"
 #include "ssettings.h"
-#include "seventptr.h"
-#include "sevent.h"
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -13,9 +10,6 @@
 
 Q_DECLARE_LOGGING_CATEGORY(smain)
 Q_LOGGING_CATEGORY(smain, "Main")
-
-Q_DECLARE_METATYPE(SEventPtr)
-Q_DECLARE_METATYPE(SEventVector)
 
 int main(int argc, char *argv[])
 {
@@ -28,11 +22,6 @@ int main(int argc, char *argv[])
     app.setOrganizationName("sierdzio"); // TODO: proper domain
     app.setQuitOnLastWindowClosed(true);
 
-//    qRegisterMetaType<SDateTime>();
-    qRegisterMetaType<SEvent>();
-//    qRegisterMetaType<SEventPtr>();
-//    qRegisterMetaType<SEventVector>();
-
     SSettings settings;
     STimeline timeline(&settings);
 
@@ -41,11 +30,6 @@ int main(int argc, char *argv[])
                       << settings.lastOpenFilePath;
         timeline.load(settings.lastOpenFilePath);
     }
-
-    // Just a quick test
-    //timeline.load("input.json");
-    //timeline.save("test.json");
-    // EO Test
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("Timeline", &timeline);
