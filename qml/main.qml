@@ -10,16 +10,36 @@ ApplicationWindow {
     title: qsTr("sTimeline - v") + Qt.application.version
 
     FileDialog {
-        id: fileDialog
+        id: loadDialog
         title: "Please choose a timeline file"
-        folder: shortcuts.home
+        folder: Timeline.settings.lastOpenFilePath
         visible: false
+        selectExisting : true
+        selectFolder : false
+        selectMultiple : false
         onAccepted: {
-            console.log("You chose: " + fileDialog.fileUrls)
-            Timeline.load(fileDialog.fileUrl)
+            console.log("You chose: " + loadDialog.fileUrls)
+            Timeline.load(loadDialog.fileUrl)
         }
         onRejected: {
             console.log("File loading canceled")
+        }
+    }
+
+    FileDialog {
+        id: saveDialog
+        title: "Please choose a timeline file"
+        folder: Timeline.settings.lastSaveFilePath
+        visible: false
+        selectExisting : false
+        selectFolder : false
+        selectMultiple : false
+        onAccepted: {
+            console.log("You chose: " + saveDialog.fileUrls)
+            Timeline.save(saveDialog.fileUrl)
+        }
+        onRejected: {
+            console.log("File saving canceled")
         }
     }
 
@@ -30,10 +50,15 @@ ApplicationWindow {
 
         Page {
             Column {
+                spacing: 15
                 anchors.fill: parent
                 Button {
                     text: qsTr("Load timeline")
-                    onClicked: fileDialog.visible = true
+                    onClicked: loadDialog.visible = true
+                }
+                Button {
+                    text: qsTr("Save timeline")
+                    onClicked: saveDialog.visible = true
                 }
             }
         }

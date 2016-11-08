@@ -19,6 +19,7 @@ STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
     mSettings(settings)
 {
     qRegisterMetaType<SEventModel*>();
+    qRegisterMetaType<SSettings*>();
     init();
 }
 
@@ -32,11 +33,7 @@ void STimeline::load(const QString &path)
     //if (reinit)
     //    init();
 
-    QString parsedPath(path);
-    if (parsedPath.startsWith("file://")) {
-        parsedPath = path.mid(7);
-    }
-
+    const QString parsedPath(cleanPath(path));
     QFile file(parsedPath);
 
     if (file.exists() == false) {
@@ -69,10 +66,11 @@ void STimeline::load(const QString &path)
 
 void STimeline::save(const QString &path) const
 {
-    QFile file(path);
+    QString parsedPath(cleanPath(path));
+    QFile file(parsedPath);
 
     if (file.open(QFile::WriteOnly | QFile::Text) == false) {
-        reportError("Could not open file for saving: " + path);
+        reportError("Could not open file for saving: " + parsedPath);
         return;
     }
 
@@ -108,4 +106,13 @@ void STimeline::reportError(const QString &message) const
 {
     qCDebug(stimeline) << message;
     emit error(message);
+}
+
+QString STimeline::cleanPath(const QString &urlPath) const
+{
+    if (urlPath.startsWith("file://")) {
+        return urlPath.mid(7);
+    }
+
+    return urlPath;
 }

@@ -30,6 +30,7 @@ static const QByteArray to("to");
 // Settings
 static const QByteArray autoLoadLastFile("autoLoadLastFile");
 static const QByteArray lastOpenFilePath("lastOpenFilePath");
+static const QByteArray lastSaveFilePath("lastSaveFilePath");
 // Misc
 static const QByteArray dateSeparator("-");
 static const QByteArray timeSeparator(":");

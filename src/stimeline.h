@@ -19,8 +19,8 @@ class STimeline : public QObject
 {
     Q_OBJECT
 
-    //Q_PROPERTY(QByteArray id MEMBER mId)
     Q_PROPERTY(SEventModel* eventModel MEMBER mEventModel CONSTANT)
+    Q_PROPERTY(SSettings* settings MEMBER mSettings CONSTANT)
 
 public:
     STimeline(SSettings *settings = nullptr, QObject *parent = nullptr);
@@ -35,9 +35,10 @@ signals:
 private:
     void init();
     void reportError(const QString &message) const;
+    QString cleanPath(const QString &urlPath) const;
 
     SSettings *mSettings = nullptr;
-    SEventModel *mEventModel;
+    SEventModel *mEventModel = nullptr;
 
     QSharedPointer<SCalendar> mCalendar;
     // TODO: add:
