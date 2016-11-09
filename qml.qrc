@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
+        <file>qml/EventCard.qml</file>
+        <file>qml/EventEditor.qml</file>
     </qresource>
 </RCC>

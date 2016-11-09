@@ -1,8 +1,11 @@
 #include "seventmodel.h"
-#include "seventdb.h"
 #include "sevent.h"
 
 #include <QModelIndex>
+#include <QJsonArray>
+#include <QDebug>
+
+Q_LOGGING_CATEGORY(seventmodel, "SEventModel")
 
 SEventModel::SEventModel(QObject *parent) : QAbstractListModel(parent)
 {
@@ -41,9 +44,78 @@ QVariant SEventModel::data(const QModelIndex &index, int role) const
     }
 }
 
+QJsonArray SEventModel::toJson() const
+{
+    QJsonArray result;
+    if (mEvents.isEmpty())
+        return result;
+
+    for (const SEventPtr &event: qAsConst(mEvents)) {
+        result.append(event->toJson());
+    }
+
+    return result;
+}
+
 void SEventModel::fromJson(const QJsonArray &json)
 {
     beginResetModel();
-    SEventDB::fromJson(json);
+
+    if (mEvents.isEmpty() == false)
+        mEvents.clear();
+
+    for (const QJsonValue &event: json) {
+        mEvents.append(SEventPtr::create(event.toObject()));
+    }
+
     endResetModel();
+}
+
+/*!
+ * Adds a new event, filling it with data: \a name, \a description, \a from and
+ * \a to and returns the ID of newly created event.
+ *
+ * \warning \a from and \a to should be replaced with datetime-aware objects
+ * instead of QString.
+ */
+QByteArray SEventModel::addEvent(const QString &name, const QString &description,
+                                 const QString &from, const QString &to)
+{
+    beginInsertRows(QModelIndex(), mEvents.size(), mEvents.size());
+    auto event = SEventPtr::create();
+    event->mName = name;
+    event->mDescription = description;
+    event->mFrom.fromString(from);
+    event->mTo.fromString(to);
+    mEvents.append(event);
+    endInsertRows();
+
+    return event->id();
+}
+
+void SEventModel::updateEvent(const QString &id, const QString &name,
+                              const QString &description, const QString &from,
+                              const QString &to)
+{
+    int index = 0;
+    SEventPtr event;
+    for (const SEventPtr &e: qAsConst(mEvents)) {
+        if (e->id() == id) {
+            event = e;
+            break;
+        }
+
+        ++index;
+    }
+
+    if (event.isNull()) {
+        qCDebug(seventmodel) << "Could not find event with ID:" << id
+                             << "Event will not be updated";
+        return;
+    }
+
+    // TODO: finish
+
+    const QModelIndex modelIndex(createIndex(index, 0));
+    emit dataChanged(modelIndex, modelIndex);
 }

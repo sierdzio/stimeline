@@ -4,6 +4,8 @@ import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
 
 ApplicationWindow {
+    property alias eventEditorId: eventEditor.eventId
+
     visible: true
     width: 640
     height: 480
@@ -43,15 +45,65 @@ ApplicationWindow {
         }
     }
 
+    EventEditor {
+        id: eventEditor
+
+        onFinished: {
+            Timeline.eventModel.updateEvent(eventEditorId,
+                                            eventEditor.name,
+                                            eventEditor.description,
+                                            eventEditor.from,
+                                            eventEditor.to
+                                            );
+            eventEditorId = "";
+        }
+    }
+
     SwipeView {
         id: swipeView
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
 
         Page {
-            Column {
+            ListView {
                 spacing: 15
                 anchors.fill: parent
+                model: Timeline.eventModel
+                delegate: EventCard {
+                    eventId: model.id
+                    name: model.name
+                    description: model.description
+                    from: model.from
+                    to: model.to
+                    width: 250
+                    height: 120
+                }
+            }
+
+            Button {
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                anchors.margins: 25
+                text: "+"
+                font.bold: true
+                width: 30
+                height: width
+                //radius: 15
+
+                onClicked: {
+                    eventEditorId = Timeline.eventModel.addEvent();
+                    eventEditor.open();
+                }
+            }
+        }
+
+        Page {
+            Column {
+                spacing: 15
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+
                 Button {
                     text: qsTr("Load timeline")
                     onClicked: loadDialog.visible = true
@@ -59,20 +111,6 @@ ApplicationWindow {
                 Button {
                     text: qsTr("Save timeline")
                     onClicked: saveDialog.visible = true
-                }
-            }
-        }
-
-        Page {
-            ListView {
-                spacing: 15
-                anchors.fill: parent
-                model: Timeline.eventModel
-                delegate: Text {
-                    text: name + "\n\t" + description + "\n\t" + from
-                     + "\n\t" + to
-                    width: 150
-                    height: 60
                 }
             }
         }

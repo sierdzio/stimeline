@@ -1,6 +1,5 @@
 #include "stimeline.h"
 #include "scalendar.h"
-#include "seventdb.h"
 #include "seventmodel.h"
 #include "ssettings.h"
 #include "tags.h"
@@ -8,6 +7,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
+#include <QJsonArray>
 #include <QFile>
 #include <QCoreApplication>
 #include <QDateTime>
