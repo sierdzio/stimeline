@@ -9,8 +9,10 @@ Popup {
     property alias from: eventFrom.text
     property alias to: eventTo.text
     signal finished()
+    signal canceled()
 
     onFinished: close()
+    onCanceled: close()
 
     id: root
     width: 600
@@ -68,7 +70,7 @@ Popup {
 
         Button {
             text: qsTr("Cancel")
-            onClicked: root.finished()
+            onClicked: root.canceled()
         }
     }
 }
