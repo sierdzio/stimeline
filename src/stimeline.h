@@ -1,8 +1,6 @@
 #ifndef STIMELINE_H
 #define STIMELINE_H
 
-#include "sevent.h"
-
 #include <QString>
 #include <QSharedPointer>
 #include <QObject>
@@ -11,7 +9,6 @@
 Q_DECLARE_LOGGING_CATEGORY(stimeline)
 
 class SCalendar;
-class SEventDB;
 class SSettings;
 class SEventModel;
 

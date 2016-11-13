@@ -1,12 +1,13 @@
 #ifndef SEVENTMODEL_H
 #define SEVENTMODEL_H
 
-#include "seventptr.h"
+#include "sevent.h"
 #include "tags.h"
 
 #include <QAbstractListModel>
 #include <QByteArray>
 #include <QHash>
+#include <QVector>
 #include <QVariant>
 #include <QObject>
 
@@ -43,7 +44,8 @@ public slots:
     void updateEvent(const SEvent &event);
 
 protected:
-    SEventVector mEvents;
+    //QHash<QByteArray, SEvent> mEvents;
+    QVector<SEvent> mEvents;
 };
 
 #endif // SEVENTMODEL_H

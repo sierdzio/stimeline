@@ -6,13 +6,11 @@ DEFINES *= QT_USE_QSTRINGBUILDER
 
 HEADERS += \
     src/sevent.h \
-    src/seventptr.h \
     src/tags.h \
     src/stimeline.h \
     src/scalendar.h \
     src/sdatetime.h \
     src/ssettings.h \
-    src/qmlcontroller.h \
     src/seventmodel.h
 
 SOURCES += src/main.cpp \
@@ -21,7 +19,6 @@ SOURCES += src/main.cpp \
     src/scalendar.cpp \
     src/sdatetime.cpp \
     src/ssettings.cpp \
-    src/qmlcontroller.cpp \
     src/seventmodel.cpp
 
 RESOURCES += qml.qrc \

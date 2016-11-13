@@ -32,14 +32,14 @@ QVariant SEventModel::data(const QModelIndex &index, int role) const
 {
     const int row = index.row();
     const int roles = Qt::UserRole + 1;
-    const SEvent *event = mEvents.at(row).data();
+    const SEvent event = mEvents.at(row);
 
     switch (role) {
-    case roles: return event->mId;
-    case roles+1: return event->mName;
-    case roles+2: return event->mDescription;
-    case roles+3: return event->mFrom.toString();
-    case roles+4: return event->mTo.toString();
+    case roles: return event.mId;
+    case roles+1: return event.mName;
+    case roles+2: return event.mDescription;
+    case roles+3: return event.mFrom.toString();
+    case roles+4: return event.mTo.toString();
     default: return QVariant();
     }
 }
@@ -50,8 +50,8 @@ QJsonArray SEventModel::toJson() const
     if (mEvents.isEmpty())
         return result;
 
-    for (const SEventPtr &event: qAsConst(mEvents)) {
-        result.append(event->toJson());
+    for (const SEvent &event: qAsConst(mEvents)) {
+        result.append(event.toJson());
     }
 
     return result;
@@ -65,7 +65,7 @@ void SEventModel::fromJson(const QJsonArray &json)
         mEvents.clear();
 
     for (const QJsonValue &event: json) {
-        mEvents.append(SEventPtr::create(event.toObject()));
+        mEvents.append(SEvent(event.toObject()));
     }
 
     endResetModel();
@@ -82,33 +82,33 @@ QByteArray SEventModel::addEvent(const QString &name, const QString &description
                                  const QString &from, const QString &to)
 {
     beginInsertRows(QModelIndex(), mEvents.size(), mEvents.size());
-    auto event = SEventPtr::create();
-    event->mName = name;
-    event->mDescription = description;
-    if (!from.isEmpty()) event->mFrom.fromString(from);
-    if (!to.isEmpty()) event->mTo.fromString(to);
+    auto event = SEvent();
+    event.mName = name;
+    event.mDescription = description;
+    if (!from.isEmpty()) event.mFrom.fromString(from);
+    if (!to.isEmpty()) event.mTo.fromString(to);
     mEvents.append(event);
     endInsertRows();
 
-    return event->id();
+    return event.id();
 }
 
 void SEventModel::updateEvent(const QString &id, const QString &name,
                               const QString &description, const QString &from,
                               const QString &to)
 {
+    bool found = false;
     int index = 0;
-    SEventPtr event;
-    for (const SEventPtr &e: qAsConst(mEvents)) {
-        if (e->id() == id) {
-            event = e;
+    for (const SEvent &e: qAsConst(mEvents)) {
+        if (e.id() == id) {
+            found = true;
             break;
         }
 
         ++index;
     }
 
-    if (event.isNull()) {
+    if (found == false) {
         qCDebug(seventmodel) << "Could not find event with ID:" << id
                              << "Event will not be updated";
         return;
@@ -116,10 +116,13 @@ void SEventModel::updateEvent(const QString &id, const QString &name,
 
     const QModelIndex modelIndex(createIndex(index, 0));
 
-    event->mName = name;
-    event->mDescription = description;
-    event->mFrom.fromString(from);
-    event->mTo.fromString(to);
+    SEvent event;
+    event.mId = id.toLatin1();
+    event.mName = name;
+    event.mDescription = description;
+    event.mFrom.fromString(from);
+    event.mTo.fromString(to);
+    mEvents.replace(index, event);
 
     emit dataChanged(modelIndex, modelIndex);
 }
@@ -127,43 +130,31 @@ void SEventModel::updateEvent(const QString &id, const QString &name,
 QByteArray SEventModel::addEvent(const SEvent &event)
 {
     beginInsertRows(QModelIndex(), mEvents.size(), mEvents.size());
-    auto modelEvent = SEventPtr::create();
-    modelEvent->mName = event.mName;
-    modelEvent->mDescription = event.mDescription;
-    modelEvent->mFrom.fromString(event.mFrom.toString());
-    modelEvent->mTo.fromString(event.mTo.toString());
-    mEvents.append(modelEvent);
+    mEvents.append(event);
     endInsertRows();
-
-    return modelEvent->id();
+    return event.id();
 }
 
 void SEventModel::updateEvent(const SEvent &event)
 {
+    bool found = false;
     int index = 0;
-    SEventPtr modelEvent;
-    for (const SEventPtr &e: qAsConst(mEvents)) {
-        if (e->id() == event.id()) {
-            modelEvent = e;
+    for (const SEvent &e: qAsConst(mEvents)) {
+        if (e.id() == event.id()) {
+            found = true;
             break;
         }
 
         ++index;
     }
 
-    if (modelEvent.isNull()) {
+    if (found == false) {
         qCDebug(seventmodel) << "Could not find event with ID:" << event.id()
                              << "Event will not be updated";
         return;
     }
 
     const QModelIndex modelIndex(createIndex(index, 0));
-
-    modelEvent->mId = event.id();
-    modelEvent->mName = event.mName;
-    modelEvent->mDescription = event.mDescription;
-    modelEvent->mFrom.fromString(event.mFrom.toString());
-    modelEvent->mTo.fromString(event.mTo.toString());
-
+    mEvents.replace(index, event);
     emit dataChanged(modelIndex, modelIndex);
 }

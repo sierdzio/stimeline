@@ -55,14 +55,14 @@
             "description": "This is event description",
             "from": "1111-11-26 11:22:33",
             "id": "1",
-            "name": "some event",
+            "name": "some event, isn't it?",
             "to": "1111-11-26 11:22:33"
         },
         {
             "description": "My hovercraft is full of eels",
             "from": "1111-11-27 11:22:25",
             "id": "2",
-            "name": "other event",
+            "name": "Other event",
             "to": "1111-11-27 11:33:44"
         },
         {
@@ -74,6 +74,6 @@
         }
     ],
     "author": "Testing Tom",
-    "timestamp": "2016-11-13T06:53:11Z",
+    "timestamp": "2016-11-13T07:16:52Z",
     "version": "0.1"
 }
