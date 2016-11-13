@@ -4,8 +4,6 @@ import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
 
 ApplicationWindow {
-    property alias eventEditorId: eventEditor.eventId
-
     visible: true
     width: 640
     height: 480
@@ -48,15 +46,23 @@ ApplicationWindow {
     EventEditor {
         id: eventEditor
 
-        onFinished: {
-            Timeline.eventModel.updateEvent(eventEditorId,
-                                            eventEditor.name,
-                                            eventEditor.description,
-                                            eventEditor.from,
-                                            eventEditor.to
-                                            );
-            eventEditorId = "";
+        onFinished: Timeline.eventModel.updateEvent(eventEditor.eventId,
+                                                    eventEditor.name,
+                                                    eventEditor.description,
+                                                    eventEditor.from,
+                                                    eventEditor.to
+                                                    )
+    }
+
+    function openEditor(eventId, name, description, from, to) {
+        eventEditor.eventId = eventId;
+        if (typeof name !== "undefined") {
+            eventEditor.name = name
+            eventEditor.description = description
+            eventEditor.from = from
+            eventEditor.to = to
         }
+        eventEditor.open();
     }
 
     SwipeView {
@@ -77,6 +83,8 @@ ApplicationWindow {
                     to: model.to
                     width: 250
                     height: 120
+
+                    onEdit: openEditor(eventId, name, description, from, to)
                 }
             }
 
@@ -90,10 +98,7 @@ ApplicationWindow {
                 height: width
                 //radius: 15
 
-                onClicked: {
-                    eventEditorId = Timeline.eventModel.addEvent();
-                    eventEditor.open();
-                }
+                onClicked: openEditor(Timeline.eventModel.addEvent())
             }
         }
 

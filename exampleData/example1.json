@@ -52,21 +52,28 @@
     ],
     "Events": [
         {
-            "id": "1",
-            "name": "some event",
             "description": "This is event description",
             "from": "1111-11-26 11:22:33",
+            "id": "1",
+            "name": "some event",
             "to": "1111-11-26 11:22:33"
         },
         {
-            "id": "2",
-            "name": "other event",
             "description": "My hovercraft is full of eels",
             "from": "1111-11-27 11:22:25",
+            "id": "2",
+            "name": "other event",
             "to": "1111-11-27 11:33:44"
+        },
+        {
+            "description": "This description is full of eels",
+            "from": "1-2-3 11:10:9",
+            "id": "#\u001e?9èèH¹¶\u0011Yâ\u001dÑ\u0011`",
+            "name": "Some name",
+            "to": "1-2-3 11:10:9"
         }
     ],
     "author": "Testing Tom",
-    "timestamp": "2016-11-08T16:45:11Z",
+    "timestamp": "2016-11-13T06:53:11Z",
     "version": "0.1"
 }

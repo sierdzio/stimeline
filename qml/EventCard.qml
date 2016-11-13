@@ -9,10 +9,17 @@ Rectangle {
     property alias from: eventFrom.text
     property alias to: eventTo.text
 
+    signal edit()
+
     radius: 5
     border {
         width: 1
         color: "#000000"
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: edit();
     }
 
     GridLayout {
@@ -25,13 +32,12 @@ Rectangle {
         Label {
             id: eventId
             text: "default"
-            //Layout.columnSpan: 2
+            visible: false
         }
 
         Label {
             id: eventName
             text: "default"
-            //Layout.columnSpan: 2
         }
 
         Label {

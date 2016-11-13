@@ -35,10 +35,12 @@ public slots:
                         const QString &from = QString::null,
                         const QString &to = QString::null);
     void updateEvent(const QString &id,
-                     const QString &name = QString::null,
-                     const QString &description = QString::null,
-                     const QString &from = QString::null,
-                     const QString &to = QString::null);
+                     const QString &name,
+                     const QString &description,
+                     const QString &from,
+                     const QString &to);
+    QByteArray addEvent(const SEvent &event);
+    void updateEvent(const SEvent &event);
 
 protected:
     SEventVector mEvents;

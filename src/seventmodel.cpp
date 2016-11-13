@@ -85,8 +85,8 @@ QByteArray SEventModel::addEvent(const QString &name, const QString &description
     auto event = SEventPtr::create();
     event->mName = name;
     event->mDescription = description;
-    event->mFrom.fromString(from);
-    event->mTo.fromString(to);
+    if (!from.isEmpty()) event->mFrom.fromString(from);
+    if (!to.isEmpty()) event->mTo.fromString(to);
     mEvents.append(event);
     endInsertRows();
 
@@ -114,8 +114,56 @@ void SEventModel::updateEvent(const QString &id, const QString &name,
         return;
     }
 
-    // TODO: finish
+    const QModelIndex modelIndex(createIndex(index, 0));
+
+    event->mName = name;
+    event->mDescription = description;
+    event->mFrom.fromString(from);
+    event->mTo.fromString(to);
+
+    emit dataChanged(modelIndex, modelIndex);
+}
+
+QByteArray SEventModel::addEvent(const SEvent &event)
+{
+    beginInsertRows(QModelIndex(), mEvents.size(), mEvents.size());
+    auto modelEvent = SEventPtr::create();
+    modelEvent->mName = event.mName;
+    modelEvent->mDescription = event.mDescription;
+    modelEvent->mFrom.fromString(event.mFrom.toString());
+    modelEvent->mTo.fromString(event.mTo.toString());
+    mEvents.append(modelEvent);
+    endInsertRows();
+
+    return modelEvent->id();
+}
+
+void SEventModel::updateEvent(const SEvent &event)
+{
+    int index = 0;
+    SEventPtr modelEvent;
+    for (const SEventPtr &e: qAsConst(mEvents)) {
+        if (e->id() == event.id()) {
+            modelEvent = e;
+            break;
+        }
+
+        ++index;
+    }
+
+    if (modelEvent.isNull()) {
+        qCDebug(seventmodel) << "Could not find event with ID:" << event.id()
+                             << "Event will not be updated";
+        return;
+    }
 
     const QModelIndex modelIndex(createIndex(index, 0));
+
+    modelEvent->mId = event.id();
+    modelEvent->mName = event.mName;
+    modelEvent->mDescription = event.mDescription;
+    modelEvent->mFrom.fromString(event.mFrom.toString());
+    modelEvent->mTo.fromString(event.mTo.toString());
+
     emit dataChanged(modelIndex, modelIndex);
 }

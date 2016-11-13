@@ -4,12 +4,13 @@ import QtQuick.Layouts 1.1
 
 Popup {
     property string eventId: ""
-    property alias eventId: eventId.text
     property alias name: eventName.text
     property alias description: eventDescription.text
     property alias from: eventFrom.text
     property alias to: eventTo.text
     signal finished()
+
+    onFinished: close()
 
     id: root
     width: 600
@@ -60,7 +61,13 @@ Popup {
         }
 
         Button {
-            text: "OK"
+            text: qsTr("OK")
+            onClicked: root.finished()
+        }
+
+
+        Button {
+            text: qsTr("Cancel")
             onClicked: root.finished()
         }
     }
