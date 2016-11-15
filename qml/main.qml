@@ -194,8 +194,8 @@ ApplicationWindow {
                 text: "<"
                 font.bold: true
                 font.pointSize: 16
-                //enabled: stack.depth > 1
-                //onClicked: stack.pop()
+                enabled: tabBar.previousIndex !== -1
+                onClicked: tabBar.currentIndex = tabBar.previousIndex
             }
             ToolButton {
                 id: hamburgerButton
@@ -218,8 +218,16 @@ ApplicationWindow {
     }
 
     footer: TabBar {
+        property int previousIndex: -1
+        property int __tempIndex: 0
+
         id: tabBar
         currentIndex: swipeView.currentIndex
+        onCurrentIndexChanged: {
+            previousIndex = __tempIndex;
+            __tempIndex = currentIndex;
+        }
+
         TabButton {
             text: qsTr("Timeline")
         }
@@ -249,27 +257,36 @@ ApplicationWindow {
         height: window.height
         edge: Qt.LeftEdge
 
-        Menu {
+        ColumnLayout {
+            anchors.fill: parent
+
             MenuItem {
                 text: qsTr("Timeline")
+                onClicked: { tabBar.currentIndex = 0; drawer.close(); }
             }
             MenuItem {
                 text: qsTr("People")
+                onClicked: { tabBar.currentIndex = 1; drawer.close(); }
             }
             MenuItem {
                 text: qsTr("Objects")
+                onClicked: { tabBar.currentIndex = 2; drawer.close(); }
             }
             MenuItem {
                 text: qsTr("Places")
+                onClicked: { tabBar.currentIndex = 3; drawer.close(); }
             }
             MenuItem {
                 text: qsTr("Maps")
+                onClicked: { tabBar.currentIndex = 4; drawer.close(); }
             }
             MenuItem {
                 text: qsTr("Settings")
+                onClicked: { tabBar.currentIndex = 5; drawer.close(); }
             }
             MenuItem {
                 text: qsTr("About")
+                onClicked: { tabBar.currentIndex = 6; drawer.close(); }
             }
         }
     }
