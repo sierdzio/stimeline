@@ -4,5 +4,6 @@
         <file>qml/EventCard.qml</file>
         <file>qml/EventEditor.qml</file>
         <file>qml/DateTimeEditor.qml</file>
+        <file>qml/STumbler.qml</file>
     </qresource>
 </RCC>

@@ -4,15 +4,9 @@ import QtQuick.Layouts 1.1
 
 Popup {
     // TODO: use separator from Tags class
-    property string dateTime: year.text + "-" + (month.currentIndex+1) + "-" + (day.currentIndex+1)
-                              + " " + (hour.currentIndex+1) + ":" + (minute.currentIndex+1) + ":" + (second.currentIndex+1) //"0001-01-01 01:01:01"
-
-    property alias year: dtYear
-    property alias month: dtMonth
-    property alias day: dtDay
-    property alias hour: dtHour
-    property alias minute: dtMinute
-    property alias second: dtSecond
+    property string dateTime: dtYear.text + "-" + (dtMonth.currentIndex+1) + "-" + (dtDay.currentIndex+1)
+                              + " " + (dtHour.currentIndex+1) + ":" + (dtMinute.currentIndex+1) + ":"
+                              + (dtSecond.currentIndex+1) //"0001-01-01 01:01:01"
 
     signal finished()
     signal canceled()
@@ -40,11 +34,11 @@ Popup {
 
     function setDateTime(yyyy, MM, dd, hh, mm, ss) {
         dtYear.text = yyyy;
-        dtMonth.currentIndex = MM+1;
-        dtDay.currentIndex = dd+1;
-        dtHour.currentIndex = hh+1;
-        dtMinute.currentIndex = mm+1;
-        dtSecond.currentIndex = ss+1;
+        dtMonth.currentIndex = MM-1;
+        dtDay.currentIndex = dd-1;
+        dtHour.currentIndex = hh-1;
+        dtMinute.currentIndex = mm-1;
+        dtSecond.currentIndex = ss-1;
     }
 
     ColumnLayout {
@@ -78,7 +72,7 @@ Popup {
                     model: Timeline.calendar.monthsInYear
                     visibleItemCount: 3
                     delegate: Text {
-                        text: Timeline.calendar.monthName(index)
+                        text: Timeline.calendar.monthName(modelData)
                         height: paintedHeight
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -90,7 +84,7 @@ Popup {
                     text: qsTr("Day")
                 }
 
-                Tumbler {
+                STumbler {
                     id: dtDay
                     model: Timeline.calendar.daysInMonth(dtMonth.currentIndex)
                 }
@@ -106,7 +100,7 @@ Popup {
                     text: qsTr("Hour")
                 }
 
-                Tumbler {
+                STumbler {
                     id: dtHour
                     model: Timeline.calendar.hoursInDay
                 }
@@ -115,7 +109,7 @@ Popup {
                     text: qsTr("Minute")
                 }
 
-                Tumbler {
+                STumbler {
                     id: dtMinute
                     model: Timeline.calendar.minutesInHour
                 }
@@ -124,7 +118,7 @@ Popup {
                     text: qsTr("Second")
                 }
 
-                Tumbler {
+                STumbler {
                     id: dtSecond
                     model: Timeline.calendar.secondsInMinute
                 }
