@@ -8,6 +8,7 @@ Popup {
     property alias description: eventDescription.text
     property alias from: eventFrom.text
     property alias to: eventTo.text
+    property var __editControl: eventFrom
     signal finished()
     signal canceled()
 
@@ -20,6 +21,12 @@ Popup {
     closePolicy: Popup.NoAutoClose
     modal: true
     focus: true
+
+    DateTimeEditor {
+        id: dateTimeEditor
+
+        onFinished: __editControl.text = dateTimeEditor.dateTime;
+    }
 
     GridLayout {
         anchors.fill: parent
@@ -50,23 +57,38 @@ Popup {
             text: qsTr("From")
         }
 
-        TextField {
+        Label {
             id: eventFrom
+            MouseArea {
+                anchors.fill: parent
+                onDoubleClicked: {
+                    __editControl = parent;
+                    dateTimeEditor.setDateTimeFromString(parent.text);
+                    dateTimeEditor.open();
+                }
+            }
         }
 
         Label {
             text: qsTr("To")
         }
 
-        TextField {
+        Label {
             id: eventTo
+            MouseArea {
+                anchors.fill: parent
+                onDoubleClicked: {
+                    __editControl = parent;
+                    dateTimeEditor.setDateTimeFromString(parent.text);
+                    dateTimeEditor.open();
+                }
+            }
         }
 
         Button {
             text: qsTr("OK")
             onClicked: root.finished()
         }
-
 
         Button {
             text: qsTr("Cancel")

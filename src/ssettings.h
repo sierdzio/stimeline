@@ -11,6 +11,7 @@ class SSettings : public QObject
     Q_PROPERTY(bool autoLoadLastFile MEMBER autoLoadLastFile NOTIFY autoLoadLastFileChanged)
     Q_PROPERTY(QString lastOpenFilePath MEMBER lastOpenFilePath NOTIFY lastOpenFilePathChanged)
     Q_PROPERTY(QString lastSaveFilePath MEMBER lastSaveFilePath NOTIFY lastSaveFilePathChanged)
+    Q_PROPERTY(QString author MEMBER author NOTIFY authorChanged)
 
 public:
     explicit SSettings(QObject *parent = 0);
@@ -23,10 +24,13 @@ public:
     QString lastOpenFilePath;
     QString lastSaveFilePath;
 
+    QString author = "Testing Tom";
+
 signals:
     void autoLoadLastFileChanged(bool newValue) const;
     void lastOpenFilePathChanged(const QString &newPath) const;
     void lastSaveFilePathChanged(const QString &newPath) const;
+    void authorChanged(const QString &author) const;
 };
 
 #endif // SSETTINGS_H

@@ -1,6 +1,6 @@
-QT += core gui qml quick
+QT += core gui qml quick quickcontrols2
 
-CONFIG += c++11
+CONFIG += c++14
 
 DEFINES *= QT_USE_QSTRINGBUILDER
 

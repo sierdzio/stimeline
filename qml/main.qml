@@ -6,8 +6,8 @@ import QtQuick.Dialogs 1.2
 ApplicationWindow {
     id: window
     visible: true
-    width: 640
-    height: 480
+    width: 1000
+    height: 800
     title: qsTr("sTimeline - v") + Qt.application.version
 
     function openEditor(eventId, name, description, from, to) {
@@ -83,7 +83,7 @@ ApplicationWindow {
                     description: model.description
                     from: model.from
                     to: model.to
-                    width: 250
+                    width: 350
                     height: 120
                     onEdit: openEditor(eventId, name, description, from, to)
                 }

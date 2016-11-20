@@ -19,6 +19,7 @@ void SSettings::load()
     autoLoadLastFile = settings.value(Tags::autoLoadLastFile, true).toBool();
     lastOpenFilePath = settings.value(Tags::lastOpenFilePath).toString();
     lastSaveFilePath = settings.value(Tags::lastSaveFilePath).toString();
+    author = settings.value(Tags::author).toString();
 }
 
 void SSettings::save() const
@@ -27,4 +28,5 @@ void SSettings::save() const
     settings.setValue(Tags::autoLoadLastFile, autoLoadLastFile);
     settings.setValue(Tags::lastOpenFilePath, lastOpenFilePath);
     settings.setValue(Tags::lastSaveFilePath, lastSaveFilePath);
+    settings.setValue(Tags::author, author);
 }

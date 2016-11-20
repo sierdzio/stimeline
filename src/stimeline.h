@@ -2,7 +2,6 @@
 #define STIMELINE_H
 
 #include <QString>
-#include <QSharedPointer>
 #include <QObject>
 
 #include <QLoggingCategory>
@@ -18,9 +17,11 @@ class STimeline : public QObject
 
     Q_PROPERTY(SEventModel* eventModel MEMBER mEventModel CONSTANT)
     Q_PROPERTY(SSettings* settings MEMBER mSettings CONSTANT)
+    Q_PROPERTY(SCalendar* calendar MEMBER mCalendar CONSTANT)
 
 public:
     STimeline(SSettings *settings = nullptr, QObject *parent = nullptr);
+    ~STimeline();
 
 public slots:
     void load(const QString &path);
@@ -36,8 +37,8 @@ private:
 
     SSettings *mSettings = nullptr;
     SEventModel *mEventModel = nullptr;
+    SCalendar *mCalendar = nullptr;
 
-    QSharedPointer<SCalendar> mCalendar;
     // TODO: add:
     // People
     // Objects

@@ -20,7 +20,12 @@ STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
 {
     qRegisterMetaType<SEventModel*>();
     qRegisterMetaType<SSettings*>();
+    qRegisterMetaType<SCalendar*>();
     init();
+}
+
+STimeline::~STimeline()
+{
 }
 
 void STimeline::load(const QString &path)
@@ -61,6 +66,7 @@ void STimeline::load(const QString &path)
     QJsonObject mainObj(doc.object());
     mCalendar->fromJson(mainObj.value(Tags::calendar).toArray());
     mEventModel->fromJson(mainObj.value(Tags::events).toArray());
+    mSettings->author = mainObj.value(Tags::author).toString();
     // TODO: plug in all other objects
 }
 
@@ -79,7 +85,7 @@ void STimeline::save(const QString &path) const
     // Add metadata
     mainObj.insert(Tags::version, QCoreApplication::applicationVersion());
     mainObj.insert(Tags::timestamp, QDateTime::currentDateTimeUtc().toString(Qt::ISODate));
-    mainObj.insert(Tags::author, "Testing Tom"); // TODO: plug in author from app settings
+    mainObj.insert(Tags::author, mSettings->author); // TODO: plug in author from app settings
 
     mainObj.insert(Tags::calendar, mCalendar->toJson());
     mainObj.insert(Tags::events, mEventModel->toJson());
@@ -98,7 +104,7 @@ void STimeline::save(const QString &path) const
 void STimeline::init()
 {
     qCDebug(stimeline) << "Initializing default timeline...";
-    mCalendar = QSharedPointer<SCalendar>::create();
+    mCalendar = new SCalendar(this);
     mEventModel = new SEventModel(this);
 }
 
@@ -110,8 +116,9 @@ void STimeline::reportError(const QString &message) const
 
 QString STimeline::cleanPath(const QString &urlPath) const
 {
-    if (urlPath.startsWith("file://")) {
-        return urlPath.mid(7);
+    const QLatin1String fileUrl("file://");
+    if (urlPath.startsWith(fileUrl)) {
+        return urlPath.mid(fileUrl.size());
     }
 
     return urlPath;

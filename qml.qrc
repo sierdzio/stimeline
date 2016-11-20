@@ -3,5 +3,6 @@
         <file>qml/main.qml</file>
         <file>qml/EventCard.qml</file>
         <file>qml/EventEditor.qml</file>
+        <file>qml/DateTimeEditor.qml</file>
     </qresource>
 </RCC>

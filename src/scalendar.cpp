@@ -8,7 +8,7 @@
 #include <QDebug>
 Q_LOGGING_CATEGORY(scalendar, "SCalendar")
 
-SCalendar::SCalendar()
+SCalendar::SCalendar(QObject *parent) : QObject (parent)
 {
     qCDebug(scalendar) << "Initializing default (Gregorian) calendar";
     checkValidity();
@@ -33,7 +33,7 @@ QJsonArray SCalendar::toJson() const
     // Months
     QJsonArray months;
     for (const SMonth &month: qAsConst(mMonths)) {
-        months.append(QJsonValue(QJsonObject({{month.first, month.second}})));
+        months.append(QJsonValue(QJsonObject({{month.first, QJsonValue(int(month.second))}})));
     }
     obj.insert(Tags::months, months);
     // Time
@@ -63,7 +63,7 @@ void SCalendar::fromJson(const QJsonArray &json)
     for (const QJsonValue &value: months) {
         const QJsonObject monthObj(value.toObject());
         const QString key(monthObj.keys().first());
-        const SMonth month(key, monthObj.value(key).toInt());
+        const SMonth month(key, uint(monthObj.value(key).toInt()));
         mMonths.append(month);
     }
     // Time
@@ -73,6 +73,38 @@ void SCalendar::fromJson(const QJsonArray &json)
 
     checkValidity();
     qCDebug(scalendar()) << mName << "calendar loaded. Valid:" << mIsValid;
+}
+
+/*!
+ * Returns the number of days in given \a month.
+ *
+ * Month indexing starts with 0 (zero).
+ */
+uint SCalendar::daysInMonth(const uint month) const
+{
+    if (month > uint(mMonths.size())) {
+        qCDebug(scalendar) << "Month number" << month << "exceeds number of months"
+                           << "in a year";
+        return 0;
+    }
+
+    return mMonths.at(int(month)).second;
+}
+
+/*!
+ * Returns the name of the given \a month number.
+ *
+ * Month indexing starts with 0 (zero).
+ */
+QString SCalendar::monthName(const uint month) const
+{
+    if (month > uint(mMonths.size())) {
+        qCDebug(scalendar) << "Month number" << month << "exceeds number of months"
+                           << "in a year";
+        return 0;
+    }
+
+    return mMonths.at(int(month)).first;
 }
 
 void SCalendar::checkValidity()
