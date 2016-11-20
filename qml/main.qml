@@ -10,6 +10,17 @@ ApplicationWindow {
     height: 480
     title: qsTr("sTimeline - v") + Qt.application.version
 
+    function openEditor(eventId, name, description, from, to) {
+        eventEditor.eventId = eventId;
+        if (typeof name !== "undefined") {
+            eventEditor.name = name
+            eventEditor.description = description
+            eventEditor.from = from
+            eventEditor.to = to
+        }
+        eventEditor.open();
+    }
+
     FileDialog {
         id: loadDialog
         title: qsTr("Please choose a timeline file")
@@ -53,17 +64,6 @@ ApplicationWindow {
                                                     eventEditor.from,
                                                     eventEditor.to
                                                     )
-    }
-
-    function openEditor(eventId, name, description, from, to) {
-        eventEditor.eventId = eventId;
-        if (typeof name !== "undefined") {
-            eventEditor.name = name
-            eventEditor.description = description
-            eventEditor.from = from
-            eventEditor.to = to
-        }
-        eventEditor.open();
     }
 
     SwipeView {
@@ -261,32 +261,36 @@ ApplicationWindow {
             anchors.fill: parent
 
             MenuItem {
-                text: qsTr("Timeline")
+                text: tabBar.contentChildren[0].text
                 onClicked: { tabBar.currentIndex = 0; drawer.close(); }
             }
             MenuItem {
-                text: qsTr("People")
+                text: tabBar.contentChildren[1].text
                 onClicked: { tabBar.currentIndex = 1; drawer.close(); }
             }
             MenuItem {
-                text: qsTr("Objects")
+                text: tabBar.contentChildren[2].text
                 onClicked: { tabBar.currentIndex = 2; drawer.close(); }
             }
             MenuItem {
-                text: qsTr("Places")
+                text: tabBar.contentChildren[3].text
                 onClicked: { tabBar.currentIndex = 3; drawer.close(); }
             }
             MenuItem {
-                text: qsTr("Maps")
+                text: tabBar.contentChildren[4].text
                 onClicked: { tabBar.currentIndex = 4; drawer.close(); }
             }
             MenuItem {
-                text: qsTr("Settings")
+                text: tabBar.contentChildren[5].text
                 onClicked: { tabBar.currentIndex = 5; drawer.close(); }
             }
             MenuItem {
-                text: qsTr("About")
+                text: tabBar.contentChildren[6].text
                 onClicked: { tabBar.currentIndex = 6; drawer.close(); }
+            }
+            MenuItem {
+                text: qsTr("Quit")
+                onClicked: { Qt.quit(); }
             }
         }
     }
