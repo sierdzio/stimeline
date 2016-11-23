@@ -32,7 +32,6 @@ int main(int argc, char *argv[])
         timeline.load(settings.lastOpenFilePath);
     }
 
-    QQuickStyle::setStyle("Universal");
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("Timeline", &timeline);
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));
