@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.0
 
-Rectangle {
+Frame {
     property alias eventId: eventId.text
     property alias name: eventName.text
     property alias description: eventDescription.text
@@ -10,12 +10,6 @@ Rectangle {
     property alias to: eventTo.text
 
     signal edit()
-
-    radius: 5
-    border {
-        width: 1
-        color: "#000000"
-    }
 
     MouseArea {
         anchors.fill: parent
