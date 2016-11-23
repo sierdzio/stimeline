@@ -59,6 +59,8 @@ Popup {
 
         Label {
             id: eventFrom
+            text: "1-1-1 1:1:1"
+
             MouseArea {
                 anchors.fill: parent
                 onDoubleClicked: {
@@ -75,6 +77,8 @@ Popup {
 
         Label {
             id: eventTo
+            text: "1-1-1 1:1:1"
+
             MouseArea {
                 anchors.fill: parent
                 onDoubleClicked: {

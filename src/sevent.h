@@ -26,7 +26,12 @@ class SEvent
     friend class SEventModel;
 
 public:
-    SEvent();
+    enum class InitialisationOption {
+        InitialiseId,
+        DoNotInitialiseId
+    };
+
+    SEvent(InitialisationOption option = InitialisationOption::InitialiseId);
     SEvent(const QJsonObject &from);
 
     QByteArray id() const;

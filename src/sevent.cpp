@@ -1,8 +1,7 @@
 #include "sevent.h"
 #include "tags.h"
+#include "sutils.h"
 
-#include <QDateTime>
-#include <QCryptographicHash>
 #include <QJsonValue>
 
 #include <QLoggingCategory>
@@ -19,13 +18,14 @@ Q_LOGGING_CATEGORY(sevent, "SEvent")
  */
 
 /*!
- * Default constructor. It will automatically generate a random ID for the SEvent.
+ * Default constructor. It will automatically generate a random ID for the SEvent
+ * if \a option is set to SEvent::InitialiseId.
  */
-SEvent::SEvent()
+SEvent::SEvent(SEvent::InitialisationOption option)
 {
-    const QByteArray msecs(QByteArray::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch()));
-    mId = QCryptographicHash::hash(msecs + QByteArray::number(qrand()) + "AA11",
-                                   QCryptographicHash::Sha1);
+    if (option == InitialisationOption::InitialiseId) {
+        mId = SUtils::generateId();
+    }
 }
 
 SEvent::SEvent(const QJsonObject &from)

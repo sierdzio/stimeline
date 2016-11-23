@@ -11,7 +11,8 @@ HEADERS += \
     src/scalendar.h \
     src/sdatetime.h \
     src/ssettings.h \
-    src/seventmodel.h
+    src/seventmodel.h \
+    src/sutils.h
 
 SOURCES += src/main.cpp \
     src/sevent.cpp \
@@ -19,7 +20,8 @@ SOURCES += src/main.cpp \
     src/scalendar.cpp \
     src/sdatetime.cpp \
     src/ssettings.cpp \
-    src/seventmodel.cpp
+    src/seventmodel.cpp \
+    src/sutils.cpp
 
 RESOURCES += qml.qrc \
     defaults.qrc

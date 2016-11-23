@@ -31,19 +31,22 @@ public:
     void fromJson(const QJsonArray &json);
 
 public slots:
-    QByteArray addEvent(const QString &name = QString::null,
-                        const QString &description = QString::null,
-                        const QString &from = QString::null,
-                        const QString &to = QString::null);
+    QByteArray newEventId() const;
+    void addEvent(const QString &id,
+                  const QString &name,
+                  const QString &description,
+                  const QString &from,
+                  const QString &to);
     void updateEvent(const QString &id,
                      const QString &name,
                      const QString &description,
                      const QString &from,
                      const QString &to);
-    QByteArray addEvent(const SEvent &event);
-    void updateEvent(const SEvent &event);
+    void removeEvent(const QString &id);
 
 protected:
+    int findEventIndex(const QByteArray &id) const;
+
     //QHash<QByteArray, SEvent> mEvents;
     QVector<SEvent> mEvents;
 };

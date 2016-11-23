@@ -1,5 +1,6 @@
 #include "seventmodel.h"
 #include "sevent.h"
+#include "sutils.h"
 
 #include <QModelIndex>
 #include <QJsonArray>
@@ -71,6 +72,11 @@ void SEventModel::fromJson(const QJsonArray &json)
     endResetModel();
 }
 
+QByteArray SEventModel::newEventId() const
+{
+    return SUtils::generateId();
+}
+
 /*!
  * Adds a new event, filling it with data: \a name, \a description, \a from and
  * \a to and returns the ID of newly created event.
@@ -78,39 +84,30 @@ void SEventModel::fromJson(const QJsonArray &json)
  * \warning \a from and \a to should be replaced with datetime-aware objects
  * instead of QString.
  */
-QByteArray SEventModel::addEvent(const QString &name, const QString &description,
-                                 const QString &from, const QString &to)
+void SEventModel::addEvent(const QString &id, const QString &name,
+                           const QString &description,
+                           const QString &from, const QString &to)
 {
     beginInsertRows(QModelIndex(), mEvents.size(), mEvents.size());
-    auto event = SEvent();
+    auto event = SEvent(SEvent::InitialisationOption::DoNotInitialiseId);
+    event.mId = id.toLatin1();
     event.mName = name;
     event.mDescription = description;
     if (!from.isEmpty()) event.mFrom.fromString(from);
     if (!to.isEmpty()) event.mTo.fromString(to);
     mEvents.append(event);
     endInsertRows();
-
-    return event.id();
 }
 
 void SEventModel::updateEvent(const QString &id, const QString &name,
                               const QString &description, const QString &from,
                               const QString &to)
 {
-    bool found = false;
-    int index = 0;
-    for (const SEvent &e: qAsConst(mEvents)) {
-        if (e.id() == id) {
-            found = true;
-            break;
-        }
+    const int index = findEventIndex(id.toLatin1());
 
-        ++index;
-    }
-
-    if (found == false) {
-        qCDebug(seventmodel) << "Could not find event with ID:" << id
-                             << "Event will not be updated";
+    // Event does not exist - create it instead
+    if (index == -1) {
+        addEvent(id, name, description, from, to);
         return;
     }
 
@@ -127,34 +124,37 @@ void SEventModel::updateEvent(const QString &id, const QString &name,
     emit dataChanged(modelIndex, modelIndex);
 }
 
-QByteArray SEventModel::addEvent(const SEvent &event)
+void SEventModel::removeEvent(const QString &id)
 {
-    beginInsertRows(QModelIndex(), mEvents.size(), mEvents.size());
-    mEvents.append(event);
-    endInsertRows();
-    return event.id();
+    const int index = findEventIndex(id.toLatin1());
+
+    if (index == -1) {
+        qDebug(seventmodel) << "Can't remove event with ID:" << id
+                            << "because it could not be found.";
+        return;
+    }
+
+    beginRemoveRows(QModelIndex(), index, index);
+    mEvents.remove(index);
+    endRemoveRows();
 }
 
-void SEventModel::updateEvent(const SEvent &event)
+/*!
+ * Returns event index in mEvents vector, denoting location of event with \a id,
+ * or -1 if no such event is found.
+ */
+int SEventModel::findEventIndex(const QByteArray &id) const
 {
-    bool found = false;
     int index = 0;
     for (const SEvent &e: qAsConst(mEvents)) {
-        if (e.id() == event.id()) {
-            found = true;
-            break;
+        if (e.id() == id) {
+            return index;
         }
 
         ++index;
     }
 
-    if (found == false) {
-        qCDebug(seventmodel) << "Could not find event with ID:" << event.id()
-                             << "Event will not be updated";
-        return;
-    }
-
-    const QModelIndex modelIndex(createIndex(index, 0));
-    mEvents.replace(index, event);
-    emit dataChanged(modelIndex, modelIndex);
+    qCDebug(seventmodel) << "Could not find event with ID:" << id
+                         << "Event will not be updated";
+    return -1;
 }

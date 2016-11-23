@@ -57,6 +57,8 @@ ApplicationWindow {
 
     EventEditor {
         id: eventEditor
+        x: (parent.width/2) - (width/2)
+        y: (parent.height/2) - (height/2)
 
         onFinished: Timeline.eventModel.updateEvent(eventEditor.eventId,
                                                     eventEditor.name,
@@ -100,7 +102,7 @@ ApplicationWindow {
                 height: width
                 //radius: 15
 
-                onClicked: openEditor(Timeline.eventModel.addEvent())
+                onClicked: openEditor(Timeline.eventModel.newEventId())
             }
         }
 
