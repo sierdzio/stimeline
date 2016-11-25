@@ -67,8 +67,8 @@ void SEvent::fromJson(const QJsonObject &json)
     mId = json.value(Tags::id).toString().toLatin1();
     mName = json.value(Tags::name).toString();
     mDescription = json.value(Tags::description).toString();
-    mFrom.fromString(json.value(Tags::from).toString());
-    mTo.fromString(json.value(Tags::to).toString());
+    mFrom = SDateTime::fromString(json.value(Tags::from).toString());
+    mTo = SDateTime::fromString(json.value(Tags::to).toString());
 
     //qCDebug(sevent).noquote() << "Event loaded from JSON. Data:\n" << toString();
 }

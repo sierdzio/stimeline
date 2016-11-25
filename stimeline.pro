@@ -13,7 +13,8 @@ HEADERS += \
     src/ssettings.h \
     src/seventmodel.h \
     src/sutils.h \
-    src/sqmlassistant.h
+    src/sqmlassistant.h \
+    src/seventsortproxymodel.h
 
 SOURCES += src/main.cpp \
     src/sevent.cpp \
@@ -23,7 +24,8 @@ SOURCES += src/main.cpp \
     src/ssettings.cpp \
     src/seventmodel.cpp \
     src/sutils.cpp \
-    src/sqmlassistant.cpp
+    src/sqmlassistant.cpp \
+    src/seventsortproxymodel.cpp
 
 RESOURCES += qml.qrc \
     defaults.qrc

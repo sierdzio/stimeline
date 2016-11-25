@@ -12,6 +12,7 @@
 Q_DECLARE_LOGGING_CATEGORY(sevent)
 
 class SEventModel;
+class SEventSortProxyModel;
 
 class SEvent
 {
@@ -24,6 +25,7 @@ class SEvent
     Q_PROPERTY(SDateTime to MEMBER mTo)
 
     friend class SEventModel;
+    friend class SEventSortProxyModel;
 
 public:
     enum class InitialisationOption {

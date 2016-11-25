@@ -12,7 +12,35 @@ SDateTime::SDateTime()
 
 }
 
-void SDateTime::fromString(const QString &dateTime)
+bool SDateTime::operator!=(const SDateTime &other) const {
+    return !(day==other.day && month==other.month && year==other.year
+             && second==other.second && minute==other.minute
+             && hour==other.hour);
+}
+
+bool SDateTime::operator<(const SDateTime &other) const {
+    if (year < other.year) return true;
+    if (year == other.year) {
+        if (month < other.month) return true;
+        if (month == other.month) {
+            if (day < other.day) return true;
+            if (day == other.day) {
+                if (hour < other.hour) return true; // TODO: check with "00" vs. "12"
+                if (hour == other.hour) {
+                    if (minute < other.minute) return true;
+                    if (minute == other.minute) {
+                        if (second < other.second) return true;
+                        else return false;
+                    }
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+SDateTime SDateTime::fromString(const QString &dateTime)
 {
     // "1234-12-24 11:11:11"
     const QStringList dateAndTime(dateTime.split(QLatin1String(" "),
@@ -21,7 +49,7 @@ void SDateTime::fromString(const QString &dateTime)
 
     if (dateAndTime.length() != 2) {
         qCDebug(sdatetime) << "DateTime parsing error!" << dateAndTime;
-        return;
+        return SDateTime();
     }
 
     const QString date(dateAndTime.first());
@@ -33,12 +61,13 @@ void SDateTime::fromString(const QString &dateTime)
                                              Qt::CaseSensitive));
     if (dateDivided.length() != 3) {
         qCDebug(sdatetime) << "Date parsing error!" << dateDivided;
-        return;
+        return SDateTime();
     }
 
-    year = dateDivided.at(0).toInt();
-    month = dateDivided.at(1).toUInt();
-    day = dateDivided.at(2).toUInt();
+    SDateTime result;
+    result.year = dateDivided.at(0).toInt();
+    result.month = dateDivided.at(1).toUInt();
+    result.day = dateDivided.at(2).toUInt();
 
     // Time
     const QStringList timeDivided(time.split(Tags::timeSeparator,
@@ -46,12 +75,13 @@ void SDateTime::fromString(const QString &dateTime)
                                              Qt::CaseSensitive));
     if (timeDivided.length() != 3) {
         qCDebug(sdatetime) << "Time parsing error!" << timeDivided;
-        return;
+        return SDateTime();
     }
 
-    hour = timeDivided.at(0).toUInt();
-    minute = timeDivided.at(1).toUInt();
-    second = timeDivided.at(2).toUInt();
+    result.hour = timeDivided.at(0).toUInt();
+    result.minute = timeDivided.at(1).toUInt();
+    result.second = timeDivided.at(2).toUInt();
+    return result;
 }
 
 QString SDateTime::toString() const

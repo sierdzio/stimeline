@@ -10,11 +10,13 @@ Q_DECLARE_LOGGING_CATEGORY(stimeline)
 class SCalendar;
 class SSettings;
 class SEventModel;
+class SEventSortProxyModel;
 
 class STimeline : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(SEventSortProxyModel* eventModelProxy MEMBER mEventModelProxy CONSTANT)
     Q_PROPERTY(SEventModel* eventModel MEMBER mEventModel CONSTANT)
     Q_PROPERTY(SSettings* settings MEMBER mSettings CONSTANT)
     Q_PROPERTY(SCalendar* calendar MEMBER mCalendar CONSTANT)
@@ -37,6 +39,7 @@ private:
 
     SSettings *mSettings = nullptr;
     SEventModel *mEventModel = nullptr;
+    SEventSortProxyModel *mEventModelProxy = nullptr;
     SCalendar *mCalendar = nullptr;
 
     // TODO: add:

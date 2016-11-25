@@ -21,13 +21,10 @@ class SDateTime
 public:
     SDateTime();
 
-    bool operator!=(const SDateTime &other) const {
-        return !(day==other.day && month==other.month && year==other.year
-                 && second==other.second && minute==other.minute
-                 && hour==other.hour);
-    }
+    bool operator!=(const SDateTime &other) const;
+    bool operator<(const SDateTime &other) const;
 
-    void fromString(const QString &dateTime);
+    static SDateTime fromString(const QString &dateTime);
     QString toString() const;
 
     uint day = 1;

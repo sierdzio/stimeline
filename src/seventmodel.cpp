@@ -93,8 +93,8 @@ void SEventModel::addEvent(const QString &id, const QString &name,
     event.mId = id.toLatin1();
     event.mName = name;
     event.mDescription = description;
-    if (!from.isEmpty()) event.mFrom.fromString(from);
-    if (!to.isEmpty()) event.mTo.fromString(to);
+    if (!from.isEmpty()) event.mFrom = SDateTime::fromString(from);
+    if (!to.isEmpty()) event.mTo = SDateTime::fromString(to);
     mEvents.append(event);
     endInsertRows();
 }
@@ -117,8 +117,8 @@ void SEventModel::updateEvent(const QString &id, const QString &name,
     event.mId = id.toLatin1();
     event.mName = name;
     event.mDescription = description;
-    event.mFrom.fromString(from);
-    event.mTo.fromString(to);
+    event.mFrom = SDateTime::fromString(from);
+    event.mTo = SDateTime::fromString(to);
     mEvents.replace(index, event);
 
     emit dataChanged(modelIndex, modelIndex);

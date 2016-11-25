@@ -79,7 +79,7 @@ ApplicationWindow {
             ListView {
                 spacing: 15
                 anchors.fill: parent
-                model: Timeline.eventModel
+                model: Timeline.eventModelProxy
                 delegate: EventCard {
                     eventId: model.id
                     name: model.name

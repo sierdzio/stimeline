@@ -1,6 +1,7 @@
 #include "stimeline.h"
 #include "scalendar.h"
 #include "seventmodel.h"
+#include "seventsortproxymodel.h"
 #include "ssettings.h"
 #include "tags.h"
 
@@ -18,6 +19,7 @@ Q_LOGGING_CATEGORY(stimeline, "STimeline")
 STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
     mSettings(settings)
 {
+    qRegisterMetaType<SEventSortProxyModel*>();
     qRegisterMetaType<SEventModel*>();
     qRegisterMetaType<SSettings*>();
     qRegisterMetaType<SCalendar*>();
@@ -79,6 +81,8 @@ void STimeline::load(const QString &path)
     mEventModel->fromJson(mainObj.value(Tags::events).toArray());
     mSettings->author = mainObj.value(Tags::author).toString();
     // TODO: plug in all other objects
+
+    mEventModelProxy->sort(0);
 }
 
 void STimeline::save(const QString &path) const
@@ -117,6 +121,8 @@ void STimeline::init()
     qCDebug(stimeline) << "Initializing default timeline...";
     mCalendar = new SCalendar(this);
     mEventModel = new SEventModel(this);
+    mEventModelProxy = new SEventSortProxyModel(this);
+    mEventModelProxy->setSourceModel(mEventModel);
 }
 
 void STimeline::reportError(const QString &message) const
