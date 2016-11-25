@@ -35,7 +35,7 @@ STimeline::~STimeline()
     if (mSettings->autoSaveOnExit) {
         qCInfo(stimeline) << "Automatically saving current timeline to file:"
                           << mSettings->lastOpenFilePath;
-        load(mSettings->lastOpenFilePath);
+        save(mSettings->lastOpenFilePath);
     }
 }
 
