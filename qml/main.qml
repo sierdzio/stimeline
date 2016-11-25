@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
+import Assistant 1.0
 
 ApplicationWindow {
     id: window
@@ -95,7 +96,7 @@ ApplicationWindow {
             Button {
                 anchors.bottom: parent.bottom
                 anchors.right: parent.right
-                anchors.margins: 25
+                anchors.margins: Assistant.buttonMargin
                 text: "+"
                 font.bold: true
                 width: 30

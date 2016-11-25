@@ -1,5 +1,6 @@
 #include "stimeline.h"
 #include "ssettings.h"
+#include "sqmlassistant.h"
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -24,6 +25,7 @@ int main(int argc, char *argv[])
     app.setQuitOnLastWindowClosed(true);
 
     SSettings settings;
+    SQmlAssistant assistant;
     STimeline timeline(&settings);
 
     if (settings.autoLoadLastFile) {
@@ -32,8 +34,12 @@ int main(int argc, char *argv[])
         timeline.load(settings.lastOpenFilePath);
     }
 
+    qmlRegisterSingletonType<SQmlAssistant>("Assistant", 1, 0, "Assistant",
+                                            SQmlAssistant::assistantSingletonProvider);
+
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("Timeline", &timeline);
+    engine.rootContext()->setContextProperty("Assistant", &assistant); // TODO: QML singleton?
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));
 
     return app.exec();
