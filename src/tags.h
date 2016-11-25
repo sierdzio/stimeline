@@ -29,6 +29,7 @@ static const QByteArray from("from");
 static const QByteArray to("to");
 // Settings
 static const QByteArray autoLoadLastFile("autoLoadLastFile");
+static const QByteArray autoSaveOnExit("autoSaveOnExit");
 static const QByteArray lastOpenFilePath("lastOpenFilePath");
 static const QByteArray lastSaveFilePath("lastSaveFilePath");
 // Misc

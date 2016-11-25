@@ -22,10 +22,21 @@ STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
     qRegisterMetaType<SSettings*>();
     qRegisterMetaType<SCalendar*>();
     init();
+
+    if (settings->autoLoadLastFile) {
+        qCInfo(stimeline) << "Automatically loading last saved file:"
+                          << settings->lastOpenFilePath;
+        load(settings->lastOpenFilePath);
+    }
 }
 
 STimeline::~STimeline()
 {
+    if (mSettings->autoSaveOnExit) {
+        qCInfo(stimeline) << "Automatically saving current timeline to file:"
+                          << mSettings->lastOpenFilePath;
+        load(mSettings->lastOpenFilePath);
+    }
 }
 
 void STimeline::load(const QString &path)

@@ -28,18 +28,12 @@ int main(int argc, char *argv[])
     SQmlAssistant assistant;
     STimeline timeline(&settings);
 
-    if (settings.autoLoadLastFile) {
-        qCInfo(smain) << "Automatically loading last saved file:"
-                      << settings.lastOpenFilePath;
-        timeline.load(settings.lastOpenFilePath);
-    }
-
     qmlRegisterSingletonType<SQmlAssistant>("Assistant", 1, 0, "Assistant",
                                             SQmlAssistant::assistantSingletonProvider);
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("Timeline", &timeline);
-    engine.rootContext()->setContextProperty("Assistant", &assistant); // TODO: QML singleton?
+    engine.rootContext()->setContextProperty("Assistant", &assistant);
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));
 
     return app.exec();

@@ -139,6 +139,16 @@ ApplicationWindow {
                     text: qsTr("Save timeline")
                     onClicked: saveDialog.visible = true
                 }
+                CheckBox {
+                    text: qsTr("Automatically load last opened file on startup")
+                    checked: Timeline.settings.autoLoadLastFile
+                    onCheckedChanged: Timeline.settings.autoLoadLastFile = checked
+                }
+                CheckBox {
+                    text: qsTr("Automatically save on exit")
+                    checked: Timeline.settings.autoSaveOnExit
+                    onCheckedChanged: Timeline.settings.autoSaveOnExit = checked
+                }
             }
         }
 
