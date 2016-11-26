@@ -2,8 +2,11 @@
 #define EVENTTIMELINE_H
 
 #include <QQuickItem>
-#include <QColor>
 
+#include <QLoggingCategory>
+Q_DECLARE_LOGGING_CATEGORY(etl)
+
+class QColor;
 class QSGNode;
 class QSGGeometryNode;
 
@@ -22,6 +25,9 @@ protected:
                               const float endX, const float endY,
                               const float width,
                               const QColor &color) const;
+    QSGGeometryNode *drawPoint(const float x, const float y,
+                               const float radius,
+                               const QColor &color) const;
 
     qreal verticalCentre() const;
     qreal horizontalCenter() const;

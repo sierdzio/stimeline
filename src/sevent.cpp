@@ -3,8 +3,6 @@
 #include "sutils.h"
 
 #include <QJsonValue>
-
-#include <QLoggingCategory>
 #include <QDebug>
 Q_LOGGING_CATEGORY(sevent, "SEvent")
 
