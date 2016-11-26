@@ -123,6 +123,7 @@ void STimeline::init()
     mEventModel = new SEventModel(this);
     mEventModelProxy = new SEventSortProxyModel(this);
     mEventModelProxy->setSourceModel(mEventModel);
+    mEventModelProxy->sort(0);
 }
 
 void STimeline::reportError(const QString &message) const

@@ -1,6 +1,7 @@
 #include "stimeline.h"
 #include "ssettings.h"
 #include "sqmlassistant.h"
+#include "customItems/eventtimeline.h"
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -25,15 +26,14 @@ int main(int argc, char *argv[])
     app.setQuitOnLastWindowClosed(true);
 
     SSettings settings;
-    SQmlAssistant assistant;
     STimeline timeline(&settings);
 
     qmlRegisterSingletonType<SQmlAssistant>("Assistant", 1, 0, "Assistant",
                                             SQmlAssistant::assistantSingletonProvider);
+    qmlRegisterType<EventTimeline>("CustomItems", 1, 0, EventTimeline::staticMetaObject.className());
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("Timeline", &timeline);
-    engine.rootContext()->setContextProperty("Assistant", &assistant);
     engine.load(QUrl(QLatin1String("qrc:/qml/main.qml")));
 
     return app.exec();

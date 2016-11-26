@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
 import Assistant 1.0
+import CustomItems 1.0
 
 ApplicationWindow {
     id: window
@@ -76,9 +77,27 @@ ApplicationWindow {
 
         Page {
             id: pageTimeline
+
+            EventTimeline {
+                id: eventTimeline
+                height: parent.height/2
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                }
+            }
+
             ListView {
+                anchors {
+                    top: eventTimeline.bottom
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                }
+
                 spacing: 15
-                anchors.fill: parent
+                clip: true
                 model: Timeline.eventModelProxy
                 delegate: EventCard {
                     eventId: model.id
