@@ -2,8 +2,10 @@
 #define EVENTTIMELINE_H
 
 #include <QQuickItem>
+#include <QColor>
 
 class QSGNode;
+class QSGGeometryNode;
 
 class EventTimeline : public QQuickItem
 {
@@ -14,6 +16,15 @@ public:
 
 protected:
     virtual QSGNode *updatePaintNode(QSGNode *node, UpdatePaintNodeData *upnd) override;
+
+    void drawNowMarkers(QSGNode *node) const;
+    QSGGeometryNode *drawLine(const float x, const float y,
+                              const float endX, const float endY,
+                              const float width,
+                              const QColor &color) const;
+
+    qreal verticalCentre() const;
+    qreal horizontalCenter() const;
 };
 
 #endif // EVENTTIMELINE_H

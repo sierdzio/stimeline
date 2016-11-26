@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
+import QtGraphicalEffects 1.0
 import Assistant 1.0
 import CustomItems 1.0
 
@@ -78,19 +79,29 @@ ApplicationWindow {
         Page {
             id: pageTimeline
 
-            EventTimeline {
-                id: eventTimeline
+            RadialGradient {
+                id: eventTimelineGradient
                 height: parent.height/2
                 anchors {
                     top: parent.top
                     left: parent.left
                     right: parent.right
                 }
+
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "white" }
+                    GradientStop { position: 0.8; color: "gray" }
+                }
+
+                EventTimeline {
+                    anchors.fill: parent
+                    clip: true
+                }
             }
 
             ListView {
                 anchors {
-                    top: eventTimeline.bottom
+                    top: eventTimelineGradient.bottom
                     left: parent.left
                     right: parent.right
                     bottom: parent.bottom
