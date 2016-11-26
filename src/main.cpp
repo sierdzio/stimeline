@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
     SSettings settings;
     STimeline timeline(&settings);
 
+    qRegisterMetaType<STimeline*>();
     qmlRegisterSingletonType<SQmlAssistant>("Assistant", 1, 0, "Assistant",
                                             SQmlAssistant::assistantSingletonProvider);
     qmlRegisterType<EventTimeline>("CustomItems", 1, 0, EventTimeline::staticMetaObject.className());

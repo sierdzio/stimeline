@@ -96,6 +96,7 @@ ApplicationWindow {
                 EventTimeline {
                     anchors.fill: parent
                     clip: true
+                    timeline: Timeline
                 }
             }
 
