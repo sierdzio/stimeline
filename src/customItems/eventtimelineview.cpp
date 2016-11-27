@@ -1,4 +1,4 @@
-#include "eventtimeline.h"
+#include "eventtimelineview.h"
 #include "../stimeline.h"
 
 #include <math.h>
@@ -9,15 +9,19 @@
 #include <QSGGeometryNode>
 #include <QSGFlatColorMaterial>
 
+#include <QQuickTextureFactory>
+#include <QWheelEvent>
+
 #include <QDebug>
 Q_LOGGING_CATEGORY(etl, "EventTimeline")
 
-EventTimeline::EventTimeline(QQuickItem *parent) : QQuickItem(parent)
+EventTimelineView::EventTimelineView(QQuickItem *parent) : QQuickItem(parent)
 {
+    setWidth(3000);
     setFlag(QQuickItem::ItemHasContents, true);
 }
 
-QSGNode *EventTimeline::updatePaintNode(QSGNode *node, QQuickItem::UpdatePaintNodeData *upnd)
+QSGNode *EventTimelineView::updatePaintNode(QSGNode *node, QQuickItem::UpdatePaintNodeData *upnd)
 {
     Q_UNUSED(upnd);
 
@@ -27,25 +31,44 @@ QSGNode *EventTimeline::updatePaintNode(QSGNode *node, QQuickItem::UpdatePaintNo
         nd = drawLine(QPointF(0, verticalCentre()),
                       QPointF(width(), verticalCentre()),
                       6, QColor(255, 0, 0));
-        drawScale(nd);
+        mScaleNode = drawScale();
 
-        // Now markers
-        drawNowMarkers(nd);
+        nd->appendChildNode(mScaleNode);
 
-        // Draw event marker
-        // (temp)
-        nd->appendChildNode(drawPoint(float(horizontalCenter()), float(verticalCentre()),
-                                      12.0, Qt::blue));
+        mMainNode = nd;
+    }
+
+    if (mScaleChanged) {
+        // TODO: repaint NowMarkers to show at top and bottom (or move them to a different Item)
+        //  - update scale
+        //  - update main time line
+
+        qDebug(etl) << "Updating scale" << scale();
+        mScaleChanged = false;
     }
 
     return nd;
+}
+
+void EventTimelineView::wheelEvent(QWheelEvent *event)
+{
+    const int eventDelta(event->delta());
+    if (eventDelta > 0) {
+        setScale(scale() - 0.1);
+        mScaleChanged = true;
+        updatePaintNode(mMainNode, nullptr);
+    } else if (eventDelta < 0) {
+        setScale(scale() + 0.1);
+        mScaleChanged = true;
+        updatePaintNode(mMainNode, nullptr);
+    }
 }
 
 /*!
  * Draws the short bars shown at the top and bottom of the Item. Bars are
  * added as subnodes to \a node.
  */
-void EventTimeline::drawNowMarkers(QSGNode *node) const
+QSGGeometryNode *EventTimelineView::drawNowMarkers() const
 {
     const qreal hCenter(horizontalCenter());
     QSGGeometryNode *top = drawLine(QPointF(hCenter, 0.0),
@@ -57,16 +80,17 @@ void EventTimeline::drawNowMarkers(QSGNode *node) const
                                        4.0,
                                        Qt::darkGray);
 
-    node->appendChildNode(top);
-    node->appendChildNode(bottom);
+    top->appendChildNode(bottom);
+    return top;
 }
 
 /*!
  * Draws small markers visualising the timespan visible in the timeline.
  * Adds text to markers to show the represented date.
  */
-void EventTimeline::drawScale(QSGNode *node) const
+QSGGeometryNode *EventTimelineView::drawScale() const
 {
+    QSGGeometryNode *result = nullptr;
     // TODO: scale drawing logic ;-)
     const QColor barColor(Qt::gray);
     const float barWidth(4.0);
@@ -77,12 +101,19 @@ void EventTimeline::drawScale(QSGNode *node) const
 
     for (uint i = 0; i < barCount; ++i) {
         const qreal x(i * spacing);
-        node->appendChildNode(drawLine(QPointF(x, y), QPointF(x, endY),
-                                       barWidth, barColor));
+
+        QSGGeometryNode *bar = drawLine(QPointF(x, y), QPointF(x, endY),
+                                        barWidth, barColor);
+        if (result)
+            result->appendChildNode(bar);
+        else
+            result = bar;
     }
+
+    return result;
 }
 
-QSGGeometryNode *EventTimeline::drawLine(const QPointF &begin, const QPointF &end,
+QSGGeometryNode *EventTimelineView::drawLine(const QPointF &begin, const QPointF &end,
                                          const float width,
                                          const QColor &color) const
 {
@@ -104,7 +135,7 @@ QSGGeometryNode *EventTimeline::drawLine(const QPointF &begin, const QPointF &en
     return node;
 }
 
-QSGGeometryNode *EventTimeline::drawPoint(const float x, const float y,
+QSGGeometryNode *EventTimelineView::drawPoint(const float x, const float y,
                                           const float radius,
                                           const QColor &color) const
 {
@@ -135,7 +166,7 @@ QSGGeometryNode *EventTimeline::drawPoint(const float x, const float y,
     return node;
 }
 
-QSGGeometryNode *EventTimeline::drawText(const QPointF &point,
+QSGGeometryNode *EventTimelineView::drawText(const QPointF &point,
                                          const QString &text,
                                          const uint pointSize) const
 {
@@ -146,12 +177,12 @@ QSGGeometryNode *EventTimeline::drawText(const QPointF &point,
     return nullptr;
 }
 
-qreal EventTimeline::verticalCentre() const
+qreal EventTimelineView::verticalCentre() const
 {
     return height()/2;
 }
 
-qreal EventTimeline::horizontalCenter() const
+qreal EventTimelineView::horizontalCenter() const
 {
     return width()/2;
 }

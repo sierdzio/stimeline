@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
 import QtGraphicalEffects 1.0
 import Assistant 1.0
-import CustomItems 1.0
 
 ApplicationWindow {
     id: window
@@ -79,30 +78,20 @@ ApplicationWindow {
         Page {
             id: pageTimeline
 
-            RadialGradient {
-                id: eventTimelineGradient
+            EventTimeline {
+                id: eventTimeline
                 height: parent.height/2
+                focus: true
                 anchors {
                     top: parent.top
                     left: parent.left
                     right: parent.right
                 }
-
-                gradient: Gradient {
-                    GradientStop { position: 0.0; color: "white" }
-                    GradientStop { position: 0.8; color: "gray" }
-                }
-
-                EventTimeline {
-                    anchors.fill: parent
-                    clip: true
-                    timeline: Timeline
-                }
             }
 
             ListView {
                 anchors {
-                    top: eventTimelineGradient.bottom
+                    top: eventTimeline.bottom
                     left: parent.left
                     right: parent.right
                     bottom: parent.bottom

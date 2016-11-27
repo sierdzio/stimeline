@@ -1,5 +1,4 @@
-#ifndef EVENTTIMELINE_H
-#define EVENTTIMELINE_H
+#pragma once
 
 #include <QQuickItem>
 
@@ -12,24 +11,28 @@ class QSGNode;
 class QSGGeometryNode;
 class STimeline;
 
-class EventTimeline : public QQuickItem
+class EventTimelineView : public QQuickItem
 {
     Q_OBJECT
 
     Q_PROPERTY(STimeline *timeline MEMBER mTimeline NOTIFY timelineChanged)
 
 public:
-    EventTimeline(QQuickItem *parent = nullptr);
+    EventTimelineView(QQuickItem *parent = nullptr);
 
 signals:
     void timelineChanged(STimeline *timeline) const;
 
 protected:
     virtual QSGNode *updatePaintNode(QSGNode *node, UpdatePaintNodeData *upnd) override;
+    //virtual void mousePressEvent(QMouseEvent *event) override;
+    //virtual void mouseMoveEvent(QMouseEvent *event) override;
+    //virtual void mouseReleaseEvent(QMouseEvent *event) override;
+    virtual void wheelEvent(QWheelEvent *event) override;
 
     // Timeline HUD
-    void drawNowMarkers(QSGNode *node) const;
-    void drawScale(QSGNode *node) const;
+    QSGGeometryNode *drawNowMarkers() const;
+    QSGGeometryNode *drawScale() const;
 
     // Primitives
     QSGGeometryNode *drawLine(const QPointF &begin,
@@ -47,7 +50,9 @@ protected:
     qreal horizontalCenter() const;
 
 private:
-    STimeline * mTimeline;
+    QSGNode *mMainNode = nullptr;
+    QSGGeometryNode *mScaleNode = nullptr;
+    QSGGeometryNode *mNowMarkersNode = nullptr;
+    STimeline * mTimeline = nullptr;
+    bool mScaleChanged = false;
 };
-
-#endif // EVENTTIMELINE_H
