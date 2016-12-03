@@ -13,6 +13,13 @@ class SQmlAssistant : public QObject
     Q_PROPERTY(int buttonMargin READ buttonMargin CONSTANT)
 
 public:
+    enum States {
+        Hidden,
+        Visible
+    };
+    Q_ENUM(States)
+
+
     explicit SQmlAssistant(QObject *parent = 0);
 
     int buttonMargin() const;
