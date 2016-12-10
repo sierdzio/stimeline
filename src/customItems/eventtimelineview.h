@@ -16,12 +16,20 @@ class EventTimelineView : public QQuickItem
     Q_OBJECT
 
     Q_PROPERTY(STimeline *timeline MEMBER mTimeline NOTIFY timelineChanged)
+    Q_PROPERTY(qreal scale READ scale WRITE setScale NOTIFY scaleChanged)
 
 public:
     EventTimelineView(QQuickItem *parent = nullptr);
 
+    Q_INVOKABLE void scrollLeft(const quint64 amount);
+    Q_INVOKABLE void scrollRight(const quint64 amount);
+
+    void setScale(const qreal newScale);
+    qreal scale() const;
+
 signals:
     void timelineChanged(STimeline *timeline) const;
+    void scaleChanged(qreal scale) const;
 
 protected:
     virtual QSGNode *updatePaintNode(QSGNode *node, UpdatePaintNodeData *upnd) override;
@@ -46,13 +54,20 @@ protected:
                               const QString &text,
                               const uint pointSize) const;
 
-    qreal verticalCentre() const;
+    qreal verticalCenter() const;
     qreal horizontalCenter() const;
 
 private:
+    quint64 mWindowStart = 0;
+    quint64 mWindowEnd = 0;
+    quint64 mNow = 0;
+    qreal mScale = 1.0;
+
+    bool mScaleChanged = false;
+    bool mNowChanged = false;
+
     QSGNode *mMainNode = nullptr;
     QSGGeometryNode *mScaleNode = nullptr;
     QSGGeometryNode *mNowMarkersNode = nullptr;
     STimeline * mTimeline = nullptr;
-    bool mScaleChanged = false;
 };

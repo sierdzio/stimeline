@@ -10,6 +10,8 @@
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(scalendar)
 
+class SDateTime;
+
 using SMonth = QPair<QString, uint>;
 
 class SCalendar : public QObject
@@ -35,6 +37,9 @@ public:
 
     Q_INVOKABLE uint daysInMonth(const uint month) const;
     Q_INVOKABLE QString monthName(const uint month) const;
+
+    quint64 duration(const SDateTime &from, const SDateTime &to) const;
+    quint64 secondsInDateTime(const SDateTime &dateTime) const;
 
 signals:
     void nameChanged(const QString &name) const;
@@ -80,15 +85,6 @@ private:
     uint mSecondsInMinute = 60;
     uint mMinutesInHour = 60;
     uint mHoursInDay = 24;
-    QString m_name;
-    uint m_daysInWeek;
-    uint m_daysInYear;
-    uint m_monthsInYear;
-    qreal m_leapDayPerYear;
-    uint m_leapDayAddsToMonthNumber;
-    uint m_secondsInMinute;
-    uint m_minutesInHour;
-    uint m_hoursInDay;
 };
 
 #endif // SCALENDAR_H

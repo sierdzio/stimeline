@@ -21,6 +21,35 @@ EventTimelineView::EventTimelineView(QQuickItem *parent) : QQuickItem(parent)
     setFlag(QQuickItem::ItemHasContents, true);
 }
 
+void EventTimelineView::scrollLeft(const quint64 amount)
+{
+    mWindowStart -= amount;
+    mNow -= amount;
+    mWindowEnd -= amount;
+    mNowChanged = true;
+    updatePaintNode(mMainNode, nullptr);
+}
+
+void EventTimelineView::scrollRight(const quint64 amount)
+{
+    mWindowStart += amount;
+    mNow += amount;
+    mWindowEnd += amount;
+    mNowChanged = true;
+    updatePaintNode(mMainNode, nullptr);
+}
+
+void EventTimelineView::setScale(const qreal newScale)
+{
+    mScale = newScale;
+    emit scaleChanged(newScale);
+}
+
+qreal EventTimelineView::scale() const
+{
+    return mScale;
+}
+
 QSGNode *EventTimelineView::updatePaintNode(QSGNode *node, QQuickItem::UpdatePaintNodeData *upnd)
 {
     Q_UNUSED(upnd);
@@ -28,8 +57,8 @@ QSGNode *EventTimelineView::updatePaintNode(QSGNode *node, QQuickItem::UpdatePai
     QSGGeometryNode *nd = static_cast<QSGGeometryNode *>(node);
     if (!nd) {
         // Main vertical line
-        nd = drawLine(QPointF(0, verticalCentre()),
-                      QPointF(width(), verticalCentre()),
+        nd = drawLine(QPointF(0, verticalCenter()),
+                      QPointF(width(), verticalCenter()),
                       6, QColor(255, 0, 0));
         mScaleNode = drawScale();
 
@@ -39,12 +68,25 @@ QSGNode *EventTimelineView::updatePaintNode(QSGNode *node, QQuickItem::UpdatePai
     }
 
     if (mScaleChanged) {
-        // TODO: repaint NowMarkers to show at top and bottom (or move them to a different Item)
-        //  - update scale
-        //  - update main time line
-
         qDebug(etl) << "Updating scale" << scale();
         mScaleChanged = false;
+        mNowChanged = true;
+    }
+
+    if (mNowChanged) {
+        qDebug(etl) << "Updating timeline. New NOW position:" << mNow
+                    << "left:" << mWindowStart << "right:" << mWindowEnd;
+        mNowChanged = false;
+
+        nd = drawLine(QPointF(0, verticalCenter()),
+                      QPointF(width(), verticalCenter()),
+                      6*scale(), QColor(255, 0, 0));
+        mScaleNode = drawScale();
+
+        nd->appendChildNode(mScaleNode);
+
+        mMainNode = nd;
+        nd->markDirty(QSGNode::DirtyGeometry);
     }
 
     return nd;
@@ -94,8 +136,8 @@ QSGGeometryNode *EventTimelineView::drawScale() const
     // TODO: scale drawing logic ;-)
     const QColor barColor(Qt::gray);
     const float barWidth(4.0);
-    const qreal y(verticalCentre());
-    const qreal endY(verticalCentre() + 12.0);
+    const qreal y(verticalCenter());
+    const qreal endY(verticalCenter() + 12.0);
     const uint barCount(scale()*8);
     const uint spacing(width() / barCount);
 
@@ -177,7 +219,7 @@ QSGGeometryNode *EventTimelineView::drawText(const QPointF &point,
     return nullptr;
 }
 
-qreal EventTimelineView::verticalCentre() const
+qreal EventTimelineView::verticalCenter() const
 {
     return height()/2;
 }

@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Controls 2.0
 import QtGraphicalEffects 1.0
 import CustomItems 1.0
 import Assistant 1.0
@@ -27,14 +28,20 @@ RadialGradient {
         anchors.bottom: parent.bottom
     }
 
-    Flickable {
+    EventTimelineView {
+        id: etlv
         anchors.fill: parent
-        flickableDirection: Flickable.HorizontalFlick
-        focus: true
+        height: parent.height
+    }
 
-        EventTimelineView {
-            id: etlv
-            height: parent.height
+    Row {
+        Button {
+            text: qsTr("<-")
+            onClicked: etlv.scrollLeft(200)
+        }
+        Button {
+            text: qsTr("->")
+            onClicked: etlv.scrollRight(200)
         }
     }
 

@@ -1,4 +1,5 @@
 #include "scalendar.h"
+#include "sdatetime.h"
 #include "tags.h"
 
 #include <QJsonValue>
@@ -105,6 +106,48 @@ QString SCalendar::monthName(const uint month) const
     }
 
     return mMonths.at(int(month)).first;
+}
+
+/*!
+ * Returns duration (in seconds) between \a from and \a to dates, based on
+ * calendar this SCalendar instance points to.
+ *
+ * This method is computationally intensive, please use it wisely.
+ */
+quint64 SCalendar::duration(const SDateTime &from, const SDateTime &to) const
+{
+    const quint64 fromSeconds = secondsInDateTime(from);
+    const quint64 toSeconds = secondsInDateTime(to);
+
+    // TODO: check if that works correctly (correct range calculation)
+    return qAbs(toSeconds - fromSeconds);
+}
+
+/*!
+ * Retuns number of seconds between zero date (0-0-0 0:0:0) and \a dateTime,
+ * based on this SCalendar instance definition of calendar.
+ *
+ * WARNING: method does not check for out of bounds error.
+ */
+quint64 SCalendar::secondsInDateTime(const SDateTime &dateTime) const
+{
+    // Secs
+    quint64 result = dateTime.second;
+    // Minutes
+    result += dateTime.minute * mSecondsInMinute;
+    // Hours
+    const quint64 secondsInHour = mMinutesInHour * mSecondsInMinute;
+    result += dateTime.hour * secondsInHour;
+    // Days
+    const quint64 secondsInDay = secondsInHour * mHoursInDay;
+    result += dateTime.day * secondsInDay;
+    // Months
+    const quint64 secondsInMonth = secondsInDay * daysInMonth(dateTime.month);
+    result += dateTime.month * secondsInMonth;
+    // Years
+    const quint64 secondsInYear = secondsInDay * mDaysInYear;
+    result += quint64(dateTime.year) * secondsInYear;
+    return result;
 }
 
 void SCalendar::checkValidity()
