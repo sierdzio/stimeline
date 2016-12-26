@@ -82,21 +82,30 @@ ApplicationWindow {
                 id: eventTimeline
                 height: parent.height/2
                 focus: true
+                anchors.fill: parent
+                /*
                 anchors {
                     top: parent.top
                     left: parent.left
                     right: parent.right
                 }
+                */
             }
+        }
 
+        Page {
+            id: pageEvents
             ListView {
+                /*
                 anchors {
                     top: eventTimeline.bottom
                     left: parent.left
                     right: parent.right
                     bottom: parent.bottom
                 }
+                */
 
+                anchors.fill: parent
                 spacing: 15
                 clip: true
                 model: Timeline.eventModelProxy
@@ -265,6 +274,9 @@ ApplicationWindow {
             text: qsTr("Timeline")
         }
         TabButton {
+            text: qsTr("Events")
+        }
+        TabButton {
             text: qsTr("People")
         }
         TabButton {
@@ -320,6 +332,10 @@ ApplicationWindow {
             MenuItem {
                 text: tabBar.contentChildren[6].text
                 onClicked: { tabBar.currentIndex = 6; drawer.close(); }
+            }
+            MenuItem {
+                text: tabBar.contentChildren[7].text
+                onClicked: { tabBar.currentIndex = 7; drawer.close(); }
             }
             MenuItem {
                 text: qsTr("Quit")
