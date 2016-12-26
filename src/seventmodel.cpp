@@ -1,6 +1,6 @@
 #include "seventmodel.h"
 #include "sevent.h"
-#include "sutils.h"
+#include "tags.h"
 
 #include <QModelIndex>
 #include <QJsonArray>
@@ -70,11 +70,6 @@ void SEventModel::fromJson(const QJsonArray &json)
     }
 
     endResetModel();
-}
-
-QByteArray SEventModel::newEventId() const
-{
-    return SUtils::generateId();
 }
 
 /*!

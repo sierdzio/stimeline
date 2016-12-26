@@ -13,6 +13,9 @@ static const QByteArray id("id");
 static const QByteArray events("Events");
 static const QByteArray name("name");
 static const QByteArray description("description");
+// People:
+static const QByteArray people("People");
+static const QByteArray picturePath("picturePath");
 // Calendar:
 static const QByteArray calendar("Calendar");
 static const QByteArray daysInWeek("daysInWeek");

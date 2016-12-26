@@ -11,6 +11,7 @@ class SCalendar;
 class SSettings;
 class SEventModel;
 class SEventSortProxyModel;
+class SPersonModel;
 
 class STimeline : public QObject
 {
@@ -20,6 +21,7 @@ class STimeline : public QObject
     Q_PROPERTY(SEventModel* eventModel MEMBER mEventModel CONSTANT)
     Q_PROPERTY(SSettings* settings MEMBER mSettings CONSTANT)
     Q_PROPERTY(SCalendar* calendar MEMBER mCalendar CONSTANT)
+    Q_PROPERTY(SPersonModel* personModel MEMBER mPersonModel CONSTANT)
 
 public:
     STimeline(SSettings *settings = nullptr, QObject *parent = nullptr);
@@ -28,6 +30,7 @@ public:
 public slots:
     void load(const QString &path);
     void save(const QString &path) const;
+    QByteArray generateId() const;
 
 signals:
     void error(const QString &message) const;
@@ -41,9 +44,9 @@ private:
     SEventModel *mEventModel = nullptr;
     SEventSortProxyModel *mEventModelProxy = nullptr;
     SCalendar *mCalendar = nullptr;
+    SPersonModel *mPersonModel = nullptr;
 
     // TODO: add:
-    // People
     // Objects
     // Places
     // Maps

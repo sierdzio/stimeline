@@ -2,7 +2,9 @@
 #include "scalendar.h"
 #include "seventmodel.h"
 #include "seventsortproxymodel.h"
+#include "spersonmodel.h"
 #include "ssettings.h"
+#include "sutils.h"
 #include "tags.h"
 
 #include <QJsonDocument>
@@ -21,6 +23,7 @@ STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
 {
     qRegisterMetaType<SEventSortProxyModel*>();
     qRegisterMetaType<SEventModel*>();
+    qRegisterMetaType<SPersonModel*>();
     qRegisterMetaType<SSettings*>();
     qRegisterMetaType<SCalendar*>();
     init();
@@ -43,14 +46,6 @@ STimeline::~STimeline()
 
 void STimeline::load(const QString &path)
 {
-    // Clear previous state
-    //bool reinit = false;
-    //if (mCalendar.isNull() == false) { mCalendar.clear(); reinit = true; }
-    //if (mEventDB.isNull() == false) { mEventDB.clear(); reinit = true; }
-
-    //if (reinit)
-    //    init();
-
     const QString parsedPath(cleanPath(path));
     QFile file(parsedPath);
 
@@ -80,6 +75,7 @@ void STimeline::load(const QString &path)
     mCalendar->fromJson(mainObj.value(Tags::calendar).toArray());
     mEventModel->fromJson(mainObj.value(Tags::events).toArray());
     mSettings->author = mainObj.value(Tags::author).toString();
+    mPersonModel->fromJson(mainObj.value(Tags::people).toArray());
     // TODO: plug in all other objects
 
     mEventModelProxy->sort(0);
@@ -104,6 +100,7 @@ void STimeline::save(const QString &path) const
 
     mainObj.insert(Tags::calendar, mCalendar->toJson());
     mainObj.insert(Tags::events, mEventModel->toJson());
+    mainObj.insert(Tags::people, mPersonModel->toJson());
     // TODO: plug in all other objects
 
     // TODO: check if all data was written successfully
@@ -116,6 +113,11 @@ void STimeline::save(const QString &path) const
     file.close();
 }
 
+QByteArray STimeline::generateId() const
+{
+    return SUtils::generateId();
+}
+
 void STimeline::init()
 {
     qCDebug(stimeline) << "Initializing default timeline...";
@@ -124,6 +126,7 @@ void STimeline::init()
     mEventModelProxy = new SEventSortProxyModel(this);
     mEventModelProxy->setSourceModel(mEventModel);
     mEventModelProxy->sort(0);
+    mPersonModel = new SPersonModel(this);
 }
 
 void STimeline::reportError(const QString &message) const

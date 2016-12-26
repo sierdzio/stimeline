@@ -15,7 +15,9 @@ HEADERS += \
     src/sutils.h \
     src/sqmlassistant.h \
     src/seventsortproxymodel.h \
-    src/customItems/eventtimelineview.h
+    src/customItems/eventtimelineview.h \
+    src/sperson.h \
+    src/spersonmodel.h
 
 SOURCES += src/main.cpp \
     src/sevent.cpp \
@@ -27,7 +29,9 @@ SOURCES += src/main.cpp \
     src/sutils.cpp \
     src/sqmlassistant.cpp \
     src/seventsortproxymodel.cpp \
-    src/customItems/eventtimelineview.cpp
+    src/customItems/eventtimelineview.cpp \
+    src/sperson.cpp \
+    src/spersonmodel.cpp
 
 RESOURCES += qml.qrc \
     defaults.qrc

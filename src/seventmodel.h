@@ -2,7 +2,6 @@
 #define SEVENTMODEL_H
 
 #include "sevent.h"
-#include "tags.h"
 
 #include <QAbstractListModel>
 #include <QByteArray>
@@ -31,7 +30,6 @@ public:
     void fromJson(const QJsonArray &json);
 
 public slots:
-    QByteArray newEventId() const;
     void addEvent(const QString &id,
                   const QString &name,
                   const QString &description,

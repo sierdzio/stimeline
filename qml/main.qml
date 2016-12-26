@@ -132,12 +132,49 @@ ApplicationWindow {
                 height: width
                 //radius: 15
 
-                onClicked: openEditor(Timeline.eventModel.newEventId())
+                onClicked: openEditor(Timeline.generateId())
             }
         }
 
         Page {
             id: pagePeople
+            ListView {
+                /*
+                anchors {
+                    top: eventTimeline.bottom
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                }
+                */
+
+                anchors.fill: parent
+                spacing: 15
+                clip: true
+                model: Timeline.personModel
+                delegate: Text {
+                    text: name + picturePath + description
+                    width: 350
+                    height: 120
+                }
+            }
+
+            // TODO: use RoundedButton from Qt 5.8
+            Button {
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                anchors.margins: Assistant.buttonMargin
+                text: "+"
+                font.bold: true
+                width: 30
+                height: width
+                //radius: 15
+
+                onClicked: Timeline.personModel.addPerson(Timeline.generateId(),
+                                                          "some/path",
+                                                          "Random Tom",
+                                                          "Even more random description of Tom")
+            }
         }
 
         Page {
