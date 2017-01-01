@@ -1,5 +1,5 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
 import QtGraphicalEffects 1.0
@@ -83,28 +83,12 @@ ApplicationWindow {
                 height: parent.height/2
                 focus: true
                 anchors.fill: parent
-                /*
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    right: parent.right
-                }
-                */
             }
         }
 
         Page {
             id: pageEvents
             ListView {
-                /*
-                anchors {
-                    top: eventTimeline.bottom
-                    left: parent.left
-                    right: parent.right
-                    bottom: parent.bottom
-                }
-                */
-
                 anchors.fill: parent
                 spacing: 15
                 clip: true
@@ -121,16 +105,13 @@ ApplicationWindow {
                 }
             }
 
-            // TODO: use RoundedButton from Qt 5.8
-            Button {
+            RoundButton {
                 anchors.bottom: parent.bottom
                 anchors.right: parent.right
                 anchors.margins: Assistant.buttonMargin
                 text: "+"
                 font.bold: true
-                width: 30
-                height: width
-                //radius: 15
+                radius: 15
 
                 onClicked: openEditor(Timeline.generateId())
             }
@@ -139,15 +120,6 @@ ApplicationWindow {
         Page {
             id: pagePeople
             ListView {
-                /*
-                anchors {
-                    top: eventTimeline.bottom
-                    left: parent.left
-                    right: parent.right
-                    bottom: parent.bottom
-                }
-                */
-
                 anchors.fill: parent
                 spacing: 15
                 clip: true
@@ -158,17 +130,13 @@ ApplicationWindow {
                     height: 120
                 }
             }
-
-            // TODO: use RoundedButton from Qt 5.8
-            Button {
+            RoundButton {
                 anchors.bottom: parent.bottom
                 anchors.right: parent.right
                 anchors.margins: Assistant.buttonMargin
                 text: "+"
                 font.bold: true
-                width: 30
-                height: width
-                //radius: 15
+                radius: 15
 
                 onClicked: Timeline.personModel.addPerson(Timeline.generateId(),
                                                           "some/path",
