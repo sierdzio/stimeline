@@ -7,5 +7,6 @@
         <file>qml/STumbler.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>qml/EventTimeline.qml</file>
+        <file>qml/views/SItemListView.qml</file>
     </qresource>
 </RCC>

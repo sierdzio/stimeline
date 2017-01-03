@@ -5,6 +5,8 @@ import QtQuick.Dialogs 1.2
 import QtGraphicalEffects 1.0
 import Assistant 1.0
 
+import "views"
+
 ApplicationWindow {
     id: window
     visible: true
@@ -86,75 +88,66 @@ ApplicationWindow {
             }
         }
 
-        Page {
+        SItemListView {
             id: pageEvents
-            ListView {
-                anchors.fill: parent
-                spacing: 15
-                clip: true
-                model: Timeline.eventModelProxy
-                delegate: EventCard {
-                    eventId: model.id
-                    name: model.name
-                    description: model.description
-                    from: model.from
-                    to: model.to
-                    width: 350
-                    height: 120
-                    onEdit: openEditor(eventId, name, description, from, to)
-                }
+            model: Timeline.eventModelProxy
+            delegate: EventCard {
+                eventId: model.id
+                name: model.name
+                description: model.description
+                from: model.from
+                to: model.to
+                width: 350
+                height: 120
+                onEdit: openEditor(eventId, name, description, from, to)
             }
 
-            RoundButton {
-                anchors.bottom: parent.bottom
-                anchors.right: parent.right
-                anchors.margins: Assistant.buttonMargin
-                text: "+"
-                font.bold: true
-                radius: 15
-
-                onClicked: openEditor(Timeline.generateId())
-            }
+            onClipChanged: openEditor(Timeline.generateId())
         }
 
-        Page {
+        SItemListView {
             id: pagePeople
-            ListView {
-                anchors.fill: parent
-                spacing: 15
-                clip: true
-                model: Timeline.personModel
-                delegate: Text {
-                    text: name + picturePath + description
-                    width: 350
-                    height: 120
-                }
+            model: Timeline.personModel
+            delegate: Text {
+                text: name + picturePath + description
+                width: 350
+                height: 120
             }
-            RoundButton {
-                anchors.bottom: parent.bottom
-                anchors.right: parent.right
-                anchors.margins: Assistant.buttonMargin
-                text: "+"
-                font.bold: true
-                radius: 15
 
-                onClicked: Timeline.personModel.addPerson(Timeline.generateId(),
-                                                          "some/path",
-                                                          "Random Tom",
-                                                          "Even more random description of Tom")
-            }
+            onClicked: Timeline.personModel.addPerson(Timeline.generateId(),
+                                                      "some/path",
+                                                      "Random Tom",
+                                                      "Even more random description of Tom")
         }
 
-        Page {
+        SItemListView {
             id: pageObjects
+            buttonVisible: false
+            model: 5
+
+            Text {
+                text: "Object " + (index+1)
+            }
         }
 
-        Page {
+        SItemListView {
             id: pagePlaces
+            buttonVisible: false
+            model: 5
+
+            delegate: Text {
+                text: "Object " + (index+1)
+            }
         }
 
-        Page {
+        SItemListView {
             id: pageMaps
+            buttonVisible: false
+            model: 5
+
+            delegate: Text {
+                text: "Object " + (index+1)
+            }
         }
 
         Page {
