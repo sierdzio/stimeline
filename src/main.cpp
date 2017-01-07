@@ -1,7 +1,7 @@
 #include "stimeline.h"
 #include "sobject.h"
 #include "ssettings.h"
-#include "sqmlassistant.h"
+#include "sassistant.h"
 #include "customItems/eventtimelineview.h"
 
 #include <QGuiApplication>
@@ -31,8 +31,8 @@ int main(int argc, char *argv[])
 
     qmlRegisterUncreatableType<SObject>("CustomItems", 1, 0, "SObject",
                                         "You cannot instantiate SObject ion QML");
-    qmlRegisterSingletonType<SQmlAssistant>("Assistant", 1, 0, "Assistant",
-                                            SQmlAssistant::assistantSingletonProvider);
+    qmlRegisterSingletonType<SAssistant>("Assistant", 1, 0, "Assistant",
+                                            SAssistant::assistantSingletonProvider);
     qmlRegisterType<EventTimelineView>("CustomItems", 1, 0, EventTimelineView::staticMetaObject.className());
 
     QQmlApplicationEngine engine;

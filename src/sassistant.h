@@ -5,7 +5,7 @@
 class QQmlEngine;
 class QJSEngine;
 
-class SQmlAssistant : public QObject
+class SAssistant : public QObject
 {
     Q_OBJECT
 
@@ -18,10 +18,11 @@ public:
     };
     Q_ENUM(States)
 
-    explicit SQmlAssistant(QObject *parent = 0);
+    explicit SAssistant(QObject *parent = 0);
 
     int buttonMargin() const;
     Q_INVOKABLE QString typeToString(const QString &type) const;
+    Q_INVOKABLE static QByteArray generateId();
 
     // Define the singleton type provider function (callback).
     static QObject *assistantSingletonProvider(QQmlEngine *engine, QJSEngine *scriptEngine);

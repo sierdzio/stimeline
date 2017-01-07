@@ -31,7 +31,7 @@ public:
 public slots:
     void load(const QString &path);
     void save(const QString &path) const;
-    QByteArray generateId() const;
+
     SObjectModel *model(const QString &type) const;
     SObjectModel *model(const int type) const;
 

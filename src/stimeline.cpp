@@ -3,7 +3,6 @@
 #include "sobjectmodel.h"
 #include "seventsortproxymodel.h"
 #include "ssettings.h"
-#include "sutils.h"
 #include "tags.h"
 
 #include <QJsonDocument>
@@ -114,11 +113,6 @@ void STimeline::save(const QString &path) const
                            << data.size() << "Bytes written:" << bytesWritten;
     }
     file.close();
-}
-
-QByteArray STimeline::generateId() const
-{
-    return SUtils::generateId();
 }
 
 SObjectModel *STimeline::model(const QString &type) const

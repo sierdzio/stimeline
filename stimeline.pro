@@ -10,24 +10,22 @@ HEADERS += \
     src/scalendar.h \
     src/sdatetime.h \
     src/ssettings.h \
-    src/sutils.h \
-    src/sqmlassistant.h \
     src/seventsortproxymodel.h \
     src/customItems/eventtimelineview.h \
     src/sobject.h \
-    src/sobjectmodel.h
+    src/sobjectmodel.h \
+    src/sassistant.h
 
 SOURCES += src/main.cpp \
     src/stimeline.cpp \
     src/scalendar.cpp \
     src/sdatetime.cpp \
     src/ssettings.cpp \
-    src/sutils.cpp \
-    src/sqmlassistant.cpp \
     src/seventsortproxymodel.cpp \
     src/customItems/eventtimelineview.cpp \
     src/sobject.cpp \
-    src/sobjectmodel.cpp
+    src/sobjectmodel.cpp \
+    src/sassistant.cpp
 
 RESOURCES += qml.qrc \
     defaults.qrc

@@ -1,6 +1,6 @@
 #include "sobject.h"
 #include "tags.h"
-#include "sutils.h"
+#include "sassistant.h"
 
 #include <QMetaEnum>
 #include <QJsonValue>
@@ -24,7 +24,7 @@ SObject::SObject(SObject::InitialisationOption option, ObjectType type)
     : mType(type)
 {
     if (option == InitialisationOption::InitialiseId) {
-        mId = SUtils::generateId();
+        mId = SAssistant::generateId();
     }
 }
 

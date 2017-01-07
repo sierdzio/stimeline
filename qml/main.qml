@@ -21,7 +21,13 @@ ApplicationWindow {
         editor.objectId = objectId
         editor.type = type
 
-        if (typeof name !== "undefined") {
+        if (typeof name === "undefined") {
+            editor.name = ""
+            editor.picturePath = ""
+            editor.description = ""
+            editor.from = ""
+            editor.to = ""
+        } else {
             editor.name = name
             editor.picturePath = picturePath
             editor.description = description
@@ -113,7 +119,7 @@ ApplicationWindow {
                 onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
-            onClicked: openEditor(Timeline.generateId(), SObject.Event)
+            onClicked: openEditor(Assistant.generateId(), SObject.Event)
         }
 
         SItemListView {
@@ -132,7 +138,7 @@ ApplicationWindow {
                 onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
-            onClicked: openEditor(Timeline.generateId(), SObject.Person)
+            onClicked: openEditor(Assistant.generateId(), SObject.Person)
         }
 
         SItemListView {
@@ -151,7 +157,7 @@ ApplicationWindow {
                 onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
-            onClicked: openEditor(Timeline.generateId(), SObject.Object)
+            onClicked: openEditor(Assistant.generateId(), SObject.Object)
         }
 
         SItemListView {
@@ -170,7 +176,7 @@ ApplicationWindow {
                 onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
-            onClicked: openEditor(Timeline.generateId(), SObject.Place)
+            onClicked: openEditor(Assistant.generateId(), SObject.Place)
         }
 
         SItemListView {
@@ -189,7 +195,7 @@ ApplicationWindow {
                 onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
-            onClicked: openEditor(Timeline.generateId(), SObject.Map)
+            onClicked: openEditor(Assistant.generateId(), SObject.Map)
         }
 
         Page {
