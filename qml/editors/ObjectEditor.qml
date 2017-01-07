@@ -1,14 +1,17 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick 2.8
+import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.1
+import Assistant 1.0
 
 Popup {
-    property string eventId: ""
-    property alias name: eventName.text
-    property alias description: eventDescription.text
-    property alias from: eventFrom.text
-    property alias to: eventTo.text
-    property var __editControl: eventFrom
+    property string objectId: ""
+    property string type: ""
+    property alias name: name.text
+    property alias picturePath: picturePath.source
+    property alias description: description.text
+    property alias from: from.text
+    property alias to: to.text
+    property var __editControl: from
     signal finished()
     signal canceled()
 
@@ -33,8 +36,12 @@ Popup {
         columns: 2
 
         Label {
-            text: qsTr("Edit event")
+            text: qsTr("Edit " + Assistant.typeToString(type)) // TODO: translate Type!
             Layout.columnSpan: 2
+        }
+
+        Image {
+            id: picturePath
         }
 
         Label {
@@ -42,7 +49,7 @@ Popup {
         }
 
         TextField {
-            id: eventName
+            id: name
         }
 
         Label {
@@ -50,7 +57,7 @@ Popup {
         }
 
         TextField {
-            id: eventDescription
+            id: description
         }
 
         Label {
@@ -58,7 +65,7 @@ Popup {
         }
 
         Label {
-            id: eventFrom
+            id: from
             text: "1-1-1 1:1:1"
 
             MouseArea {
@@ -76,7 +83,7 @@ Popup {
         }
 
         Label {
-            id: eventTo
+            id: to
             text: "1-1-1 1:1:1"
 
             MouseArea {

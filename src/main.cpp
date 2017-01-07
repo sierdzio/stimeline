@@ -1,4 +1,5 @@
 #include "stimeline.h"
+#include "sobject.h"
 #include "ssettings.h"
 #include "sqmlassistant.h"
 #include "customItems/eventtimelineview.h"
@@ -18,7 +19,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
-    app.setApplicationVersion("0.1");
+    app.setApplicationVersion("0.2");
     app.setApplicationDisplayName("sTimeline");
     app.setApplicationName("sTimeline");
     app.setOrganizationName("sierdzio");
@@ -28,7 +29,8 @@ int main(int argc, char *argv[])
     SSettings settings;
     STimeline timeline(&settings);
 
-    qRegisterMetaType<STimeline*>();
+    qmlRegisterUncreatableType<SObject>("CustomItems", 1, 0, "SObject",
+                                        "You cannot instantiate SObject ion QML");
     qmlRegisterSingletonType<SQmlAssistant>("Assistant", 1, 0, "Assistant",
                                             SQmlAssistant::assistantSingletonProvider);
     qmlRegisterType<EventTimelineView>("CustomItems", 1, 0, EventTimelineView::staticMetaObject.className());

@@ -1,5 +1,4 @@
-#ifndef SEVENTSORTPROXYMODEL_H
-#define SEVENTSORTPROXYMODEL_H
+#pragma once
 
 #include <QObject>
 #include <QSortFilterProxyModel>
@@ -14,5 +13,3 @@ public:
 protected:
     virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 };
-
-#endif // SEVENTSORTPROXYMODEL_H

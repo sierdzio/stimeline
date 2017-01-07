@@ -56,31 +56,107 @@
             "from": "1111-11-26 11:22:33",
             "id": "1",
             "name": "some event, isn't it?",
-            "to": "1111-11-26 11:22:33"
+            "to": "1111-11-26 11:22:33",
+            "type": "Event"
         },
         {
             "description": "My hovercraft is full of eels",
             "from": "1111-11-27 11:22:25",
             "id": "2",
             "name": "Other event",
-            "to": "1111-11-27 11:33:44"
+            "to": "1111-11-27 11:33:44",
+            "type": "Event"
         },
         {
             "description": "This description is full of eels",
             "from": "1-2-3 11:10:9",
             "id": "#\u001e?9èèH¹¶\u0011Yâ\u001dÑ\u0011`",
             "name": "Some name",
-            "to": "1-2-3 11:10:9"
+            "to": "1-2-3 11:10:9",
+            "type": "Event"
         },
         {
             "description": "Aha!",
             "from": "1-1-2 2:1:1",
             "id": "??Vd??m????w?\u0013???=5?",
             "name": "Event 4",
-            "to": "1-1-2 2:1:1"
+            "to": "1-1-2 2:1:1",
+            "type": "Event"
+        },
+        {
+            "description": "OHO!",
+            "from": "1-1-3 1:1:1",
+            "id": "?d???4????\u000e??\u001b?^5]i?",
+            "name": "Event 5",
+            "to": "1-1-3 1:1:1",
+            "type": "Event"
+        },
+        {
+            "description": "Ihi!",
+            "from": "1-1-1 1:1:1",
+            "id": "???r'?/?\u001a?Nj,,?\t???",
+            "name": "Event 6",
+            "to": "1-1-1 1:1:1",
+            "type": "Event"
+        },
+        {
+            "description": "Bu bu",
+            "from": "1-3-1 1:1:1",
+            "id": "?\tR^??fS??;h?@ce?j??",
+            "name": "Test event 7",
+            "to": "1-3-1 3:1:1",
+            "type": "Event"
         }
     ],
+    "Maps": [
+    ],
+    "Objects": [
+        {
+            "description": "Some desc",
+            "from": "1-1-1 1:1:1",
+            "id": "ik??G?f\u0007]?\\[t\"A(?j\u0005?",
+            "name": "Object 1",
+            "to": "1-1-1 1:1:1",
+            "type": "Object"
+        }
+    ],
+    "People": [
+        {
+            "description": "Even more random description of Tom",
+            "from": "1-1-1 1:1:1",
+            "id": "??`??362\"\u0005W\u0018??t??pv",
+            "name": "Random Tom",
+            "to": "1-1-1 1:1:1",
+            "type": "Person"
+        },
+        {
+            "description": "Even more random description of Tom 2",
+            "from": "1-1-1 1:1:1",
+            "id": "?F?cS]\u0002\u0019??]?GO?:??A",
+            "name": "Random Tom",
+            "to": "1-1-1 1:1:1",
+            "type": "Person"
+        },
+        {
+            "description": "Even more random description of Tom",
+            "from": "1-1-1 1:1:1",
+            "id": "?A??m???????<??T\\",
+            "name": "Random Tom",
+            "to": "1-1-1 1:1:1",
+            "type": "Person"
+        },
+        {
+            "description": "Even more random description of Tom 6",
+            "from": "1-1-1 1:1:1",
+            "id": "d??\u0011??<^?????\u0006???UE?",
+            "name": "Random Tommy 4",
+            "to": "1-1-1 1:1:1",
+            "type": "Person"
+        }
+    ],
+    "Places": [
+    ],
     "author": "Testing Tom",
-    "timestamp": "2016-11-23T20:10:28Z",
-    "version": "0.1"
+    "timestamp": "2017-01-07T12:27:49Z",
+    "version": "0.2"
 }

@@ -1,5 +1,4 @@
-#ifndef TAGS_H
-#define TAGS_H
+#pragma once
 
 #include <QByteArray>
 
@@ -8,14 +7,18 @@ namespace Tags {
 static const QByteArray version("version");
 static const QByteArray timestamp("timestamp");
 static const QByteArray author("author");
-// Events:
+// Objects:
 static const QByteArray id("id");
-static const QByteArray events("Events");
+static const QByteArray type("type");
 static const QByteArray name("name");
 static const QByteArray description("description");
-// People:
-static const QByteArray people("People");
 static const QByteArray picturePath("picturePath");
+// Object types:
+static const QByteArray events("Events");
+static const QByteArray people("People");
+static const QByteArray objects("Objects");
+static const QByteArray places("Places");
+static const QByteArray maps("Maps");
 // Calendar:
 static const QByteArray calendar("Calendar");
 static const QByteArray daysInWeek("daysInWeek");
@@ -39,5 +42,3 @@ static const QByteArray lastSaveFilePath("lastSaveFilePath");
 static const QByteArray dateSeparator("-");
 static const QByteArray timeSeparator(":");
 }
-
-#endif // TAGS_H

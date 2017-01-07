@@ -5,33 +5,29 @@ CONFIG += c++14
 DEFINES *= QT_USE_QSTRINGBUILDER
 
 HEADERS += \
-    src/sevent.h \
     src/tags.h \
     src/stimeline.h \
     src/scalendar.h \
     src/sdatetime.h \
     src/ssettings.h \
-    src/seventmodel.h \
     src/sutils.h \
     src/sqmlassistant.h \
     src/seventsortproxymodel.h \
     src/customItems/eventtimelineview.h \
-    src/sperson.h \
-    src/spersonmodel.h
+    src/sobject.h \
+    src/sobjectmodel.h
 
 SOURCES += src/main.cpp \
-    src/sevent.cpp \
     src/stimeline.cpp \
     src/scalendar.cpp \
     src/sdatetime.cpp \
     src/ssettings.cpp \
-    src/seventmodel.cpp \
     src/sutils.cpp \
     src/sqmlassistant.cpp \
     src/seventsortproxymodel.cpp \
     src/customItems/eventtimelineview.cpp \
-    src/sperson.cpp \
-    src/spersonmodel.cpp
+    src/sobject.cpp \
+    src/sobjectmodel.cpp
 
 RESOURCES += qml.qrc \
     defaults.qrc

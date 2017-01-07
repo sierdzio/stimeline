@@ -1,11 +1,14 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
 import QtGraphicalEffects 1.0
 import Assistant 1.0
+import CustomItems 1.0
 
 import "views"
+import "cards"
+import "editors"
 
 ApplicationWindow {
     id: window
@@ -14,15 +17,19 @@ ApplicationWindow {
     height: 800
     title: qsTr("sTimeline - v") + Qt.application.version
 
-    function openEditor(eventId, name, description, from, to) {
-        eventEditor.eventId = eventId;
+    function openEditor(objectId, type, name, picturePath, description, from, to) {
+        editor.objectId = objectId
+        editor.type = type
+
         if (typeof name !== "undefined") {
-            eventEditor.name = name
-            eventEditor.description = description
-            eventEditor.from = from
-            eventEditor.to = to
+            editor.name = name
+            editor.picturePath = picturePath
+            editor.description = description
+            editor.from = from
+            editor.to = to
         }
-        eventEditor.open();
+
+        editor.open()
     }
 
     FileDialog {
@@ -59,17 +66,19 @@ ApplicationWindow {
         }
     }
 
-    EventEditor {
-        id: eventEditor
+    ObjectEditor {
+        id: editor
         x: (parent.width/2) - (width/2)
         y: (parent.height/2) - (height/2)
 
-        onFinished: Timeline.eventModel.updateEvent(eventEditor.eventId,
-                                                    eventEditor.name,
-                                                    eventEditor.description,
-                                                    eventEditor.from,
-                                                    eventEditor.to
-                                                    )
+        onFinished: Timeline.model(editor.type).updateObject(editor.objectId,
+                                                             editor.type,
+                                                             editor.name,
+                                                             editor.picturePath,
+                                                             editor.description,
+                                                             editor.from,
+                                                             editor.to
+                                                             )
     }
 
     SwipeView {
@@ -91,63 +100,96 @@ ApplicationWindow {
         SItemListView {
             id: pageEvents
             model: Timeline.eventModelProxy
-            delegate: EventCard {
-                eventId: model.id
+            delegate: ObjectCard {
+                objectId: model.id
+                type: SObject.Event
                 name: model.name
+                picturePath: model.picturePath
                 description: model.description
                 from: model.from
                 to: model.to
                 width: 350
                 height: 120
-                onEdit: openEditor(eventId, name, description, from, to)
+                onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
-            onClipChanged: openEditor(Timeline.generateId())
+            onClicked: openEditor(Timeline.generateId(), SObject.Event)
         }
 
         SItemListView {
             id: pagePeople
             model: Timeline.personModel
-            delegate: Text {
-                text: name + picturePath + description
+            delegate: ObjectCard {
+                objectId: model.id
+                type: SObject.Person
+                name: model.name
+                picturePath: model.picturePath
+                description: model.description
+                from: model.from
+                to: model.to
                 width: 350
                 height: 120
+                onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
-            onClicked: Timeline.personModel.addPerson(Timeline.generateId(),
-                                                      "some/path",
-                                                      "Random Tom",
-                                                      "Even more random description of Tom")
+            onClicked: openEditor(Timeline.generateId(), SObject.Person)
         }
 
         SItemListView {
             id: pageObjects
-            buttonVisible: false
-            model: 5
-
-            Text {
-                text: "Object " + (index+1)
+            model: Timeline.objectModel
+            delegate: ObjectCard {
+                objectId: model.id
+                type: SObject.Object
+                name: model.name
+                picturePath: model.picturePath
+                description: model.description
+                from: model.from
+                to: model.to
+                width: 350
+                height: 120
+                onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
+
+            onClicked: openEditor(Timeline.generateId(), SObject.Object)
         }
 
         SItemListView {
             id: pagePlaces
-            buttonVisible: false
-            model: 5
-
-            delegate: Text {
-                text: "Object " + (index+1)
+            model: Timeline.placeModel
+            delegate: ObjectCard {
+                objectId: model.id
+                type: SObject.Place
+                name: model.name
+                picturePath: model.picturePath
+                description: model.description
+                from: model.from
+                to: model.to
+                width: 350
+                height: 120
+                onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
+
+            onClicked: openEditor(Timeline.generateId(), SObject.Place)
         }
 
         SItemListView {
             id: pageMaps
-            buttonVisible: false
-            model: 5
-
-            delegate: Text {
-                text: "Object " + (index+1)
+            model: Timeline.mapModel
+            delegate: ObjectCard {
+                objectId: model.id
+                type: SObject.Map
+                name: model.name
+                picturePath: model.picturePath
+                description: model.description
+                from: model.from
+                to: model.to
+                width: 350
+                height: 120
+                onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
+
+            onClicked: openEditor(Timeline.generateId(), SObject.Map)
         }
 
         Page {

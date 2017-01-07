@@ -5,3 +5,4 @@ Short and incomplete list of what is left to be done here:
 - support for saving images/ file attachments
 - support JSON and binary JSON load/ save
 - nice GUI for timeline, with smooth zooming and swiping (EventTimeline)
+- use magic macros for Q_OBJECTS

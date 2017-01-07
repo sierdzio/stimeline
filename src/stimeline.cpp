@@ -1,8 +1,7 @@
 #include "stimeline.h"
 #include "scalendar.h"
-#include "seventmodel.h"
+#include "sobjectmodel.h"
 #include "seventsortproxymodel.h"
-#include "spersonmodel.h"
 #include "ssettings.h"
 #include "sutils.h"
 #include "tags.h"
@@ -22,10 +21,10 @@ STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
     mSettings(settings)
 {
     qRegisterMetaType<SEventSortProxyModel*>();
-    qRegisterMetaType<SEventModel*>();
-    qRegisterMetaType<SPersonModel*>();
+    qRegisterMetaType<SObjectModel*>();
     qRegisterMetaType<SSettings*>();
     qRegisterMetaType<SCalendar*>();
+    qRegisterMetaType<STimeline*>();
     init();
 
     if (settings->autoLoadLastFile) {
@@ -76,7 +75,9 @@ void STimeline::load(const QString &path)
     mEventModel->fromJson(mainObj.value(Tags::events).toArray());
     mSettings->author = mainObj.value(Tags::author).toString();
     mPersonModel->fromJson(mainObj.value(Tags::people).toArray());
-    // TODO: plug in all other objects
+    mObjectModel->fromJson(mainObj.value(Tags::objects).toArray());
+    mPlaceModel->fromJson(mainObj.value(Tags::places).toArray());
+    mMapModel->fromJson(mainObj.value(Tags::maps).toArray());
 
     mEventModelProxy->sort(0);
 }
@@ -101,7 +102,9 @@ void STimeline::save(const QString &path) const
     mainObj.insert(Tags::calendar, mCalendar->toJson());
     mainObj.insert(Tags::events, mEventModel->toJson());
     mainObj.insert(Tags::people, mPersonModel->toJson());
-    // TODO: plug in all other objects
+    mainObj.insert(Tags::objects, mObjectModel->toJson());
+    mainObj.insert(Tags::places, mPlaceModel->toJson());
+    mainObj.insert(Tags::maps, mMapModel->toJson());
 
     // TODO: check if all data was written successfully
     const QByteArray data(QJsonDocument(mainObj).toJson(QJsonDocument::Indented));
@@ -118,15 +121,44 @@ QByteArray STimeline::generateId() const
     return SUtils::generateId();
 }
 
+SObjectModel *STimeline::model(const QString &type) const
+{
+    return model(int(SObject::stringToType(type)));
+}
+
+SObjectModel *STimeline::model(const int type) const
+{
+    auto typeEnum = SObject::ObjectType(type);
+
+    if (typeEnum == SObject::ObjectType::Event) {
+        return mEventModel;
+    } else if (typeEnum == SObject::ObjectType::Person) {
+        return mPersonModel;
+    } else if (typeEnum == SObject::ObjectType::Object) {
+        return mObjectModel;
+    } else if (typeEnum == SObject::ObjectType::Place) {
+        return mPlaceModel;
+    } else if (typeEnum == SObject::ObjectType::Map) {
+        return mMapModel;
+    } else {
+        qDebug(stimeline) << "Model not found for type" << type
+                          << SObject::typeToString(typeEnum);
+        return nullptr;
+    }
+}
+
 void STimeline::init()
 {
     qCDebug(stimeline) << "Initializing default timeline...";
     mCalendar = new SCalendar(this);
-    mEventModel = new SEventModel(this);
+    mEventModel = new SObjectModel(this);
     mEventModelProxy = new SEventSortProxyModel(this);
     mEventModelProxy->setSourceModel(mEventModel);
     mEventModelProxy->sort(0);
-    mPersonModel = new SPersonModel(this);
+    mPersonModel = new SObjectModel(this);
+    mObjectModel = new SObjectModel(this);
+    mPlaceModel = new SObjectModel(this);
+    mMapModel = new SObjectModel(this);
 }
 
 void STimeline::reportError(const QString &message) const

@@ -1,7 +1,7 @@
-#ifndef SUTILS_H
-#define SUTILS_H
+#pragma once
 
 #include <QByteArray>
+#include <QString>
 
 // TODO: make Singleton?
 class SUtils
@@ -11,5 +11,3 @@ public:
 
     static QByteArray generateId();
 };
-
-#endif // SUTILS_H

@@ -1,5 +1,4 @@
-#ifndef SDATETIME_H
-#define SDATETIME_H
+#pragma once
 
 #include <QString>
 #include <QObject>
@@ -34,5 +33,3 @@ public:
     uint minute = 1;
     uint hour = 1;
 };
-
-#endif // SDATETIME_H

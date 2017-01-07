@@ -1,4 +1,5 @@
 #include "sqmlassistant.h"
+#include "sobject.h"
 
 SQmlAssistant::SQmlAssistant(QObject *parent) : QObject(parent)
 {
@@ -8,6 +9,11 @@ SQmlAssistant::SQmlAssistant(QObject *parent) : QObject(parent)
 int SQmlAssistant::buttonMargin() const
 {
     return 25;
+}
+
+QString SQmlAssistant::typeToString(const QString &type) const
+{
+    return SObject::typeToString(type);
 }
 
 QObject *SQmlAssistant::assistantSingletonProvider(QQmlEngine *engine, QJSEngine *scriptEngine)

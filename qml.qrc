@@ -1,12 +1,12 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/main.qml</file>
-        <file>qml/EventCard.qml</file>
-        <file>qml/EventEditor.qml</file>
-        <file>qml/DateTimeEditor.qml</file>
-        <file>qml/STumbler.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>qml/main.qml</file>
+        <file>qml/STumbler.qml</file>
         <file>qml/EventTimeline.qml</file>
         <file>qml/views/SItemListView.qml</file>
+        <file>qml/cards/ObjectCard.qml</file>
+        <file>qml/editors/DateTimeEditor.qml</file>
+        <file>qml/editors/ObjectEditor.qml</file>
     </qresource>
 </RCC>

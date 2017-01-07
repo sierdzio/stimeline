@@ -1,5 +1,4 @@
-#ifndef STIMELINE_H
-#define STIMELINE_H
+#pragma once
 
 #include <QString>
 #include <QObject>
@@ -9,19 +8,21 @@ Q_DECLARE_LOGGING_CATEGORY(stimeline)
 
 class SCalendar;
 class SSettings;
-class SEventModel;
+class SObjectModel;
 class SEventSortProxyModel;
-class SPersonModel;
 
 class STimeline : public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(SEventSortProxyModel* eventModelProxy MEMBER mEventModelProxy CONSTANT)
-    Q_PROPERTY(SEventModel* eventModel MEMBER mEventModel CONSTANT)
+    Q_PROPERTY(SObjectModel* eventModel MEMBER mEventModel CONSTANT)
+    Q_PROPERTY(SObjectModel* personModel MEMBER mPersonModel CONSTANT)
+    Q_PROPERTY(SObjectModel* objectModel MEMBER mObjectModel CONSTANT)
+    Q_PROPERTY(SObjectModel* placeModel MEMBER mPlaceModel CONSTANT)
+    Q_PROPERTY(SObjectModel* mapModel MEMBER mMapModel CONSTANT)
     Q_PROPERTY(SSettings* settings MEMBER mSettings CONSTANT)
     Q_PROPERTY(SCalendar* calendar MEMBER mCalendar CONSTANT)
-    Q_PROPERTY(SPersonModel* personModel MEMBER mPersonModel CONSTANT)
 
 public:
     STimeline(SSettings *settings = nullptr, QObject *parent = nullptr);
@@ -31,6 +32,8 @@ public slots:
     void load(const QString &path);
     void save(const QString &path) const;
     QByteArray generateId() const;
+    SObjectModel *model(const QString &type) const;
+    SObjectModel *model(const int type) const;
 
 signals:
     void error(const QString &message) const;
@@ -41,15 +44,11 @@ private:
     QString cleanPath(const QString &urlPath) const;
 
     SSettings *mSettings = nullptr;
-    SEventModel *mEventModel = nullptr;
     SEventSortProxyModel *mEventModelProxy = nullptr;
     SCalendar *mCalendar = nullptr;
-    SPersonModel *mPersonModel = nullptr;
-
-    // TODO: add:
-    // Objects
-    // Places
-    // Maps
+    SObjectModel *mEventModel = nullptr;
+    SObjectModel *mPersonModel = nullptr;
+    SObjectModel *mObjectModel = nullptr;
+    SObjectModel *mPlaceModel = nullptr;
+    SObjectModel *mMapModel = nullptr;
 };
-
-#endif // STIMELINE_H

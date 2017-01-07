@@ -1,5 +1,4 @@
-#ifndef SSETTINGS_H
-#define SSETTINGS_H
+#pragma once
 
 #include <QString>
 #include <QObject>
@@ -35,5 +34,3 @@ signals:
     void lastSaveFilePathChanged(const QString &newPath) const;
     void authorChanged(const QString &author) const;
 };
-
-#endif // SSETTINGS_H

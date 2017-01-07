@@ -1,14 +1,16 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 import Assistant 1.0
 
 Frame {
-    property alias eventId: eventId.text
-    property alias name: eventName.text
-    property alias description: eventDescription.text
-    property alias from: eventFrom.text
-    property alias to: eventTo.text
+    property alias objectId: objectId.text
+    property alias type: type.text
+    property alias name: name.text
+    property alias picturePath: picturePath.source
+    property alias description: description.text
+    property alias from: from.text
+    property alias to: to.text
 
     signal edit()
 
@@ -25,10 +27,10 @@ Frame {
         }
         width: 35
         height: width
-        text: "DEL"
+        text: qsTr("DEL")
         font.pointSize: 8
 
-        onClicked: Timeline.eventModel.removeEvent(eventId.text)
+        onClicked: Timeline.eventModel.removeEvent(objectId.text)
     }
 
     GridLayout {
@@ -39,29 +41,40 @@ Frame {
         columns: 2
 
         Label {
-            id: eventId
+            id: objectId
             text: "default"
             visible: false
         }
 
         Label {
-            id: eventName
+            id: type
+            text: "None"
+            visible: false
+        }
+
+        Image {
+            id: picturePath
+            source: ""
+        }
+
+        Label {
+            id: name
             text: "default"
         }
 
         Label {
-            id: eventDescription
+            id: description
             text: "default"
             Layout.columnSpan: 2
         }
 
         Label {
-            id: eventFrom
+            id: from
             text: "default"
         }
 
         Label {
-            id: eventTo
+            id: to
             text: "default"
         }
     }

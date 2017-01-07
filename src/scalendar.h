@@ -1,5 +1,4 @@
-#ifndef SCALENDAR_H
-#define SCALENDAR_H
+#pragma once
 
 #include <QString>
 #include <QObject>
@@ -86,5 +85,3 @@ private:
     uint mMinutesInHour = 60;
     uint mHoursInDay = 24;
 };
-
-#endif // SCALENDAR_H

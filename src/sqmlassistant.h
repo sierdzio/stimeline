@@ -1,5 +1,4 @@
-#ifndef SQMLASSISTANT_H
-#define SQMLASSISTANT_H
+#pragma once
 
 #include <QObject>
 
@@ -19,13 +18,11 @@ public:
     };
     Q_ENUM(States)
 
-
     explicit SQmlAssistant(QObject *parent = 0);
 
     int buttonMargin() const;
+    Q_INVOKABLE QString typeToString(const QString &type) const;
 
-    // First, define the singleton type provider function (callback).
+    // Define the singleton type provider function (callback).
     static QObject *assistantSingletonProvider(QQmlEngine *engine, QJSEngine *scriptEngine);
 };
-
-#endif // SQMLASSISTANT_H
