@@ -18,7 +18,7 @@ class STimeline : public QObject
     Q_PROPERTY(SEventSortProxyModel* eventModelProxy MEMBER mEventModelProxy CONSTANT)
     Q_PROPERTY(SObjectModel* eventModel MEMBER mEventModel CONSTANT)
     Q_PROPERTY(SObjectModel* personModel MEMBER mPersonModel CONSTANT)
-    Q_PROPERTY(SObjectModel* objectModel MEMBER mObjectModel CONSTANT)
+    Q_PROPERTY(SObjectModel* artifactModel MEMBER mArtifactModel CONSTANT)
     Q_PROPERTY(SObjectModel* placeModel MEMBER mPlaceModel CONSTANT)
     Q_PROPERTY(SObjectModel* mapModel MEMBER mMapModel CONSTANT)
     Q_PROPERTY(SSettings* settings MEMBER mSettings CONSTANT)
@@ -41,14 +41,13 @@ signals:
 private:
     void init();
     void reportError(const QString &message) const;
-    QString cleanPath(const QString &urlPath) const;
 
     SSettings *mSettings = nullptr;
     SEventSortProxyModel *mEventModelProxy = nullptr;
     SCalendar *mCalendar = nullptr;
     SObjectModel *mEventModel = nullptr;
     SObjectModel *mPersonModel = nullptr;
-    SObjectModel *mObjectModel = nullptr;
+    SObjectModel *mArtifactModel = nullptr;
     SObjectModel *mPlaceModel = nullptr;
     SObjectModel *mMapModel = nullptr;
 };

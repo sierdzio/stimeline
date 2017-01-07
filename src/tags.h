@@ -16,7 +16,7 @@ static const QByteArray picturePath("picturePath");
 // Object types:
 static const QByteArray events("Events");
 static const QByteArray people("People");
-static const QByteArray objects("Objects");
+static const QByteArray artifacts("Artifacts");
 static const QByteArray places("Places");
 static const QByteArray maps("Maps");
 // Calendar:

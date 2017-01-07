@@ -23,6 +23,7 @@ public:
     int buttonMargin() const;
     Q_INVOKABLE QString typeToString(const QString &type) const;
     Q_INVOKABLE static QByteArray generateId();
+    static QString cleanPath(const QString &urlPath);
 
     // Define the singleton type provider function (callback).
     static QObject *assistantSingletonProvider(QQmlEngine *engine, QJSEngine *scriptEngine);

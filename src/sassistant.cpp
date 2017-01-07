@@ -27,6 +27,16 @@ QByteArray SAssistant::generateId()
     return result;
 }
 
+QString SAssistant::cleanPath(const QString &urlPath)
+{
+    const QLatin1String fileUrl("file://");
+    if (urlPath.startsWith(fileUrl)) {
+        return urlPath.mid(fileUrl.size());
+    }
+
+    return urlPath;
+}
+
 QObject *SAssistant::assistantSingletonProvider(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
     Q_UNUSED(engine)

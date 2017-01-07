@@ -142,11 +142,11 @@ ApplicationWindow {
         }
 
         SItemListView {
-            id: pageObjects
+            id: pageArtifacts
             model: Timeline.objectModel
             delegate: ObjectCard {
                 objectId: model.id
-                type: SObject.Object
+                type: SObject.Artifact
                 name: model.name
                 picturePath: model.picturePath
                 description: model.description
@@ -157,7 +157,7 @@ ApplicationWindow {
                 onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
-            onClicked: openEditor(Assistant.generateId(), SObject.Object)
+            onClicked: openEditor(Assistant.generateId(), SObject.Artifact)
         }
 
         SItemListView {
@@ -326,7 +326,7 @@ ApplicationWindow {
             text: qsTr("People")
         }
         TabButton {
-            text: qsTr("Objects")
+            text: qsTr("Artifacts")
         }
         TabButton {
             text: qsTr("Places")

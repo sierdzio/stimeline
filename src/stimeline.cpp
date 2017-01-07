@@ -3,6 +3,7 @@
 #include "sobjectmodel.h"
 #include "seventsortproxymodel.h"
 #include "ssettings.h"
+#include "sassistant.h"
 #include "tags.h"
 
 #include <QJsonDocument>
@@ -44,7 +45,7 @@ STimeline::~STimeline()
 
 void STimeline::load(const QString &path)
 {
-    const QString parsedPath(cleanPath(path));
+    const QString parsedPath(SAssistant::cleanPath(path));
     QFile file(parsedPath);
 
     if (file.exists() == false) {
@@ -74,7 +75,7 @@ void STimeline::load(const QString &path)
     mEventModel->fromJson(mainObj.value(Tags::events).toArray());
     mSettings->author = mainObj.value(Tags::author).toString();
     mPersonModel->fromJson(mainObj.value(Tags::people).toArray());
-    mObjectModel->fromJson(mainObj.value(Tags::objects).toArray());
+    mArtifactModel->fromJson(mainObj.value(Tags::artifacts).toArray());
     mPlaceModel->fromJson(mainObj.value(Tags::places).toArray());
     mMapModel->fromJson(mainObj.value(Tags::maps).toArray());
 
@@ -83,7 +84,7 @@ void STimeline::load(const QString &path)
 
 void STimeline::save(const QString &path) const
 {
-    QString parsedPath(cleanPath(path));
+    QString parsedPath(SAssistant::cleanPath(path));
     QFile file(parsedPath);
 
     if (file.open(QFile::WriteOnly | QFile::Text) == false) {
@@ -101,7 +102,7 @@ void STimeline::save(const QString &path) const
     mainObj.insert(Tags::calendar, mCalendar->toJson());
     mainObj.insert(Tags::events, mEventModel->toJson());
     mainObj.insert(Tags::people, mPersonModel->toJson());
-    mainObj.insert(Tags::objects, mObjectModel->toJson());
+    mainObj.insert(Tags::artifacts, mArtifactModel->toJson());
     mainObj.insert(Tags::places, mPlaceModel->toJson());
     mainObj.insert(Tags::maps, mMapModel->toJson());
 
@@ -128,8 +129,8 @@ SObjectModel *STimeline::model(const int type) const
         return mEventModel;
     } else if (typeEnum == SObject::ObjectType::Person) {
         return mPersonModel;
-    } else if (typeEnum == SObject::ObjectType::Object) {
-        return mObjectModel;
+    } else if (typeEnum == SObject::ObjectType::Artifact) {
+        return mArtifactModel;
     } else if (typeEnum == SObject::ObjectType::Place) {
         return mPlaceModel;
     } else if (typeEnum == SObject::ObjectType::Map) {
@@ -150,7 +151,7 @@ void STimeline::init()
     mEventModelProxy->setSourceModel(mEventModel);
     mEventModelProxy->sort(0);
     mPersonModel = new SObjectModel(this);
-    mObjectModel = new SObjectModel(this);
+    mArtifactModel = new SObjectModel(this);
     mPlaceModel = new SObjectModel(this);
     mMapModel = new SObjectModel(this);
 }
@@ -159,14 +160,4 @@ void STimeline::reportError(const QString &message) const
 {
     qCDebug(stimeline) << message;
     emit error(message);
-}
-
-QString STimeline::cleanPath(const QString &urlPath) const
-{
-    const QLatin1String fileUrl("file://");
-    if (urlPath.startsWith(fileUrl)) {
-        return urlPath.mid(fileUrl.size());
-    }
-
-    return urlPath;
 }

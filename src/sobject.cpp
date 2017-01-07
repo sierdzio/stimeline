@@ -8,12 +8,16 @@
 Q_LOGGING_CATEGORY(sevent, "SEvent")
 
 /*!
- * \class sEvent
+ * \class SObject
  *
- * \brief Base class for all events in a timeline.
+ * \brief Base class for all events in a timeline and other objects.
  *
- * Base class for all events. Events can be chained into Plots using their IDs
- * and parent-child hierarchy.
+ * Base class for all objects. An object can be:
+ * \li an event
+ * \li a person
+ * \li an artifact
+ * \li a place
+ * \li a map
  */
 
 /*!

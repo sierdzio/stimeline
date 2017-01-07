@@ -38,7 +38,7 @@ public:
         None = 0,
         Event,
         Person,
-        Object,
+        Artifact,
         Place,
         Map
     }; Q_ENUM(ObjectType)
