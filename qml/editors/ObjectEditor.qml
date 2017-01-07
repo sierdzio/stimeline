@@ -36,7 +36,7 @@ Popup {
         columns: 2
 
         Label {
-            text: qsTr("Edit " + Assistant.typeToString(type)) // TODO: translate Type!
+            text: qsTr("Edit %1").arg(Assistant.typeToString(type)) // TODO: translate Type!
             Layout.columnSpan: 2
         }
 
