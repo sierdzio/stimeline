@@ -144,7 +144,7 @@ ApplicationWindow {
 
         SItemListView {
             id: pageArtifacts
-            model: Timeline.objectModel
+            model: Timeline.artifactModel
             delegate: ObjectCard {
                 objectId: model.id
                 type: SObject.Artifact

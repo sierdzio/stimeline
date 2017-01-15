@@ -6,12 +6,12 @@ import Assistant 1.0
 Popup {
     property string objectId: ""
     property string type: ""
-    property alias name: name.text
-    property alias picturePath: picturePath.source
-    property alias description: description.text
-    property alias from: from.text
-    property alias to: to.text
-    property var __editControl: from
+    property alias name: nameLabel.text
+    property alias picturePath: picturePathLabel.source
+    property alias description: descriptionLabel.text
+    property alias from: fromLabel.text
+    property alias to: toLabel.text
+    property var __editControl: fromLabel
     signal finished()
     signal canceled()
 
@@ -40,7 +40,7 @@ Popup {
         }
 
         Image {
-            id: picturePath
+            id: picturePathLabel
         }
 
         Label {
@@ -48,7 +48,7 @@ Popup {
         }
 
         TextField {
-            id: name
+            id: nameLabel
         }
 
         Label {
@@ -56,7 +56,7 @@ Popup {
         }
 
         TextField {
-            id: description
+            id: descriptionLabel
         }
 
         Label {
@@ -64,7 +64,7 @@ Popup {
         }
 
         Label {
-            id: from
+            id: fromLabel
             text: "1-1-1 1:1:1"
 
             MouseArea {
@@ -82,7 +82,7 @@ Popup {
         }
 
         Label {
-            id: to
+            id: toLabel
             text: "1-1-1 1:1:1"
 
             MouseArea {

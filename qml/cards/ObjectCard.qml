@@ -4,13 +4,13 @@ import QtQuick.Controls 2.1
 import Assistant 1.0
 
 Frame {
-    property alias objectId: objectId.text
-    property alias type: type.text
-    property alias name: name.text
-    property alias picturePath: picturePath.source
-    property alias description: description.text
-    property alias from: from.text
-    property alias to: to.text
+    property alias objectId: objectIdLabel.text
+    property alias type: typeLabel.text
+    property alias name: nameLabel.text
+    property alias picturePath: picturePathLabel.source
+    property alias description: descriptionLabel.text
+    property alias from: fromLabel.text
+    property alias to: toLabel.text
 
     signal edit()
 
@@ -30,7 +30,7 @@ Frame {
         text: qsTr("DEL")
         font.pointSize: 8
 
-        onClicked: Timeline.model(type).removeObject(objectId.text)
+        onClicked: Timeline.model(type).removeObject(objectId)
     }
 
     GridLayout {
@@ -41,40 +41,40 @@ Frame {
         columns: 2
 
         Label {
-            id: objectId
+            id: objectIdLabel
             text: "default"
             visible: false
         }
 
         Label {
-            id: type
-            text: "None"
+            id: typeLabel
+            text: "No type"
             visible: false
         }
 
         Image {
-            id: picturePath
+            id: picturePathLabel
             source: ""
         }
 
         Label {
-            id: name
+            id: nameLabel
             text: "default"
         }
 
         Label {
-            id: description
+            id: descriptionLabel
             text: "default"
             Layout.columnSpan: 2
         }
 
         Label {
-            id: from
+            id: fromLabel
             text: "default"
         }
 
         Label {
-            id: to
+            id: toLabel
             text: "default"
         }
     }
