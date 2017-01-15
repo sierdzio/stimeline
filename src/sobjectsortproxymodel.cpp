@@ -1,14 +1,14 @@
-#include "seventsortproxymodel.h"
+#include "sobjectsortproxymodel.h"
 #include "sdatetime.h"
 
 //#include <QDebug>
 
-SEventSortProxyModel::SEventSortProxyModel(QObject *parent)
+SObjectSortProxyModel::SObjectSortProxyModel(QObject *parent)
     : QSortFilterProxyModel (parent)
 {
 }
 
-bool SEventSortProxyModel::lessThan(const QModelIndex &left,
+bool SObjectSortProxyModel::lessThan(const QModelIndex &left,
                                     const QModelIndex &right) const
 {
     const QVariant leftData = sourceModel()->data(left, Qt::UserRole + 4);

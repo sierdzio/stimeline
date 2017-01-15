@@ -9,13 +9,13 @@ Q_DECLARE_LOGGING_CATEGORY(stimeline)
 class SCalendar;
 class SSettings;
 class SObjectModel;
-class SEventSortProxyModel;
+class SObjectSortProxyModel;
 
 class STimeline : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(SEventSortProxyModel* eventModelProxy MEMBER mEventModelProxy CONSTANT)
+    Q_PROPERTY(SObjectSortProxyModel* eventModelProxy MEMBER mEventModelProxy CONSTANT)
     Q_PROPERTY(SObjectModel* eventModel MEMBER mEventModel CONSTANT)
     Q_PROPERTY(SObjectModel* personModel MEMBER mPersonModel CONSTANT)
     Q_PROPERTY(SObjectModel* artifactModel MEMBER mArtifactModel CONSTANT)
@@ -43,7 +43,7 @@ private:
     void reportError(const QString &message) const;
 
     SSettings *mSettings = nullptr;
-    SEventSortProxyModel *mEventModelProxy = nullptr;
+    SObjectSortProxyModel *mEventModelProxy = nullptr;
     SCalendar *mCalendar = nullptr;
     SObjectModel *mEventModel = nullptr;
     SObjectModel *mPersonModel = nullptr;

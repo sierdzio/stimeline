@@ -11,7 +11,7 @@
 Q_DECLARE_LOGGING_CATEGORY(sevent)
 
 class SObjectModel;
-class SEventSortProxyModel;
+class SObjectSortProxyModel;
 
 class SObject
 {
@@ -26,7 +26,7 @@ class SObject
     Q_PROPERTY(SDateTime to MEMBER mTo)
 
     friend class SObjectModel;
-    friend class SEventSortProxyModel;
+    friend class SObjectSortProxyModel;
 
 public:
     enum class InitialisationOption {
