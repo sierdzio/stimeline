@@ -94,6 +94,7 @@ ApplicationWindow {
 
         Page {
             id: pageTimeline
+            visible: false
 
             EventTimeline {
                 id: eventTimeline

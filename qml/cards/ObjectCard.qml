@@ -30,7 +30,7 @@ Frame {
         text: qsTr("DEL")
         font.pointSize: 8
 
-        onClicked: Timeline.eventModel.removeEvent(objectId.text)
+        onClicked: Timeline.model(type).removeObject(objectId.text)
     }
 
     GridLayout {

@@ -106,6 +106,8 @@ void SObjectModel::updateObject(const QString &id, const QString &type,
                                 const QString &description, const QString &from,
                                 const QString &to)
 {
+    qDebug() << "UPDATE:" << id << type << name;
+
     const int index = findObjectIndex(id.toLatin1());
 
     // Event does not exist - create it instead

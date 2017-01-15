@@ -71,9 +71,10 @@ void STimeline::load(const QString &path)
     }
 
     QJsonObject mainObj(doc.object());
+    mSettings->author = mainObj.value(Tags::author).toString();
+
     mCalendar->fromJson(mainObj.value(Tags::calendar).toArray());
     mEventModel->fromJson(mainObj.value(Tags::events).toArray());
-    mSettings->author = mainObj.value(Tags::author).toString();
     mPersonModel->fromJson(mainObj.value(Tags::people).toArray());
     mArtifactModel->fromJson(mainObj.value(Tags::artifacts).toArray());
     mPlaceModel->fromJson(mainObj.value(Tags::places).toArray());

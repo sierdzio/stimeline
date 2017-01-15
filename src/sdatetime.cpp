@@ -42,6 +42,11 @@ bool SDateTime::operator<(const SDateTime &other) const {
 
 SDateTime SDateTime::fromString(const QString &dateTime)
 {
+    if (dateTime.isEmpty()) {
+        //qDebug(sdatetime) << "DateTime is empty!";
+        return SDateTime();
+    }
+
     // "1234-12-24 11:11:11"
     const QStringList dateAndTime(dateTime.split(QLatin1String(" "),
                                                  QString::KeepEmptyParts,

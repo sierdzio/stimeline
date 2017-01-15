@@ -27,7 +27,6 @@ Popup {
 
     DateTimeEditor {
         id: dateTimeEditor
-
         onFinished: __editControl.text = dateTimeEditor.dateTime;
     }
 

@@ -24,7 +24,7 @@ QByteArray SAssistant::generateId()
     const QByteArray msecs(QByteArray::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch()));
     const QByteArray result (QCryptographicHash::hash(msecs + QByteArray::number(qrand()) + "AA11",
                                                       QCryptographicHash::Sha1));
-    return result;
+    return result.toHex();
 }
 
 QString SAssistant::cleanPath(const QString &urlPath)
