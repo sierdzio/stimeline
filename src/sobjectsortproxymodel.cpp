@@ -11,8 +11,8 @@ SObjectSortProxyModel::SObjectSortProxyModel(QObject *parent)
 bool SObjectSortProxyModel::lessThan(const QModelIndex &left,
                                     const QModelIndex &right) const
 {
-    const QVariant leftData = sourceModel()->data(left, Qt::UserRole + 4);
-    const QVariant rightData = sourceModel()->data(right, Qt::UserRole + 4);
+    const QVariant leftData = sourceModel()->data(left, Qt::UserRole + 6);
+    const QVariant rightData = sourceModel()->data(right, Qt::UserRole + 6);
     const SDateTime leftDT = SDateTime::fromString(leftData.toString());
     const SDateTime rightDT = SDateTime::fromString(rightData.toString());
 
