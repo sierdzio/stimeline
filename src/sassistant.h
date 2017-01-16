@@ -20,9 +20,10 @@ public:
 
     explicit SAssistant(QObject *parent = 0);
 
-    int buttonMargin() const;
-    Q_INVOKABLE QString typeToString(const QString &type) const;
+    static int buttonMargin();
+    Q_INVOKABLE static QString typeToString(const QString &type);
     Q_INVOKABLE static QByteArray generateId();
+    static QByteArray fileChecksum(const QString &filePath);
     static QString cleanPath(const QString &urlPath);
 
     // Define the singleton type provider function (callback).

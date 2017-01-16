@@ -2,12 +2,13 @@ import QtQuick 2.8
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.1
 import Assistant 1.0
+import "../items"
 
 Frame {
     property alias objectId: objectIdLabel.text
     property alias type: typeLabel.text
     property alias name: nameLabel.text
-    property alias picturePath: picturePathLabel.source
+    property alias picturePath: picturePathLabel.relativeSource
     property alias description: descriptionLabel.text
     property alias from: fromLabel.text
     property alias to: toLabel.text
@@ -52,9 +53,10 @@ Frame {
             visible: false
         }
 
-        Image {
+        SImage {
             id: picturePathLabel
-            source: ""
+            width: 40
+            height: 40
         }
 
         Label {

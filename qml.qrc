@@ -8,5 +8,7 @@
         <file>qml/cards/ObjectCard.qml</file>
         <file>qml/editors/DateTimeEditor.qml</file>
         <file>qml/editors/ObjectEditor.qml</file>
+        <file>qml/editors/ImageChooser.qml</file>
+        <file>qml/items/SImage.qml</file>
     </qresource>
 </RCC>

@@ -10,6 +10,8 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
+#include <QDir>
+#include <QFileInfo>
 #include <QFile>
 #include <QCoreApplication>
 #include <QDateTime>
@@ -45,6 +47,7 @@ STimeline::~STimeline()
 
 void STimeline::load(const QString &path)
 {
+    // TODO: add picture cache filling!
     const QString parsedPath(SAssistant::cleanPath(path));
     QFile file(parsedPath);
 
@@ -115,6 +118,56 @@ void STimeline::save(const QString &path) const
                            << data.size() << "Bytes written:" << bytesWritten;
     }
     file.close();
+}
+
+/*!
+ * Loads a new picture from \a absolutePath into pictures directory and returns
+ * the relative picture path. That path needs to be appended to basePicturePath().
+ *
+ * STimeline supports one picture per SObject. All pictures selected by user from
+ * the hard drive are copied into pictures directory. The name of the picture is
+ * changed to <file SHA1 checksum>.<original extension>. This allows us to quickly
+ * recognise when a similar file is already present in pictures directory and
+ * refrain from storing it again. So, the "pictures" directory acts like a simple
+ * cache/ deduplication storage.
+ */
+QString STimeline::loadPicture(const QString &absolutePath)
+{
+    const QString cleanedPath(SAssistant::cleanPath(absolutePath));
+    const QString basePath(basePicturePath());
+
+    QDir pictureDir(basePath);
+    if (!pictureDir.exists()) {
+        pictureDir.mkpath(pictureDir.absolutePath());
+    }
+
+    const QByteArray fileHash(SAssistant::fileChecksum(cleanedPath));
+    const QString result(fileHash + "." + QFileInfo(cleanedPath).suffix());
+
+    if (!mPictureCache.contains(fileHash)) {
+        // Add picture checksum to picture cache
+        mPictureCache.append(fileHash);
+        // Copy file to pictures dir
+        if (!QFile::copy(cleanedPath, pictureDir.absolutePath() + "/" + result)) {
+            qDebug(stimeline) << "Error while copying" << cleanedPath << "to"
+                              << pictureDir.absolutePath() + "/" + result;
+            return QString();
+        }
+    }
+
+    return result;
+}
+
+/*!
+ * This is where stimeline will look for pictures for SObjects. Returns an absolute
+ * path to "pictures" directory.
+ *
+ * Pictures dir will be located in the same dir as main .json file extracted from save.
+ */
+QString STimeline::basePicturePath() const
+{
+    return QFileInfo(mSettings->lastOpenFilePath).absolutePath()
+            + QStringLiteral("/pictures");
 }
 
 SObjectModel *STimeline::model(const QString &type) const

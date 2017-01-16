@@ -60,6 +60,7 @@ QJsonObject SObject::toJson() const
     result.insert(Tags::id, QJsonValue(QLatin1String(mId)));
     result.insert(Tags::type, typeToString(mType));
     result.insert(Tags::name, QJsonValue(mName));
+    result.insert(Tags::picturePath, QJsonValue(mPicturePath));
     result.insert(Tags::description, QJsonValue(mDescription));
     result.insert(Tags::from, QJsonValue(mFrom.toString()));
     result.insert(Tags::to, QJsonValue(mTo.toString()));
@@ -72,6 +73,7 @@ void SObject::fromJson(const QJsonObject &json)
     mId = json.value(Tags::id).toString().toLatin1();
     mType = stringToType(json.value(Tags::type).toString());
     mName = json.value(Tags::name).toString();
+    mPicturePath = json.value(Tags::picturePath).toString();
     mDescription = json.value(Tags::description).toString();
     mFrom = SDateTime::fromString(json.value(Tags::from).toString());
     mTo = SDateTime::fromString(json.value(Tags::to).toString());

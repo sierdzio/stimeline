@@ -1,0 +1,122 @@
+{
+    "Artifacts": [
+        {
+            "description": "Krgb",
+            "from": "1-1-1 1:1:1",
+            "id": "6981143e46dc14f635c2488597a00b4de07c2a1d",
+            "name": "Hm1",
+            "to": "1-1-1 1:1:1",
+            "type": "Artifact"
+        }
+    ],
+    "Calendar": [
+        {
+            "Months": [
+                {
+                    "January": 31
+                },
+                {
+                    "February": 28
+                },
+                {
+                    "March": 31
+                },
+                {
+                    "April": 30
+                },
+                {
+                    "May": 31
+                },
+                {
+                    "June": 30
+                },
+                {
+                    "July": 31
+                },
+                {
+                    "August": 31
+                },
+                {
+                    "September": 30
+                },
+                {
+                    "October": 31
+                },
+                {
+                    "November": 30
+                },
+                {
+                    "December": 31
+                }
+            ],
+            "daysInWeek": 7,
+            "daysInYear": 365,
+            "hoursInDay": 24,
+            "leapDayAddsToMonthNumber": 2,
+            "leapDayPerYear": 0.25,
+            "minutesInHour": 60,
+            "monthsInYear": 12,
+            "name": "Gregorian",
+            "secondsInMinute": 60
+        }
+    ],
+    "Events": [
+        {
+            "description": "Aha1",
+            "from": "1-1-1 1:1:1",
+            "id": "66cafa39652ace9d1ec9f9f40a2f1a2e8715d550",
+            "name": "Event 1",
+            "to": "1-1-1 1:1:1",
+            "type": "Event"
+        },
+        {
+            "description": "BBB",
+            "from": "1-1-3 1:1:4",
+            "id": "1c462dec69dfc2ada12db5a02e4dceaf04b40ef6",
+            "name": "Event 2",
+            "to": "1-1-3 1:1:7",
+            "type": "Event"
+        },
+        {
+            "description": "Heh :-)",
+            "from": "1-1-1 1:1:1",
+            "id": "0e543ad97df3903ec95cff53abdf866a658dc1b8",
+            "name": "E345",
+            "to": "1-1-1 1:1:1",
+            "type": "Event"
+        }
+    ],
+    "Maps": [
+        {
+            "description": "Max",
+            "from": "1-1-1 1:1:1",
+            "id": "b35c7fd93635ada805fd59b039554e0ad0350b3e",
+            "name": "Meh",
+            "to": "1-1-1 1:1:1",
+            "type": "Map"
+        }
+    ],
+    "People": [
+        {
+            "description": "bgbg",
+            "from": "1-1-1 1:1:1",
+            "id": "b2a5d2768a465f0145b02662220279222620fc10",
+            "name": "AAAA1",
+            "to": "1-1-1 1:1:1",
+            "type": "Person"
+        }
+    ],
+    "Places": [
+        {
+            "description": "Ygby!",
+            "from": "1-1-1 1:1:1",
+            "id": "e56c699f426371fb1cb371baa25016e9e389b14e",
+            "name": "UUi",
+            "to": "1-1-1 1:1:1",
+            "type": "Place"
+        }
+    ],
+    "author": "Testing Tom",
+    "timestamp": "2017-01-15T17:37:12Z",
+    "version": "0.2"
+}

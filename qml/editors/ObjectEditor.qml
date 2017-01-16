@@ -7,7 +7,7 @@ Popup {
     property string objectId: ""
     property string type: ""
     property alias name: nameLabel.text
-    property alias picturePath: picturePathLabel.source
+    property alias picturePath: picturePathLabel.path
     property alias description: descriptionLabel.text
     property alias from: fromLabel.text
     property alias to: toLabel.text
@@ -39,8 +39,10 @@ Popup {
             Layout.columnSpan: 2
         }
 
-        Image {
+        ImageChooser {
             id: picturePathLabel
+            Layout.columnSpan: 2
+            // TODO: display proper image when editing an existing object!
         }
 
         Label {

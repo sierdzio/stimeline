@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QVector>
 #include <QString>
 #include <QObject>
 
@@ -31,6 +32,8 @@ public:
 public slots:
     void load(const QString &path);
     void save(const QString &path) const;
+    QString loadPicture(const QString &absolutePath);
+    QString basePicturePath() const;
 
     SObjectModel *model(const QString &type) const;
     SObjectModel *model(const int type) const;
@@ -42,6 +45,7 @@ private:
     void init();
     void reportError(const QString &message) const;
 
+    QVector<QByteArray> mPictureCache;
     SSettings *mSettings = nullptr;
     SObjectSortProxyModel *mEventModelProxy = nullptr;
     SCalendar *mCalendar = nullptr;
