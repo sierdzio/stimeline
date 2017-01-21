@@ -42,6 +42,7 @@ ApplicationWindow {
         id: loadDialog
         title: qsTr("Please choose a timeline file")
         folder: Timeline.settings.lastOpenFilePath
+        nameFilters: ["Open timeline (*.json)", "Compressed timeline (*.stm)"]
         visible: false
         selectExisting : true
         selectFolder : false
@@ -59,6 +60,7 @@ ApplicationWindow {
         id: saveDialog
         title: qsTr("Please choose a timeline file")
         folder: Timeline.settings.lastSaveFilePath
+        nameFilters: ["Open timeline (*.json)", "Compressed timeline (*.stm)"]
         visible: false
         selectExisting : false
         selectFolder : false
