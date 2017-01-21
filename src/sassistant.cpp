@@ -14,6 +14,12 @@
  */
 
 /*!
+ * \enum SAssistant::States
+ *
+ * Typo-preventing convenience replacement for States strings in QML.
+ */
+
+/*!
  * \property SAssistant::buttonMargin
  *
  * The distance between a button and it's surrounding items.

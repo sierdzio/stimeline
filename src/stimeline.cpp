@@ -119,7 +119,6 @@ STimeline::~STimeline()
  */
 void STimeline::load(const QString &path)
 {
-    // TODO: add picture cache filling!
     const QString parsedPath(SAssistant::cleanPath(path));
     QFile file(parsedPath);
 
@@ -143,6 +142,13 @@ void STimeline::load(const QString &path)
 
     if (mSettings) {
         mSettings->lastOpenFilePath = parsedPath;
+    }
+
+    // Fill picture cache
+    mPictureCache.clear();
+    const QFileInfoList pics(QDir(basePicturePath()).entryInfoList(QDir::Files | QDir::NoDotAndDotDot));
+    for (auto pic: pics) {
+        mPictureCache.append(pic.baseName().toLatin1());
     }
 
     QJsonObject mainObj(doc.object());
