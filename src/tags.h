@@ -8,6 +8,8 @@
  * This helps to avoid typos and hard to detect errors.
  */
 namespace Tags {
+// General:
+static const QByteArray picturesDir("pictures");
 // Metadata:
 static const QByteArray version("version");
 static const QByteArray timestamp("timestamp");

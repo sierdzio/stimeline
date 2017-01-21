@@ -169,7 +169,7 @@ void STimeline::load(const QString &path)
  */
 void STimeline::save(const QString &path) const
 {
-    QString parsedPath(SAssistant::cleanPath(path));
+    const QString parsedPath(SAssistant::cleanPath(path));
     QFile file(parsedPath);
 
     if (file.open(QFile::WriteOnly | QFile::Text) == false) {
@@ -199,6 +199,22 @@ void STimeline::save(const QString &path) const
                            << data.size() << "Bytes written:" << bytesWritten;
     }
     file.close();
+
+    // Write all pictures
+    QDir pictureDir(QFileInfo(parsedPath).absoluteDir());
+    if (!pictureDir.exists(Tags::picturesDir)) {
+        pictureDir.mkdir(Tags::picturesDir);
+    }
+    pictureDir.cd(Tags::picturesDir);
+
+    const QStringList existingPics(pictureDir.entryList(QDir::Files | QDir::NoDotAndDotDot));
+    const QFileInfoList sourcePics(QDir(basePicturePath()).entryInfoList(QDir::Files | QDir::NoDotAndDotDot));
+    for (auto pic: sourcePics) {
+        if (!existingPics.contains(pic.fileName())) {
+            QFile::copy(basePicturePath() + "/" + pic.fileName(),
+                        pictureDir.absolutePath() + "/" + pic.fileName());
+        }
+    }
 }
 
 /*!
@@ -248,7 +264,7 @@ QString STimeline::loadPicture(const QString &absolutePath)
 QString STimeline::basePicturePath() const
 {
     return QFileInfo(mSettings->lastOpenFilePath).absolutePath()
-            + QStringLiteral("/pictures");
+            + QStringLiteral("/") + Tags::picturesDir;
 }
 
 /*!
