@@ -64,9 +64,13 @@ Frame {
             text: "default"
         }
 
+        // TODO: make description small & fading away when it is big.
+        // Add a button to show it all
         Label {
             id: descriptionLabel
             text: "default"
+            elide: Text.ElideRight
+            maximumLineCount: 2
             Layout.columnSpan: 2
         }
 

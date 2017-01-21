@@ -115,7 +115,7 @@ ApplicationWindow {
                 from: model.from
                 to: model.to
                 width: 350
-                height: 120
+                height: 140
                 onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
@@ -134,7 +134,7 @@ ApplicationWindow {
                 from: model.from
                 to: model.to
                 width: 350
-                height: 120
+                height: 140
                 onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
@@ -153,7 +153,7 @@ ApplicationWindow {
                 from: model.from
                 to: model.to
                 width: 350
-                height: 120
+                height: 140
                 onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
@@ -172,7 +172,7 @@ ApplicationWindow {
                 from: model.from
                 to: model.to
                 width: 350
-                height: 120
+                height: 140
                 onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
@@ -191,7 +191,7 @@ ApplicationWindow {
                 from: model.from
                 to: model.to
                 width: 350
-                height: 120
+                height: 140
                 onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
             }
 
