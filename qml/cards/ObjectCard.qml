@@ -70,6 +70,7 @@ Frame {
             id: descriptionLabel
             text: "default"
             elide: Text.ElideRight
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             maximumLineCount: 2
             Layout.columnSpan: 2
         }
