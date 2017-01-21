@@ -28,9 +28,9 @@ public:
     QString author = "Testing Tom";
 
 signals:
-    void autoSaveOnExitChanged(bool newValue) const;
-    void autoLoadLastFileChanged(bool newValue) const;
-    void lastOpenFilePathChanged(const QString &newPath) const;
-    void lastSaveFilePathChanged(const QString &newPath) const;
-    void authorChanged(const QString &author) const;
+    void autoSaveOnExitChanged(bool newValue) const; //!< K
+    void autoLoadLastFileChanged(bool newValue) const; //!< K
+    void lastOpenFilePathChanged(const QString &newPath) const; //!< K
+    void lastSaveFilePathChanged(const QString &newPath) const; //!< K
+    void authorChanged(const QString &author) const; //!< K
 };

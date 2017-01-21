@@ -41,13 +41,14 @@ public:
         Artifact,
         Place,
         Map
-    }; Q_ENUM(ObjectType)
+    };
+    Q_ENUM(ObjectType)
 
     SObject(InitialisationOption option = InitialisationOption::InitialiseId,
             ObjectType type = ObjectType::None);
     SObject(const QJsonObject &from);
 
-    QByteArray id() const;
+    QByteArray id() const; //!< K
     bool isValid() const;
 
     QJsonObject toJson() const;

@@ -18,6 +18,69 @@ Q_LOGGING_CATEGORY(sevent, "SEvent")
  * \li an artifact
  * \li a place
  * \li a map
+ *
+ * Every object, regardless of type, can have a name and description. Additionally,
+ * a picture can be provided. Pictures are stored separate from JSON data and
+ * referenced by a relative path.
+ *
+ * An object has a start date (from) and end date (to). They can be the same
+ * (meaning the object will have no duration; it will be a point in time).
+ */
+
+/*!
+ * \enum SObject::InitialisationOption
+ *
+ * SObject can be initialised with or without an ID. Please remember that in order
+ * to be usable, the object has to have an id.
+ */
+
+/*!
+ * \enum SObject::ObjectType
+ *
+ * Object type helps to determine what the given object is about. Also, different
+ * SObjectModels store different types of objects.
+ */
+
+/*!
+ * \property SObject::id
+ *
+ * Object ID. Should be unique.
+ */
+
+/*!
+ * \property SObject::type
+ *
+ * Object type.
+ */
+
+/*!
+ * \property SObject::name
+ *
+ * Object name.
+ */
+
+/*!
+ * \property SObject::picturePath
+ *
+ * Relative path to the picture representing this object.
+ */
+
+/*!
+ * \property SObject::description
+ *
+ * Object description.
+ */
+
+/*!
+ * \property SObject::from
+ *
+ * Beginning date of this object/ event.
+ */
+
+/*!
+ * \property SObject::to
+ *
+ * End date for this object/ event.
  */
 
 /*!
@@ -32,16 +95,25 @@ SObject::SObject(SObject::InitialisationOption option, ObjectType type)
     }
 }
 
+/*!
+ * Constructs a new SObject \a from JSON data. Useful when loading from file.
+ */
 SObject::SObject(const QJsonObject &from)
 {
     fromJson(from);
 }
 
+/*!
+ * Returns object's ID.
+ */
 QByteArray SObject::id() const
 {
     return mId;
 }
 
+/*!
+ * Reutrns true if object is valid (has an id).
+ */
 bool SObject::isValid() const
 {
     if (mId.isEmpty()) {
@@ -51,6 +123,9 @@ bool SObject::isValid() const
     return true;
 }
 
+/*!
+ * Returns object's JSON representation.
+ */
 QJsonObject SObject::toJson() const
 {
     // NOTE: to speed up this method (and thus file saving), it is possible to
@@ -68,6 +143,9 @@ QJsonObject SObject::toJson() const
     return result;
 }
 
+/*!
+ * Sets the object up based on \a json data.
+ */
 void SObject::fromJson(const QJsonObject &json)
 {
     mId = json.value(Tags::id).toString().toLatin1();
@@ -96,16 +174,25 @@ QString SObject::typeToString(const QString &type)
     return type;
 }
 
+/*!
+ * Returns a string name of given \a type.
+ */
 QString SObject::typeToString(const int type)
 {
     return typeToString(SObject::ObjectType(type));
 }
 
+/*!
+ * Returns a string name of given \a type.
+ */
 QString SObject::typeToString(const SObject::ObjectType type)
 {
     return QMetaEnum::fromType<SObject::ObjectType>().valueToKey(int(type));
 }
 
+/*!
+ * Converts given \a type name to enum value.
+ */
 SObject::ObjectType SObject::stringToType(const QString &type)
 {
     bool isNumber = false;

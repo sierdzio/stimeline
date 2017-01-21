@@ -7,17 +7,71 @@
 #include <QDebug>
 Q_LOGGING_CATEGORY(sdatetime, "SDateTime")
 
+/*!
+ * \class SDateTime
+ *
+ * Represents a certain point in time. Implementation is SCalendar-agnostic and
+ * can work with any calendar system.
+ */
+
+/*!
+ * \property SDateTime::day
+ *
+ * Current day of the month.
+ */
+
+/*!
+ * \property SDateTime::month
+ *
+ * Current month of the year.
+ */
+
+/*!
+ * \property SDateTime::year
+ *
+ * Current year.
+ */
+
+/*!
+ * \property SDateTime::second
+ *
+ * Current second.
+ */
+
+/*!
+ * \property SDateTime::minute
+ *
+ * Current minute.
+ */
+
+/*!
+ * \property SDateTime::hour
+ *
+ * Current hour.
+ */
+
+/*!
+ * Default constructor. Nothing interesting.
+ */
 SDateTime::SDateTime()
 {
-
 }
 
+/*!
+ * Returns true if this object and \a other are not the same.
+ */
 bool SDateTime::operator!=(const SDateTime &other) const {
     return !(day==other.day && month==other.month && year==other.year
              && second==other.second && minute==other.minute
              && hour==other.hour);
 }
 
+/*!
+ * Returns true if this object is earlier than \a other.
+ *
+ * Method is optimised, it checks biggest time periods first and then narrows
+ * down the comparison.
+ */
 bool SDateTime::operator<(const SDateTime &other) const {
     if (year < other.year) return true;
     if (year == other.year) {
@@ -40,6 +94,12 @@ bool SDateTime::operator<(const SDateTime &other) const {
     return false;
 }
 
+/*!
+ * Parses \a dateTime and returns corresponding SDateTime object. On error,
+ * a valid date is returned! (1-1-1 1:1:1)
+ *
+ * \todo Add invalid/ null date concept.
+ */
 SDateTime SDateTime::fromString(const QString &dateTime)
 {
     if (dateTime.isEmpty()) {
@@ -89,6 +149,9 @@ SDateTime SDateTime::fromString(const QString &dateTime)
     return result;
 }
 
+/*!
+ * Returns a string representation of current date, in format: yyyy-MM-dd hh:mm:ss.
+ */
 QString SDateTime::toString() const
 {
     QString result;
@@ -96,7 +159,7 @@ QString SDateTime::toString() const
     result = QString::number(year) + Tags::dateSeparator
             + QString::number(month) + Tags::dateSeparator
             + QString::number(day)
-            + QLatin1String(" ")
+            + QStringLiteral(" ")
             + QString::number(hour) + Tags::timeSeparator
             + QString::number(minute) + Tags::timeSeparator
             + QString::number(second);

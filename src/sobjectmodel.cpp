@@ -8,10 +8,28 @@
 
 Q_LOGGING_CATEGORY(sobjectmodel, "SObjectModel")
 
+/*!
+ * \class SObjectModel
+ *
+ * Model representing a collection of SObjects to Qt's MVC system.
+ */
+
+/*!
+ * \var SObjectModel::mObjects
+ *
+ * Holds all SObject instances.
+ */
+
+/*!
+ * Default constructor using \a parent. Move along.
+ */
 SObjectModel::SObjectModel(QObject *parent) : QAbstractListModel(parent)
 {
 }
 
+/*!
+ * Returns a has containing role indices and names.
+ */
 QHash<int, QByteArray> SObjectModel::roleNames() const {
     QHash<int, QByteArray> roles;
     int i = Qt::UserRole + 1;
@@ -25,12 +43,19 @@ QHash<int, QByteArray> SObjectModel::roleNames() const {
     return roles;
 }
 
+/*!
+ * Returns the overal number of SObjects. \a parent is unused.
+ */
 int SObjectModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return mObjects.count();
 }
 
+/*!
+ * Returns SObject data for given \a index and \a role. \a role needs to match
+ * one of roleNames().
+ */
 QVariant SObjectModel::data(const QModelIndex &index, int role) const
 {
     const int row = index.row();
@@ -49,6 +74,9 @@ QVariant SObjectModel::data(const QModelIndex &index, int role) const
     }
 }
 
+/*!
+ * Returns a JSON array containing all SObjects withing this model.
+ */
 QJsonArray SObjectModel::toJson() const
 {
     QJsonArray result;
@@ -62,6 +90,9 @@ QJsonArray SObjectModel::toJson() const
     return result;
 }
 
+/*!
+ * Populates the model with SObjects defined in \a json.
+ */
 void SObjectModel::fromJson(const QJsonArray &json)
 {
     beginResetModel();
@@ -101,6 +132,10 @@ void SObjectModel::addObject(const QString &id, const QString &type,
     endInsertRows();
 }
 
+/*!
+ * Updates a SObject recognised by \a id. All characteristics are updated:
+ * \a type, \a name, \a picturePath, \a description, \a from and \a to.
+ */
 void SObjectModel::updateObject(const QString &id, const QString &type,
                                 const QString &name, const QString &picturePath,
                                 const QString &description, const QString &from,
@@ -131,6 +166,9 @@ void SObjectModel::updateObject(const QString &id, const QString &type,
     emit dataChanged(modelIndex, modelIndex);
 }
 
+/*!
+ * Removes the object recognised by \a id.
+ */
 void SObjectModel::removeObject(const QString &id)
 {
     const int index = findObjectIndex(id.toLatin1());

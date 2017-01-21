@@ -6,29 +6,62 @@
 #include <QCryptographicHash>
 #include <QDebug>
 
+/*!
+ * \class SAssistant
+ *
+ * Utility class, provides a wide assortment of convenience methods. An instance
+ * is used as QML singleton, but the class is also available from C++.
+ */
+
+/*!
+ * \property SAssistant::buttonMargin
+ *
+ * The distance between a button and it's surrounding items.
+ */
+
+/*!
+ * Default constructor, taking in a QObject \a parent.
+ */
 SAssistant::SAssistant(QObject *parent) : QObject(parent)
 {
-
 }
 
+/*!
+ * Returns the default button margin: the distance between a button and it's
+ * surrounding items.
+ */
 int SAssistant::buttonMargin()
 {
     return 25;
 }
 
+/*!
+ * Converts numeric \a type (for example coming from QML) into a string representation
+ * of SObject::ObjectType enum and returns it.
+ */
 QString SAssistant::typeToString(const QString &type)
 {
     return SObject::typeToString(type);
 }
 
+/*!
+ * Returns a random ID generated based on some random numbers, current date and
+ * time and a short salt.
+ *
+ * IDs are SHA1 checksums.
+ */
 QByteArray SAssistant::generateId()
 {
     const QByteArray msecs(QByteArray::number(QDateTime::currentDateTimeUtc().toMSecsSinceEpoch()));
     const QByteArray result(QCryptographicHash::hash(msecs + QByteArray::number(qrand()) + "AA11",
-                                                      QCryptographicHash::Sha1));
+                                                     QCryptographicHash::Sha1));
     return result.toHex();
 }
 
+/*!
+ * Returns a SHA1 checksum of all data found under \a filePath or empty array
+ * on error.
+ */
 QByteArray SAssistant::fileChecksum(const QString &filePath)
 {
     QFile file(filePath);
@@ -40,6 +73,9 @@ QByteArray SAssistant::fileChecksum(const QString &filePath)
     return QCryptographicHash::hash(file.readAll(), QCryptographicHash::Sha1).toHex();
 }
 
+/*!
+ * Returns the \a urlPath stripped from "file://" prefix.
+ */
 QString SAssistant::cleanPath(const QString &urlPath)
 {
     const QLatin1String fileUrl("file://");
@@ -50,6 +86,9 @@ QString SAssistant::cleanPath(const QString &urlPath)
     return urlPath;
 }
 
+/*!
+ * Returns an instance of SAssistant to be used by QML \a engine and \a scriptEngine.
+ */
 QObject *SAssistant::assistantSingletonProvider(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
     Q_UNUSED(engine)

@@ -19,6 +19,71 @@
 
 Q_LOGGING_CATEGORY(stimeline, "STimeline")
 
+/*!
+ * \class STimeline
+ *
+ * Main class of the application, serves as the router between C++ and QML,
+ * manages current timeline, allows file saving and loading.
+ */
+
+/*!
+ * \fn STimeline::error(const QString &message)
+ *
+ * Emitted on error.
+ */
+
+/*!
+ * \property STimeline::eventModelProxy
+ *
+ * Used by QML to display events (sorted).
+ */
+
+/*!
+ * \property STimeline::eventModel
+ *
+ * Main event model (unsorted).
+ */
+
+/*!
+ * \property STimeline::personModel
+ *
+ * Model holding all people.
+ */
+
+/*!
+ * \property STimeline::artifactModel
+ *
+ * Model holding all artifacts.
+ */
+
+/*!
+ * \property STimeline::placeModel
+ *
+ * Model holding all places.
+ */
+
+/*!
+ * \property STimeline::mapModel
+ *
+ * Model holding all maps.
+ */
+
+/*!
+ * \property STimeline::settings
+ *
+ * Pointer to SSettings instance.
+ */
+
+/*!
+ * \property STimeline::calendar
+ *
+ * Pinter to current calendar system in use (SCalendar).
+ */
+
+/*!
+ * Constructor, requires a valid \a settings pointer and optionally a QObject
+ * \a parent.
+ */
 STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
     mSettings(settings)
 {
@@ -36,6 +101,10 @@ STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
     }
 }
 
+/*!
+ * If autoSaveOnExit is true, the destructor saves the timeline to predefined
+ * file.
+ */
 STimeline::~STimeline()
 {
     if (mSettings->autoSaveOnExit) {
@@ -45,6 +114,9 @@ STimeline::~STimeline()
     }
 }
 
+/*!
+ * Loads the whole timeline from a file under \a path.
+ */
 void STimeline::load(const QString &path)
 {
     // TODO: add picture cache filling!
@@ -86,6 +158,9 @@ void STimeline::load(const QString &path)
     mEventModelProxy->sort(0);
 }
 
+/*!
+ * Saves current timeline data to a file under \a path.
+ */
 void STimeline::save(const QString &path) const
 {
     QString parsedPath(SAssistant::cleanPath(path));
@@ -126,7 +201,7 @@ void STimeline::save(const QString &path) const
  *
  * STimeline supports one picture per SObject. All pictures selected by user from
  * the hard drive are copied into pictures directory. The name of the picture is
- * changed to <file SHA1 checksum>.<original extension>. This allows us to quickly
+ * changed to \<file SHA1 checksum\>.\<original extension\>. This allows us to quickly
  * recognise when a similar file is already present in pictures directory and
  * refrain from storing it again. So, the "pictures" directory acts like a simple
  * cache/ deduplication storage.
@@ -162,7 +237,7 @@ QString STimeline::loadPicture(const QString &absolutePath)
  * This is where stimeline will look for pictures for SObjects. Returns an absolute
  * path to "pictures" directory.
  *
- * Pictures dir will be located in the same dir as main .json file extracted from save.
+ * Pictures dir will be located in the same dir as main JSON extracted from save.
  */
 QString STimeline::basePicturePath() const
 {
@@ -170,11 +245,17 @@ QString STimeline::basePicturePath() const
             + QStringLiteral("/pictures");
 }
 
+/*!
+ * Returns the correct SObjectModel for given object \a type.
+ */
 SObjectModel *STimeline::model(const QString &type) const
 {
     return model(int(SObject::stringToType(type)));
 }
 
+/*!
+ * Returns the correct SObjectModel for given object \a type.
+ */
 SObjectModel *STimeline::model(const int type) const
 {
     auto typeEnum = SObject::ObjectType(type);
@@ -196,6 +277,9 @@ SObjectModel *STimeline::model(const int type) const
     }
 }
 
+/*!
+ * Initializes a new STimeline object.
+ */
 void STimeline::init()
 {
     qCDebug(stimeline) << "Initializing default timeline...";
@@ -210,6 +294,9 @@ void STimeline::init()
     mMapModel = new SObjectModel(this);
 }
 
+/*!
+ * Convenience method. Prints \a message and emits an error() signal.
+ */
 void STimeline::reportError(const QString &message) const
 {
     qCDebug(stimeline) << message;

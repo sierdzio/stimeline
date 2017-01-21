@@ -15,6 +15,7 @@
 Q_DECLARE_LOGGING_CATEGORY(smain)
 Q_LOGGING_CATEGORY(smain, "Main")
 
+//! Main routine. Fires up the QML engine
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);

@@ -9,17 +9,101 @@
 #include <QDebug>
 Q_LOGGING_CATEGORY(scalendar, "SCalendar")
 
+/*!
+ * \class SCalendar
+ *
+ * STimeline supports arbitrary calendar types and SCalendar is a representation
+ * of such system.
+ *
+ * The user can define any characteristics of the calendar:
+ * \li how long the year is
+ * \li month names and lenghts
+ * \li leap days
+ * \li week length
+ * And many more.
+ */
+
+/*!
+ * \property SCalendar::name
+ *
+ * Calendar name. Default is Gregorian.
+ */
+
+/*!
+ * \property SCalendar::daysInWeek
+ *
+ * Number of days in a week. Default value is 7.
+ */
+
+/*!
+ * \property SCalendar::daysInYear
+ *
+ * Number of days in a single (non-leap) year. Default is 356.
+ */
+
+/*!
+ * \property SCalendar::monthsInYear
+ *
+ * Number of months in a single year. Default is 12.
+ */
+
+/*!
+ * \property SCalendar::leapDayPerYear
+ *
+ * How much is a year longer than a full day. Default is 0.25 (so a leap year
+ * happens every 4 years).
+ */
+
+/*!
+ * \property SCalendar::leapDayAddsToMonthNumber
+ *
+ * Leap day should be added to this month number. Default is 2.
+ */
+
+/*!
+ * \property SCalendar::secondsInMinute
+ *
+ * Number of seconds in a single minute. Default is 60.
+ */
+
+/*!
+ * \property SCalendar::minutesInHour
+ *
+ * Number of minutes in a single hour. Default is 60
+ */
+
+/*!
+ * \property SCalendar::hoursInDay
+ *
+ * Number of hours in a single day. Default is 24.
+ */
+
+/*!
+ * Constructor - initializes the default Gregorian calendar. Accepts a QObject
+ * \a parent.
+ */
 SCalendar::SCalendar(QObject *parent) : QObject (parent)
 {
     qCDebug(scalendar) << "Initializing default (Gregorian) calendar";
     checkValidity();
 }
 
+/*!
+ * Returns true if the calendar definition is valid.
+ *
+ * A calendar can be invalid when number of days in year does not match summarized
+ * days from all months, for example.
+ *
+ * \sa checkValidity
+ */
 bool SCalendar::isValid() const
 {
     return mIsValid;
 }
 
+/*!
+ * Returns a JSON representation of current calendar system.
+ */
 QJsonArray SCalendar::toJson() const
 {
     QJsonObject obj;
@@ -47,6 +131,9 @@ QJsonArray SCalendar::toJson() const
     return result;
 }
 
+/*!
+ * Loads calendar definition from \a json.
+ */
 void SCalendar::fromJson(const QJsonArray &json)
 {
     QJsonObject obj(json.first().toObject());
@@ -150,6 +237,13 @@ quint64 SCalendar::secondsInDateTime(const SDateTime &dateTime) const
     return result;
 }
 
+/*!
+ * Checks if calendar definition is sound.
+ *
+ * Modifies internal state. To check the result, use isValid().
+ *
+ * \sa isValid
+ */
 void SCalendar::checkValidity()
 {
     mIsValid = true;

@@ -2,6 +2,11 @@
 
 #include <QByteArray>
 
+/*!
+ * Tags namespace holds all necessary fixed strings used in the application.
+ *
+ * This helps to avoid typos and hard to detect errors.
+ */
 namespace Tags {
 // Metadata:
 static const QByteArray version("version");

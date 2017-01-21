@@ -72,7 +72,7 @@ WARN_AS_ERROR          = YES
 WARN_FORMAT            = "$file:$line: $text"
 WARN_LOGFILE           =
 
-INPUT                  = src qml
+INPUT                  = src qml README.md LICENSE.md
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          =
 RECURSIVE              = YES
@@ -82,7 +82,7 @@ EXAMPLE_PATH           =
 EXAMPLE_RECURSIVE      = NO
 IMAGE_PATH             =
 
-USE_MDFILE_AS_MAINPAGE = YES
+USE_MDFILE_AS_MAINPAGE = README.md
 
 SOURCE_BROWSER         = NO
 INLINE_SOURCES         = NO
@@ -94,7 +94,7 @@ CLANG_ASSISTED_PARSING = NO
 ALPHABETICAL_INDEX     = YES
 COLS_IN_ALPHA_INDEX    = 5
 
-
+GENERATE_LATEX         = NO
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html

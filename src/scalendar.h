@@ -41,15 +41,15 @@ public:
     quint64 secondsInDateTime(const SDateTime &dateTime) const;
 
 signals:
-    void nameChanged(const QString &name) const;
-    void daysInWeekChanged(uint daysInWeek) const;
-    void daysInYearChanged(uint daysInYear) const;
-    void monthsInYearChanged(uint monthsInYear) const;
-    void leapDayPerYearChanged(qreal leapDayPerYear) const;
-    void leapDayAddsToMonthNumberChanged(uint leapDayAddsToMonthNumber) const;
-    void secondsInMinuteChanged(uint secondsInMinute) const;
-    void minutesInHourChanged(uint minutesInHour) const;
-    void hoursInDayChanged(uint hoursInDay) const;
+    void nameChanged(const QString &name) const; //!< Indicates name change
+    void daysInWeekChanged(uint daysInWeek) const; //!< K
+    void daysInYearChanged(uint daysInYear) const; //!< K
+    void monthsInYearChanged(uint monthsInYear) const; //!< K
+    void leapDayPerYearChanged(qreal leapDayPerYear) const; //!< K
+    void leapDayAddsToMonthNumberChanged(uint leapDayAddsToMonthNumber) const; //!< K
+    void secondsInMinuteChanged(uint secondsInMinute) const; //!< K
+    void minutesInHourChanged(uint minutesInHour) const; //!< K
+    void hoursInDayChanged(uint hoursInDay) const; //!< K
 
 private:
     void checkValidity();
