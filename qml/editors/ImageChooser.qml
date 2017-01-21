@@ -2,11 +2,28 @@ import QtQuick 2.8
 import QtQuick.Dialogs 1.2
 
 Rectangle {
-    property string path: "qrc:/defaults/pics/defaultObject.png"
+    property string path
+    property string __fileName: "defaultObject.png"
+    property string __pathBase: "qrc:/defaults/pics/"
     id: root
     border.width: 1
-    width: 100
+    border.color: "#55555555"
+    width: 300
     height: 200
+
+    onVisibleChanged: {
+        if (visible) {
+            if (path !== "") {
+                __pathBase = "file://" + Timeline.basePicturePath() + "/"
+                __fileName = path
+                image.source = root.__pathBase + root.__fileName
+            } else {
+                __pathBase = "qrc:/defaults/pics/"
+                __fileName = "defaultObject.png"
+                image.source = root.__pathBase + root.__fileName
+            }
+        }
+    }
 
     MouseArea {
         anchors.fill: parent
@@ -23,9 +40,12 @@ Rectangle {
         selectFolder : false
         selectMultiple : false
         onAccepted: {
-            console.log("You chose picture: " + dialog.fileUrls)
-            root.path = Timeline.loadPicture(dialog.fileUrls)
-            image.source = "file://" + Timeline.basePicturePath() + "/" + root.path
+            root.__pathBase = "file://" + Timeline.basePicturePath() + "/"
+            root.__fileName = Timeline.loadPicture(dialog.fileUrls)
+            image.source = root.__pathBase + root.__fileName
+            root.path = root.__fileName
+            console.log("You chose picture: " + dialog.fileUrls
+                        + "Changing picture to: " + image.source)
         }
         onRejected: {
             console.log("Picture loading canceled")

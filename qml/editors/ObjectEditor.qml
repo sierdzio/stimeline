@@ -55,10 +55,18 @@ Popup {
 
         Label {
             text: qsTr("Description")
-        }
+        } 
 
-        TextField {
-            id: descriptionLabel
+        Flickable {
+            TextArea.flickable: TextArea {
+                id: descriptionLabel
+                wrapMode: TextArea.Wrap
+            }
+
+            ScrollBar.vertical: ScrollBar { }
+
+            Layout.fillHeight: true
+            Layout.fillWidth: true
         }
 
         Label {

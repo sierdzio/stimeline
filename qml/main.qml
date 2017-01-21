@@ -92,17 +92,16 @@ ApplicationWindow {
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
 
-        Page {
-            id: pageTimeline
-            visible: false
+//        Page {
+//            id: pageTimeline
 
-            EventTimeline {
-                id: eventTimeline
-                height: parent.height/2
-                focus: true
-                anchors.fill: parent
-            }
-        }
+//            EventTimeline {
+//                id: eventTimeline
+//                height: parent.height/2
+//                focus: true
+//                anchors.fill: parent
+//            }
+//        }
 
         SItemListView {
             id: pageEvents
@@ -317,9 +316,9 @@ ApplicationWindow {
             __tempIndex = currentIndex;
         }
 
-        TabButton {
-            text: qsTr("Timeline")
-        }
+//        TabButton {
+//            text: qsTr("Timeline")
+//        }
         TabButton {
             text: qsTr("Events")
         }
@@ -380,10 +379,10 @@ ApplicationWindow {
                 text: tabBar.contentChildren[6].text
                 onClicked: { tabBar.currentIndex = 6; drawer.close(); }
             }
-            MenuItem {
-                text: tabBar.contentChildren[7].text
-                onClicked: { tabBar.currentIndex = 7; drawer.close(); }
-            }
+//            MenuItem {
+//                text: tabBar.contentChildren[7].text
+//                onClicked: { tabBar.currentIndex = 7; drawer.close(); }
+//            }
             MenuItem {
                 text: qsTr("Quit")
                 onClicked: { Qt.quit(); }
