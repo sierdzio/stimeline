@@ -6,6 +6,10 @@
 #include "sassistant.h"
 #include "tags.h"
 
+#include "quazip.h"
+#include "quazipfile.h"
+#include "JlCompress.h"
+
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
@@ -201,6 +205,7 @@ void STimeline::save(const QString &path) const
     file.close();
 
     // Write all pictures
+    const QString outDirPath(QFileInfo(parsedPath).absolutePath());
     QDir pictureDir(QFileInfo(parsedPath).absoluteDir());
     if (!pictureDir.exists(Tags::picturesDir)) {
         pictureDir.mkdir(Tags::picturesDir);
@@ -215,6 +220,11 @@ void STimeline::save(const QString &path) const
                         pictureDir.absolutePath() + "/" + pic.fileName());
         }
     }
+
+    // STM test!
+    // TODO: only compress STimelinefiles, do not include any other files found
+    // in outDirPath
+    JlCompress::compressDir(outDirPath + "/testZip.zip", outDirPath);
 }
 
 /*!

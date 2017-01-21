@@ -4,6 +4,9 @@ CONFIG += c++14
 
 DEFINES *= QT_USE_QSTRINGBUILDER
 
+INCLUDEPATH += /include/quazip
+LIBS += -lquazip
+
 HEADERS += \
     src/tags.h \
     src/stimeline.h \

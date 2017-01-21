@@ -7,7 +7,7 @@ Short and incomplete list of what is left to be done here:
 - nice GUI for timeline, with smooth zooming and swiping (EventTimeline)
 - use magic macros for Q_OBJECTS
 - add null datetime (when it is not set)
-- file saving should work (now it only loads correctly
 - make "to" date self-adjust when "from" is set to a later point
 - object description - text elide fixes + add ability to expand the item to show
   whole text
+- .stm saving support (compressed save)
