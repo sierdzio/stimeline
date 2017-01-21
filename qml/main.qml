@@ -25,8 +25,8 @@ ApplicationWindow {
             editor.name = ""
             editor.picturePath = ""
             editor.description = ""
-            editor.from = ""
-            editor.to = ""
+            editor.from = "1-1-1 1:1:1"
+            editor.to = "1-1-1 1:1:1"
         } else {
             editor.name = name
             editor.picturePath = picturePath
