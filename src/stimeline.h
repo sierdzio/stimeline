@@ -38,12 +38,8 @@ public slots:
     SObjectModel *model(const QString &type) const;
     SObjectModel *model(const int type) const;
 
-signals:
-    void error(const QString &message) const;
-
 private:
     void init();
-    void reportError(const QString &message) const;
 
     QVector<QByteArray> mPictureCache;
     SSettings *mSettings = nullptr;

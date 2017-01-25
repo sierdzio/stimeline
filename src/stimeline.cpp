@@ -4,6 +4,7 @@
 #include "sobjectsortproxymodel.h"
 #include "ssettings.h"
 #include "sassistant.h"
+#include "ssave.h"
 #include "tags.h"
 
 #include "quazip.h"
@@ -124,23 +125,9 @@ STimeline::~STimeline()
 void STimeline::load(const QString &path)
 {
     const QString parsedPath(SAssistant::cleanPath(path));
-    QFile file(parsedPath);
 
-    if (file.exists() == false) {
-        reportError("File does not exist: " + parsedPath);
-        return;
-    }
-
-    if (file.open(QFile::ReadOnly | QFile::Text) == false) {
-        reportError("Could not open file for reading: " + parsedPath);
-        return;
-    }
-
-    // TODO: add support for binary JSON saving and loading
-    QJsonDocument doc(QJsonDocument::fromJson(file.readAll()));
-
-    if (doc.isEmpty() || doc.isNull() || doc.isArray()) {
-        reportError("Invalid JSON file, could not read. Path: " + parsedPath);
+    SSave load;
+    if (!load.load(path)) {
         return;
     }
 
@@ -148,14 +135,7 @@ void STimeline::load(const QString &path)
         mSettings->lastOpenFilePath = parsedPath;
     }
 
-    // Fill picture cache
-    mPictureCache.clear();
-    const QFileInfoList pics(QDir(basePicturePath()).entryInfoList(QDir::Files | QDir::NoDotAndDotDot));
-    for (auto pic: pics) {
-        mPictureCache.append(pic.baseName().toLatin1());
-    }
-
-    QJsonObject mainObj(doc.object());
+    QJsonObject mainObj(load.json());
     mSettings->author = mainObj.value(Tags::author).toString();
 
     mCalendar->fromJson(mainObj.value(Tags::calendar).toArray());
@@ -220,11 +200,6 @@ void STimeline::save(const QString &path) const
                         pictureDir.absolutePath() + "/" + pic.fileName());
         }
     }
-
-    // STM test!
-    // TODO: only compress STimelinefiles, do not include any other files found
-    // in outDirPath
-    JlCompress::compressDir(outDirPath + "/testZip.zip", outDirPath);
 }
 
 /*!
@@ -324,13 +299,4 @@ void STimeline::init()
     mArtifactModel = new SObjectModel(this);
     mPlaceModel = new SObjectModel(this);
     mMapModel = new SObjectModel(this);
-}
-
-/*!
- * Convenience method. Prints \a message and emits an error() signal.
- */
-void STimeline::reportError(const QString &message) const
-{
-    qCDebug(stimeline) << message;
-    emit error(message);
 }

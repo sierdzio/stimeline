@@ -18,7 +18,7 @@ HEADERS += \
     src/sobjectmodel.h \
     src/sassistant.h \
     src/sobjectsortproxymodel.h \
-    src/ssaver.h
+    src/ssave.h
 
 SOURCES += src/main.cpp \
     src/stimeline.cpp \
@@ -30,7 +30,7 @@ SOURCES += src/main.cpp \
     src/sobjectmodel.cpp \
     src/sassistant.cpp \
     src/sobjectsortproxymodel.cpp \
-    src/ssaver.cpp
+    src/ssave.cpp
 
 RESOURCES += qml.qrc \
     defaults.qrc
