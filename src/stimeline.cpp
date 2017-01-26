@@ -179,7 +179,7 @@ void STimeline::save(const QString &path) const
     }
 
     if (mSettings) {
-        mSettings->lastOpenFilePath = parsedPath;
+        mSettings->lastSaveFilePath = parsedPath;
     }
 }
 

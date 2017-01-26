@@ -32,9 +32,9 @@ bool SSave::load(const QString &path)
     const QFileInfo file(parsedPath);
     mLoadDataPath = parsedPath;
 
-    if (file.suffix() == QStringLiteral("json")) {
+    if (file.suffix() == Tags::extensionUncompressed) {
         return loadUncompressed(parsedPath);
-    } else if (file.suffix() == QStringLiteral("tmln")) {
+    } else if (file.suffix() == Tags::extensionCompressed) {
         return loadCompressed(parsedPath);
     }
 
@@ -49,9 +49,9 @@ bool SSave::save(const QString &path)
     const QFileInfo file(parsedPath);
     mSaveDataPath = parsedPath;
 
-    if (file.suffix() == QStringLiteral(".json")) {
+    if (file.suffix() == Tags::extensionUncompressed) {
         return saveUncompressed(parsedPath);
-    } else if (file.suffix() == QStringLiteral(".tmln")) {
+    } else if (file.suffix() == Tags::extensionCompressed) {
         return saveCompressed(parsedPath);
     }
 
@@ -77,10 +77,10 @@ QVector<QByteArray> SSave::pictureCache() const
 void SSave::init()
 {
     mIsError = false;
-    mSaveDataPath.clear();
-    mLoadDataPath.clear();
-    mPictureCache.clear();
-    mJson = QJsonObject();
+    //mSaveDataPath.clear();
+    //mLoadDataPath.clear();
+    //mPictureCache.clear();
+    //mJson = QJsonObject();
 }
 
 bool SSave::loadCompressed(const QString &path)
@@ -100,7 +100,7 @@ bool SSave::loadUncompressed(const QString &path)
         return false;
     }
 
-    mRuntimeDataPath = path;
+    mRuntimeDataPath = QFileInfo(path).absolutePath();
 
     return true;
 }
@@ -158,7 +158,6 @@ bool SSave::saveCompressed(const QString &path)
 bool SSave::saveUncompressed(const QString &path)
 {
     QFile file(path);
-
     if (file.open(QFile::WriteOnly | QFile::Text) == false) {
         reportError("Could not open file for saving: " + path);
         return false;
@@ -168,8 +167,10 @@ bool SSave::saveUncompressed(const QString &path)
     const QByteArray data(QJsonDocument(mJson).toJson(QJsonDocument::Indented));
     const qint64 bytesWritten = file.write(data);
     if (bytesWritten != data.size()) {
+        // TODO: use reportError()
         qCDebug(ssave) << "File saving: something went wrong. Data size:"
-                           << data.size() << "Bytes written:" << bytesWritten;
+                       << data.size() << "Bytes written:" << bytesWritten;
+        return false;
     }
     file.close();
 
@@ -211,5 +212,5 @@ void SSave::reportError(const QString &message)
 {
     mIsError = true;
     qCDebug(ssave) << message;
-//    emit error(message);
+    //    emit error(message);
 }

@@ -10,6 +10,8 @@
 namespace Tags {
 // General:
 static const QByteArray picturesDir("pictures");
+static const QByteArray extensionCompressed("tmln");
+static const QByteArray extensionUncompressed("json");
 // Metadata:
 static const QByteArray version("version");
 static const QByteArray timestamp("timestamp");
