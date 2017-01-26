@@ -11,9 +11,7 @@
 #include "quazipfile.h"
 #include "JlCompress.h"
 
-#include <QJsonDocument>
 #include <QJsonObject>
-#include <QJsonValue>
 #include <QJsonArray>
 #include <QDir>
 #include <QFileInfo>
@@ -135,6 +133,9 @@ void STimeline::load(const QString &path)
         mSettings->lastOpenFilePath = parsedPath;
     }
 
+    mPictureCache = load.pictureCache();
+    mRuntimeDataPath = load.runtimeDataPath();
+
     QJsonObject mainObj(load.json());
     mSettings->author = mainObj.value(Tags::author).toString();
 
@@ -154,12 +155,7 @@ void STimeline::load(const QString &path)
 void STimeline::save(const QString &path) const
 {
     const QString parsedPath(SAssistant::cleanPath(path));
-    QFile file(parsedPath);
 
-    if (file.open(QFile::WriteOnly | QFile::Text) == false) {
-        reportError("Could not open file for saving: " + parsedPath);
-        return;
-    }
 
     QJsonObject mainObj;
 
@@ -175,30 +171,15 @@ void STimeline::save(const QString &path) const
     mainObj.insert(Tags::places, mPlaceModel->toJson());
     mainObj.insert(Tags::maps, mMapModel->toJson());
 
-    // TODO: check if all data was written successfully
-    const QByteArray data(QJsonDocument(mainObj).toJson(QJsonDocument::Indented));
-    const qint64 bytesWritten = file.write(data);
-    if (bytesWritten != data.size()) {
-        qCDebug(stimeline) << "File saving: something went wrong. Data size:"
-                           << data.size() << "Bytes written:" << bytesWritten;
-    }
-    file.close();
+    SSave save(mRuntimeDataPath);
+    save.setJson(mainObj);
 
-    // Write all pictures
-    const QString outDirPath(QFileInfo(parsedPath).absolutePath());
-    QDir pictureDir(QFileInfo(parsedPath).absoluteDir());
-    if (!pictureDir.exists(Tags::picturesDir)) {
-        pictureDir.mkdir(Tags::picturesDir);
+    if (!save.save(parsedPath)) {
+        return;
     }
-    pictureDir.cd(Tags::picturesDir);
 
-    const QStringList existingPics(pictureDir.entryList(QDir::Files | QDir::NoDotAndDotDot));
-    const QFileInfoList sourcePics(QDir(basePicturePath()).entryInfoList(QDir::Files | QDir::NoDotAndDotDot));
-    for (auto pic: sourcePics) {
-        if (!existingPics.contains(pic.fileName())) {
-            QFile::copy(basePicturePath() + "/" + pic.fileName(),
-                        pictureDir.absolutePath() + "/" + pic.fileName());
-        }
+    if (mSettings) {
+        mSettings->lastOpenFilePath = parsedPath;
     }
 }
 
@@ -248,8 +229,7 @@ QString STimeline::loadPicture(const QString &absolutePath)
  */
 QString STimeline::basePicturePath() const
 {
-    return QFileInfo(mSettings->lastOpenFilePath).absolutePath()
-            + QStringLiteral("/") + Tags::picturesDir;
+    return mRuntimeDataPath + QStringLiteral("/") + Tags::picturesDir;
 }
 
 /*!

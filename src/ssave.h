@@ -8,15 +8,22 @@
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(ssave)
 
+class QJsonObject;
+class SObjectModel;
+
 class SSave
 {
 public:
-    explicit SSave();
+    explicit SSave(const QString &runtimeDataPath = QString::null);
+    QString runtimeDataPath() const;
 
     bool load(const QString &path);
-    bool save(const QString &path, const QString &author);
+    bool save(const QString &path);
 
     QJsonObject json() const;
+    void setJson(const QJsonObject &json);
+
+    QVector<QByteArray> pictureCache() const;
 
 private:
     void init();
@@ -25,16 +32,18 @@ private:
     bool loadJson(const QString &path);
     bool loadPictures(const QString &path);
 
-    bool saveCompressed(const QString &path, const QString &author);
-    bool saveUncompressed(const QString &path, const QString &author);
+    bool saveCompressed(const QString &path);
+    bool saveUncompressed(const QString &path);
 
+    QString generateRuntimePath() const;
     void reportError(const QString &message);
 
     bool mIsError = false;
     // TODO: basePath, tempLocation,
     // save/load paths... think it through. We need a simple and robust solution
-    QString mSavePath;
-    QString mLoadPath;
+    QString mSaveDataPath;
+    QString mLoadDataPath;
+    QString mRuntimeDataPath;
     QVector<QByteArray> mPictureCache;
     QJsonObject mJson;
 };

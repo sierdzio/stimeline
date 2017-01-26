@@ -1,3 +1,5 @@
+## Intro
+
 sTimeline application helps in creating and maintaining records of historical or
 fictional events.
 
@@ -12,3 +14,12 @@ time rules), which can be especially useful for science fiction and fantasy
 authors.
 
 This is Free Software, for details see LICENSE.md file.
+
+## File support
+
+sTimeline supports 2 major file saving "architectures":
+ - compressed saves (.tmln)
+ - uncompressed (open) saves (.json)
+
+Both are very alike. In fact, a TMLN file is just a simple ZIP archive made from
+the JSON type + all aditional artifacts (pictures).

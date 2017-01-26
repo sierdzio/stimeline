@@ -33,6 +33,7 @@ public slots:
     void load(const QString &path);
     void save(const QString &path) const;
     QString loadPicture(const QString &absolutePath);
+    // TODO: make property
     QString basePicturePath() const;
 
     SObjectModel *model(const QString &type) const;
@@ -41,6 +42,7 @@ public slots:
 private:
     void init();
 
+    QString mRuntimeDataPath;
     QVector<QByteArray> mPictureCache;
     SSettings *mSettings = nullptr;
     SObjectSortProxyModel *mEventModelProxy = nullptr;

@@ -6,19 +6,23 @@
 #include "quazipfile.h"
 #include "JlCompress.h"
 
-#include <QCoreApplication>
 #include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonValue>
-#include <QJsonArray>
 #include <QDir>
 #include <QFileInfo>
 #include <QFile>
+#include <QStandardPaths>
 
 Q_LOGGING_CATEGORY(ssave, "SSave")
 
-SSave::SSave()
+SSave::SSave(const QString &runtimeDataPath) : mRuntimeDataPath(runtimeDataPath)
 {
+    if (mRuntimeDataPath.isEmpty())
+        mRuntimeDataPath = generateRuntimePath();
+}
+
+QString SSave::runtimeDataPath() const
+{
+    return mRuntimeDataPath;
 }
 
 bool SSave::load(const QString &path)
@@ -26,11 +30,11 @@ bool SSave::load(const QString &path)
     init();
     const QString parsedPath(SAssistant::cleanPath(path));
     const QFileInfo file(parsedPath);
-    mLoadPath = parsedPath;
+    mLoadDataPath = parsedPath;
 
-    if (file.suffix() == QStringLiteral(".json")) {
+    if (file.suffix() == QStringLiteral("json")) {
         return loadUncompressed(parsedPath);
-    } else if (file.suffix() == QStringLiteral(".tmln")) {
+    } else if (file.suffix() == QStringLiteral("tmln")) {
         return loadCompressed(parsedPath);
     }
 
@@ -38,17 +42,17 @@ bool SSave::load(const QString &path)
     return false;
 }
 
-bool SSave::save(const QString &path, const QString &author)
+bool SSave::save(const QString &path)
 {
     init();
     const QString parsedPath(SAssistant::cleanPath(path));
     const QFileInfo file(parsedPath);
-    mSavePath = parsedPath;
+    mSaveDataPath = parsedPath;
 
     if (file.suffix() == QStringLiteral(".json")) {
-        return saveUncompressed(parsedPath, author);
+        return saveUncompressed(parsedPath);
     } else if (file.suffix() == QStringLiteral(".tmln")) {
-        return saveCompressed(parsedPath, author);
+        return saveCompressed(parsedPath);
     }
 
     reportError("Wrong file extension: " + parsedPath);
@@ -60,11 +64,21 @@ QJsonObject SSave::json() const
     return mJson;
 }
 
+void SSave::setJson(const QJsonObject &json)
+{
+    mJson = json;
+}
+
+QVector<QByteArray> SSave::pictureCache() const
+{
+    return mPictureCache;
+}
+
 void SSave::init()
 {
     mIsError = false;
-    mSavePath.clear();
-    mLoadPath.clear();
+    mSaveDataPath.clear();
+    mLoadDataPath.clear();
     mPictureCache.clear();
     mJson = QJsonObject();
 }
@@ -85,6 +99,8 @@ bool SSave::loadUncompressed(const QString &path)
     if (!loadPictures(path)) {
         return false;
     }
+
+    mRuntimeDataPath = path;
 
     return true;
 }
@@ -127,15 +143,19 @@ bool SSave::loadPictures(const QString &path)
     return true;
 }
 
-bool SSave::saveCompressed(const QString &path, const QString &author)
+bool SSave::saveCompressed(const QString &path)
 {
+    Q_UNUSED(path);
+
     // STM test!
     // TODO: only compress STimelinefiles, do not include any other files found
     // in outDirPath
     //JlCompress::compressDir(outDirPath + "/testZip.zip", outDirPath);
+
+    return false;
 }
 
-bool SSave::saveUncompressed(const QString &path, const QString &author)
+bool SSave::saveUncompressed(const QString &path)
 {
     QFile file(path);
 
@@ -144,45 +164,44 @@ bool SSave::saveUncompressed(const QString &path, const QString &author)
         return false;
     }
 
-    QJsonObject mainObj;
-
-    // Add metadata
-    mainObj.insert(Tags::version, QCoreApplication::applicationVersion());
-    mainObj.insert(Tags::timestamp, QDateTime::currentDateTimeUtc().toString(Qt::ISODate));
-    mainObj.insert(Tags::author, mSettings->author); // TODO: plug in author from app settings
-
-    mainObj.insert(Tags::calendar, mCalendar->toJson());
-    mainObj.insert(Tags::events, mEventModel->toJson());
-    mainObj.insert(Tags::people, mPersonModel->toJson());
-    mainObj.insert(Tags::artifacts, mArtifactModel->toJson());
-    mainObj.insert(Tags::places, mPlaceModel->toJson());
-    mainObj.insert(Tags::maps, mMapModel->toJson());
-
     // TODO: check if all data was written successfully
-    const QByteArray data(QJsonDocument(mainObj).toJson(QJsonDocument::Indented));
+    const QByteArray data(QJsonDocument(mJson).toJson(QJsonDocument::Indented));
     const qint64 bytesWritten = file.write(data);
     if (bytesWritten != data.size()) {
-        qCDebug(stimeline) << "File saving: something went wrong. Data size:"
+        qCDebug(ssave) << "File saving: something went wrong. Data size:"
                            << data.size() << "Bytes written:" << bytesWritten;
     }
     file.close();
 
     // Write all pictures
-    const QString outDirPath(QFileInfo(parsedPath).absolutePath());
-    QDir pictureDir(QFileInfo(parsedPath).absoluteDir());
+    QDir pictureDir(QFileInfo(path).absoluteDir());
     if (!pictureDir.exists(Tags::picturesDir)) {
         pictureDir.mkdir(Tags::picturesDir);
     }
     pictureDir.cd(Tags::picturesDir);
 
     const QStringList existingPics(pictureDir.entryList(QDir::Files | QDir::NoDotAndDotDot));
-    const QFileInfoList sourcePics(QDir(basePicturePath()).entryInfoList(QDir::Files | QDir::NoDotAndDotDot));
+    const QString basePicturePath(mRuntimeDataPath + "/" + Tags::picturesDir);
+    const QFileInfoList sourcePics(QDir(basePicturePath).entryInfoList(QDir::Files | QDir::NoDotAndDotDot));
     for (auto pic: sourcePics) {
         if (!existingPics.contains(pic.fileName())) {
-            QFile::copy(basePicturePath() + "/" + pic.fileName(),
+            QFile::copy(basePicturePath + "/" + pic.fileName(),
                         pictureDir.absolutePath() + "/" + pic.fileName());
         }
     }
+
+    return true;
+}
+
+/*!
+ * Returns a temporary location (writable) to use for storing runtime artifacts
+ * (picture cache, JSON file for saving pusposes, extracted compressed save data,
+ * and so on).
+ */
+QString SSave::generateRuntimePath() const
+{
+    return QStandardPaths::writableLocation(QStandardPaths::TempLocation)
+            + "/sTimeline" + SAssistant::generateId();
 }
 
 /*!
