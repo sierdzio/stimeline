@@ -34,6 +34,8 @@ private:
 
     bool saveCompressed(const QString &path);
     bool saveUncompressed(const QString &path);
+    bool saveJson(const QString &path);
+    bool savePictures(const QString &path);
 
     QString generateRuntimePath() const;
     void reportError(const QString &message);

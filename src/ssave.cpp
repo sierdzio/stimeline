@@ -85,9 +85,16 @@ void SSave::init()
 
 bool SSave::loadCompressed(const QString &path)
 {
-    // TODO: implement!
-    Q_UNUSED(path);
-    return false;
+    const QString tempLoadPath(generateRuntimePath());
+    qDebug(ssave) << "Loading compressed to temp path:" << tempLoadPath;
+
+    if (JlCompress::extractDir(path, tempLoadPath).isEmpty()) {
+        reportError("Could not extract file: " + path + "into: " + tempLoadPath);
+        return false;
+    }
+
+    const QFileInfo file(path);
+    return loadUncompressed(tempLoadPath + "/" + file.baseName() + ".json");
 }
 
 bool SSave::loadUncompressed(const QString &path)
@@ -145,17 +152,49 @@ bool SSave::loadPictures(const QString &path)
 
 bool SSave::saveCompressed(const QString &path)
 {
-    Q_UNUSED(path);
+    const QFileInfo file(path);
+    const QString tempSavePath(generateRuntimePath() + "/" + file.baseName() + ".json");
+    qDebug(ssave) << "Using temp save path:" << tempSavePath;
 
-    // STM test!
-    // TODO: only compress STimelinefiles, do not include any other files found
-    // in outDirPath
-    //JlCompress::compressDir(outDirPath + "/testZip.zip", outDirPath);
+    const QDir baseDir(QFileInfo(tempSavePath).absoluteDir());
+    qDebug(ssave) << "Creating temp path:" << baseDir.absolutePath()
+                  << "from:" << baseDir.absolutePath()
+                  << "exists?" << baseDir.exists();
+    if (!baseDir.exists()) {
+        if (!baseDir.mkpath(baseDir.absolutePath())) {
+            reportError("Could not create temp dir: " + baseDir.absolutePath());
+            return false;
+        }
+    }
+
+    if (!saveUncompressed(tempSavePath)) {
+        return false;
+    }
+
+    if (!JlCompress::compressDir(path, baseDir.absolutePath(), true)) {
+        reportError("Compression error. Input: " + tempSavePath + ", output: "
+                    + path);
+    }
 
     return false;
 }
 
 bool SSave::saveUncompressed(const QString &path)
+{
+    qDebug(ssave) << "Saving uncompressed to:" << path;
+
+    if (!saveJson(path)) {
+        return false;
+    }
+
+    if (!savePictures(path)) {
+        return false;
+    }
+
+    return true;
+}
+
+bool SSave::saveJson(const QString &path)
 {
     QFile file(path);
     if (file.open(QFile::WriteOnly | QFile::Text) == false) {
@@ -172,8 +211,12 @@ bool SSave::saveUncompressed(const QString &path)
                        << data.size() << "Bytes written:" << bytesWritten;
         return false;
     }
-    file.close();
 
+    return true;
+}
+
+bool SSave::savePictures(const QString &path)
+{
     // Write all pictures
     QDir pictureDir(QFileInfo(path).absoluteDir());
     if (!pictureDir.exists(Tags::picturesDir)) {
@@ -202,7 +245,7 @@ bool SSave::saveUncompressed(const QString &path)
 QString SSave::generateRuntimePath() const
 {
     return QStandardPaths::writableLocation(QStandardPaths::TempLocation)
-            + "/sTimeline" + SAssistant::generateId();
+            + "/sTimeline-" + SAssistant::generateId().left(10);
 }
 
 /*!

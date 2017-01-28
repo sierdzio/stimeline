@@ -10,4 +10,5 @@ Short and incomplete list of what is left to be done here:
 - make "to" date self-adjust when "from" is set to a later point
 - object description - text elide fixes + add ability to expand the item to show
   whole text
-- .stm saving support (compressed save)
+- .tmln saving support (compressed save)
+- clean up temp dir after using it (save/ load)
