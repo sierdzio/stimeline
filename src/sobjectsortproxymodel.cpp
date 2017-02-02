@@ -24,13 +24,16 @@ SObjectSortProxyModel::SObjectSortProxyModel(QObject *parent)
 bool SObjectSortProxyModel::lessThan(const QModelIndex &left,
                                      const QModelIndex &right) const
 {
-    const QVariant leftData = sourceModel()->data(left, Qt::UserRole + 6);
-    const QVariant rightData = sourceModel()->data(right, Qt::UserRole + 6);
+    const int role = Qt::UserRole + 6;
+    const QVariant leftData = sourceModel()->data(left, role);
+    const QVariant rightData = sourceModel()->data(right, role);
     const SDateTime leftDT(leftData.toString());
     const SDateTime rightDT(rightData.toString());
+    const bool result = leftDT < rightDT;
 
-    //qDebug() << "Less than. L:" << leftData.toString()
-    //         << "R:" << rightData.toString();
+    //qDebug() << "Less than. L:" << leftDT.toString()
+    //         << "R:" << rightDT.toString()
+    //         << "is:" << result;
 
-    return leftDT < rightDT;
+    return result;
 }

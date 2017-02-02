@@ -153,8 +153,8 @@ void SObject::fromJson(const QJsonObject &json)
     mName = json.value(Tags::name).toString();
     mPicturePath = json.value(Tags::picturePath).toString();
     mDescription = json.value(Tags::description).toString();
-    mFrom = SDateTime::fromString(json.value(Tags::from).toString());
-    mTo = SDateTime::fromString(json.value(Tags::to).toString());
+    mFrom = SDateTime(json.value(Tags::from).toString());
+    mTo = SDateTime(json.value(Tags::to).toString());
 
     //qCDebug(sevent).noquote() << "Event loaded from JSON. Data:\n" << toString();
 }

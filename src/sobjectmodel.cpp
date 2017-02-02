@@ -126,8 +126,8 @@ void SObjectModel::addObject(const QString &id, const QString &type,
     object.mName = name;
     object.mPicturePath = picturePath;
     object.mDescription = description;
-    if (!from.isEmpty()) object.mFrom = SDateTime::fromString(from);
-    if (!to.isEmpty()) object.mTo = SDateTime::fromString(to);
+    if (!from.isEmpty()) object.mFrom = SDateTime(from);
+    if (!to.isEmpty()) object.mTo = SDateTime(to);
     mObjects.append(object);
     endInsertRows();
 }
@@ -159,8 +159,8 @@ void SObjectModel::updateObject(const QString &id, const QString &type,
     object.mName = name;
     object.mPicturePath = picturePath;
     object.mDescription = description;
-    object.mFrom = SDateTime::fromString(from);
-    object.mTo = SDateTime::fromString(to);
+    object.mFrom = SDateTime(from);
+    object.mTo = SDateTime(to);
     mObjects.replace(index, object);
 
     emit dataChanged(modelIndex, modelIndex);
