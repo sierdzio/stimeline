@@ -26,8 +26,8 @@ bool SObjectSortProxyModel::lessThan(const QModelIndex &left,
 {
     const QVariant leftData = sourceModel()->data(left, Qt::UserRole + 6);
     const QVariant rightData = sourceModel()->data(right, Qt::UserRole + 6);
-    const SDateTime leftDT = SDateTime::fromString(leftData.toString());
-    const SDateTime rightDT = SDateTime::fromString(rightData.toString());
+    const SDateTime leftDT(leftData.toString());
+    const SDateTime rightDT(rightData.toString());
 
     //qDebug() << "Less than. L:" << leftData.toString()
     //         << "R:" << rightData.toString();

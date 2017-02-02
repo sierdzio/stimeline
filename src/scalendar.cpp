@@ -196,6 +196,16 @@ QString SCalendar::monthName(const uint month) const
 }
 
 /*!
+ * Returns true is \a date is earlier than \a other.
+ */
+bool SCalendar::isEarlier(const QString &date, const QString &other) const
+{
+    const bool result = SDateTime(date) < SDateTime(other);
+    //qDebug(scalendar) << "Measuring dates!" << date << "<" << other << "result:" << result;
+    return result;
+}
+
+/*!
  * Returns duration (in seconds) between \a from and \a to dates, based on
  * calendar this SCalendar instance points to.
  *

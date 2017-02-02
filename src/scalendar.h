@@ -36,6 +36,7 @@ public:
 
     Q_INVOKABLE uint daysInMonth(const uint month) const;
     Q_INVOKABLE QString monthName(const uint month) const;
+    Q_INVOKABLE bool isEarlier(const QString &date, const QString &other) const;
 
     quint64 duration(const SDateTime &from, const SDateTime &to) const;
     quint64 secondsInDateTime(const SDateTime &dateTime) const;

@@ -58,6 +58,16 @@ SDateTime::SDateTime()
 }
 
 /*!
+ * Constructs a SDateTime object from \a dateTimeString.
+ *
+ *
+ */
+SDateTime::SDateTime(const QString &dateTimeString)
+{
+    fromString(dateTimeString);
+}
+
+/*!
  * Returns true if this object and \a other are not the same.
  */
 bool SDateTime::operator!=(const SDateTime &other) const {

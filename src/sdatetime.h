@@ -19,6 +19,7 @@ class SDateTime
 
 public:
     SDateTime();
+    SDateTime(const QString &dateTimeString);
 
     bool operator!=(const SDateTime &other) const;
     bool operator<(const SDateTime &other) const;

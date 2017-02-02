@@ -27,7 +27,12 @@ Popup {
 
     DateTimeEditor {
         id: dateTimeEditor
-        onFinished: __editControl.text = dateTimeEditor.dateTime;
+        onFinished: {
+            __editControl.text = dateTimeEditor.dateTime
+            if (!Timeline.calendar.isEarlier(fromLabel.text, toLabel.text)) {
+                toLabel.text = fromLabel.text
+            }
+        }
     }
 
     GridLayout {
