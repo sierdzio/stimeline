@@ -26,6 +26,13 @@
  */
 
 /*!
+ * \property SSettings::useSimpleFileDialog
+ *
+ * If true, simple file dialog is used (on by default on Android). Otherwise,
+ * a full blown file dialog is used.
+ */
+
+/*!
  * \property SSettings::lastOpenFilePath
  *
  * Path to most recently opened file.
@@ -67,6 +74,7 @@ void SSettings::load()
     QSettings settings;
     autoLoadLastFile = settings.value(Tags::autoLoadLastFile, true).toBool();
     autoSaveOnExit = settings.value(Tags::autoSaveOnExit, true).toBool();
+    useSimpleFileDialog = settings.value(Tags::useSimpleFileDialog, true).toBool();
     lastOpenFilePath = settings.value(Tags::lastOpenFilePath).toString();
     lastSaveFilePath = settings.value(Tags::lastSaveFilePath).toString();
     author = settings.value(Tags::author).toString();
@@ -80,6 +88,7 @@ void SSettings::save() const
     QSettings settings;
     settings.setValue(Tags::autoLoadLastFile, autoLoadLastFile);
     settings.setValue(Tags::autoSaveOnExit, autoSaveOnExit);
+    settings.setValue(Tags::useSimpleFileDialog, useSimpleFileDialog);
     settings.setValue(Tags::lastOpenFilePath, lastOpenFilePath);
     settings.setValue(Tags::lastSaveFilePath, lastSaveFilePath);
     settings.setValue(Tags::author, author);

@@ -9,6 +9,7 @@ class SSettings : public QObject
 
     Q_PROPERTY(bool autoLoadLastFile MEMBER autoLoadLastFile NOTIFY autoLoadLastFileChanged)
     Q_PROPERTY(bool autoSaveOnExit MEMBER autoSaveOnExit NOTIFY autoSaveOnExitChanged)
+    Q_PROPERTY(bool useSimpleFileDialog MEMBER useSimpleFileDialog NOTIFY useSimpleFileDialogChanged)
     Q_PROPERTY(QString lastOpenFilePath MEMBER lastOpenFilePath NOTIFY lastOpenFilePathChanged)
     Q_PROPERTY(QString lastSaveFilePath MEMBER lastSaveFilePath NOTIFY lastSaveFilePathChanged)
     Q_PROPERTY(QString author MEMBER author NOTIFY authorChanged)
@@ -22,6 +23,7 @@ public:
 
     bool autoLoadLastFile = true;
     bool autoSaveOnExit = true;
+    bool useSimpleFileDialog = true;
     QString lastOpenFilePath;
     QString lastSaveFilePath;
 
@@ -30,6 +32,7 @@ public:
 signals:
     void autoSaveOnExitChanged(bool newValue) const; //!< K
     void autoLoadLastFileChanged(bool newValue) const; //!< K
+    void useSimpleFileDialog(bool newValue) const; //!< K
     void lastOpenFilePathChanged(const QString &newPath) const; //!< K
     void lastSaveFilePathChanged(const QString &newPath) const; //!< K
     void authorChanged(const QString &author) const; //!< K

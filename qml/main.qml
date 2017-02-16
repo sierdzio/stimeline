@@ -39,38 +39,30 @@ ApplicationWindow {
     }
 
     FileDialog {
-        id: loadDialog
+        property bool isLoading: true
+
+        id: normalFileDialog
         title: qsTr("Please choose a timeline file")
         folder: Timeline.settings.lastOpenFilePath
         nameFilters: ["Open timeline (*.json)", "Compressed timeline (*.tmln)"]
         visible: false
-        selectExisting : true
-        selectFolder : false
-        selectMultiple : false
+        selectExisting: isLoading
+        selectFolder: false
+        selectMultiple: false
         onAccepted: {
-            console.log("You chose: " + loadDialog.fileUrls)
-            Timeline.load(loadDialog.fileUrl)
+            console.log("You chose: " + fileUrls)
+            if (isLoading) {
+                Timeline.load(fileUrl)
+            } else {
+                Timeline.save(fileUrl)
+            }
         }
         onRejected: {
-            console.log("File loading canceled")
-        }
-    }
-
-    FileDialog {
-        id: saveDialog
-        title: qsTr("Please choose a timeline file")
-        folder: Timeline.settings.lastSaveFilePath
-        nameFilters: ["Open timeline (*.json)", "Compressed timeline (*.tmln)"]
-        visible: false
-        selectExisting : false
-        selectFolder : false
-        selectMultiple : false
-        onAccepted: {
-            console.log("You chose: " + saveDialog.fileUrls)
-            Timeline.save(saveDialog.fileUrl)
-        }
-        onRejected: {
-            console.log("File saving canceled")
+            if (isLoading) {
+                console.log("File loading canceled")
+            } else {
+                console.log("File saving canceled")
+            }
         }
     }
 
@@ -210,11 +202,17 @@ ApplicationWindow {
 
                 Button {
                     text: qsTr("Load timeline")
-                    onClicked: loadDialog.visible = true
+                    onClicked: {
+                        normalFileDialog.isLoading = true
+                        normalFileDialog.visible = true
+                    }
                 }
                 Button {
                     text: qsTr("Save timeline")
-                    onClicked: saveDialog.visible = true
+                    onClicked: {
+                        normalFileDialog.isLoading = false
+                        normalFileDialog.visible = true
+                    }
                 }
                 CheckBox {
                     text: qsTr("Automatically load last opened file on startup")
