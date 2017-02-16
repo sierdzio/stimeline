@@ -39,7 +39,14 @@ DISTFILES += \
     README.md \
     LICENSE.md \
     defaults/calendar/dynyghtian.json \
-    todo.md
+    todo.md \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat
 
 OTHER_FILES += \
     .gitignore \
@@ -53,3 +60,10 @@ QML_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+contains(ANDROID_TARGET_ARCH,x86) {
+    ANDROID_EXTRA_LIBS = \
+        $$PWD/../../qt/5.8/android_x86/lib/libquazip.so
+}

@@ -12,3 +12,4 @@ Short and incomplete list of what is left to be done here:
   whole text
 - .tmln saving support (compressed save)
 - clean up temp dir after using it (save/ load)
+- custom file fialog for Android!
