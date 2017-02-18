@@ -14,8 +14,6 @@ Popup {
     signal rejected()
 
     id: root
-    height: 300
-    width: 500
     closePolicy: Popup.NoAutoClose
     modal: true
     focus: true
@@ -35,26 +33,24 @@ Popup {
             Layout.fillWidth: true
         }
 
-        RowLayout {
-            Layout.fillWidth: true
-            RadioButton {
-                id: extensionJson
-                checked: true
-                text: qsTr("Open timeline (.%1)").arg(Assistant.extensionUncompressed)
+        RadioButton {
+            id: extensionJson
+            checked: true
+            text: qsTr("Open timeline (.%1)").arg(Assistant.extensionUncompressed)
 
-                ToolTip.visible: pressed
-                ToolTip.text: qsTr("Timeline data is stored in JSON file, while all "
-                                   + "attached pictures are stored in pictures/ directory "
-                                   + "created in the same folder as the JSON file.")
-            }
-            RadioButton {
-                id: extensionTmln
-                text: qsTr("Compressed timeline (.%1)").arg(Assistant.extensionCompressed)
+            ToolTip.visible: pressed
+            ToolTip.text: qsTr("Timeline data is stored in JSON file, while all "
+                               + "attached pictures are stored in pictures/ directory "
+                               + "created in the same folder as the JSON file.")
+        }
 
-                ToolTip.visible: pressed
-                ToolTip.text: qsTr("Timeline data and all attached pictures are stored "
-                                   + "in a single ZIP archive.")
-            }
+        RadioButton {
+            id: extensionTmln
+            text: qsTr("Compressed timeline (.%1)").arg(Assistant.extensionCompressed)
+
+            ToolTip.visible: pressed
+            ToolTip.text: qsTr("Timeline data and all attached pictures are stored "
+                               + "in a single ZIP archive.")
         }
 
         DialogButtonBox {

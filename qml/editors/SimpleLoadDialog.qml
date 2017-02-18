@@ -12,8 +12,6 @@ Popup {
     signal rejected()
 
     id: root
-    width: 350
-    height: 500
     closePolicy: Popup.NoAutoClose
     modal: true
     focus: true
@@ -34,6 +32,7 @@ Popup {
 
         ListView {
             id: folderView
+            height: 150
             //clip: true
             focus: true
             highlightFollowsCurrentItem: true

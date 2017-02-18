@@ -19,8 +19,6 @@ Popup {
     onCanceled: close()
 
     id: root
-    width: 600
-    height: 800
     closePolicy: Popup.NoAutoClose
     modal: true
     focus: true
@@ -47,7 +45,6 @@ Popup {
         ImageChooser {
             id: picturePathLabel
             Layout.columnSpan: 2
-            // TODO: display proper image when editing an existing object!
         }
 
         Label {
@@ -66,8 +63,11 @@ Popup {
             TextArea.flickable: TextArea {
                 id: descriptionLabel
                 wrapMode: TextArea.Wrap
+                width: parent.width
+                //height: 200
             }
 
+            height: 200
             ScrollBar.vertical: ScrollBar { }
 
             Layout.fillHeight: true

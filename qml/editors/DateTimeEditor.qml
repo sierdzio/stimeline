@@ -17,8 +17,8 @@ Popup {
     onCanceled: close()
 
     id: root
-    width: 800
-    height: 600
+    //width: 800
+    //height: 600
     closePolicy: Popup.NoAutoClose
     modal: true
     focus: true
@@ -49,11 +49,13 @@ Popup {
         Label {
             text: qsTr("Edit date and time ") + dateTime
             Layout.columnSpan: 2
+            Layout.fillWidth: true
         }
 
         // Date
         GroupBox {
             title: qsTr("Date")
+            Layout.fillWidth: true
 
             RowLayout {
                 Label {
@@ -96,6 +98,7 @@ Popup {
         // Time
         GroupBox {
             title: qsTr("Time")
+            Layout.fillWidth: true
 
             RowLayout {
                 Label {
@@ -127,14 +130,17 @@ Popup {
             }
         }
 
-        Button {
-            text: qsTr("OK")
-            onClicked: root.finished()
-        }
+        DialogButtonBox {
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignRight
+            standardButtons: DialogButtonBox.Ok | DialogButtonBox.Cancel
 
-        Button {
-            text: qsTr("Cancel")
-            onClicked: root.canceled()
+            onAccepted: {
+                root.finished()
+            }
+            onRejected: {
+                root.canceled()
+            }
         }
     }
 }
