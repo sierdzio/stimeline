@@ -1,7 +1,10 @@
 #include "sassistant.h"
 #include "sobject.h"
+#include "tags.h"
 
+#include <QDir>
 #include <QFile>
+#include <QFileInfo>
 #include <QDateTime>
 #include <QCryptographicHash>
 #include <QDebug>
@@ -39,6 +42,22 @@ SAssistant::SAssistant(QObject *parent) : QObject(parent)
 int SAssistant::buttonMargin()
 {
     return 25;
+}
+
+/*!
+ * Returns the file extension for compressed save.
+ */
+QString SAssistant::extensionCompressed()
+{
+    return Tags::extensionCompressed;
+}
+
+/*!
+ * Returns the file extension for uncompressed save.
+ */
+QString SAssistant::extensionUncompressed()
+{
+    return Tags::extensionUncompressed;
 }
 
 /*!
@@ -90,6 +109,15 @@ QString SAssistant::cleanPath(const QString &urlPath)
     }
 
     return urlPath;
+}
+
+/*!
+ * Returns directory leading to \a filePath.
+ */
+QString SAssistant::directory(const QString &filePath)
+{
+    //return QDir(filePath).absolutePath();
+    return QFileInfo(filePath).absolutePath();
 }
 
 /*!

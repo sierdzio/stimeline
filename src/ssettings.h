@@ -23,7 +23,7 @@ public:
 
     bool autoLoadLastFile = true;
     bool autoSaveOnExit = true;
-    bool useSimpleFileDialog = true;
+    bool useSimpleFileDialog = false;
     QString lastOpenFilePath;
     QString lastSaveFilePath;
 
@@ -32,7 +32,7 @@ public:
 signals:
     void autoSaveOnExitChanged(bool newValue) const; //!< K
     void autoLoadLastFileChanged(bool newValue) const; //!< K
-    void useSimpleFileDialog(bool newValue) const; //!< K
+    void useSimpleFileDialogChanged(bool newValue) const; //!< K
     void lastOpenFilePathChanged(const QString &newPath) const; //!< K
     void lastSaveFilePathChanged(const QString &newPath) const; //!< K
     void authorChanged(const QString &author) const; //!< K

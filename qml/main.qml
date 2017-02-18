@@ -38,30 +38,15 @@ ApplicationWindow {
         editor.open()
     }
 
-    FileDialog {
-        property bool isLoading: true
-
-        id: normalFileDialog
-        title: qsTr("Please choose a timeline file")
-        folder: Timeline.settings.lastOpenFilePath
-        nameFilters: ["Open timeline (*.json)", "Compressed timeline (*.tmln)"]
-        visible: false
-        selectExisting: isLoading
-        selectFolder: false
-        selectMultiple: false
+    FileDialogLoader {
+        id: fileDialog
+        isLoading: true
+        useSimpleDialog: Timeline.settings.useSimpleFileDialog
         onAccepted: {
-            console.log("You chose: " + fileUrls)
             if (isLoading) {
-                Timeline.load(fileUrl)
+                Timeline.load(filePath)
             } else {
-                Timeline.save(fileUrl)
-            }
-        }
-        onRejected: {
-            if (isLoading) {
-                console.log("File loading canceled")
-            } else {
-                console.log("File saving canceled")
+                Timeline.save(filePath)
             }
         }
     }
@@ -86,16 +71,16 @@ ApplicationWindow {
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
 
-//        Page {
-//            id: pageTimeline
+        //        Page {
+        //            id: pageTimeline
 
-//            EventTimeline {
-//                id: eventTimeline
-//                height: parent.height/2
-//                focus: true
-//                anchors.fill: parent
-//            }
-//        }
+        //            EventTimeline {
+        //                id: eventTimeline
+        //                height: parent.height/2
+        //                focus: true
+        //                anchors.fill: parent
+        //            }
+        //        }
 
         SItemListView {
             id: pageEvents
@@ -203,15 +188,15 @@ ApplicationWindow {
                 Button {
                     text: qsTr("Load timeline")
                     onClicked: {
-                        normalFileDialog.isLoading = true
-                        normalFileDialog.visible = true
+                        fileDialog.isLoading = true
+                        fileDialog.open()
                     }
                 }
                 Button {
                     text: qsTr("Save timeline")
                     onClicked: {
-                        normalFileDialog.isLoading = false
-                        normalFileDialog.visible = true
+                        fileDialog.isLoading = false
+                        fileDialog.open()
                     }
                 }
                 CheckBox {
@@ -223,6 +208,11 @@ ApplicationWindow {
                     text: qsTr("Automatically save on exit")
                     checked: Timeline.settings.autoSaveOnExit
                     onCheckedChanged: Timeline.settings.autoSaveOnExit = checked
+                }
+                CheckBox {
+                    text: qsTr("Use simple file dialog")
+                    checked: Timeline.settings.useSimpleFileDialog
+                    onCheckedChanged: Timeline.settings.useSimpleFileDialog = checked
                 }
             }
         }
@@ -316,9 +306,9 @@ ApplicationWindow {
             __tempIndex = currentIndex;
         }
 
-//        TabButton {
-//            text: qsTr("Timeline")
-//        }
+        //        TabButton {
+        //            text: qsTr("Timeline")
+        //        }
         TabButton {
             text: qsTr("Events")
         }
@@ -379,10 +369,10 @@ ApplicationWindow {
                 text: tabBar.contentChildren[6].text
                 onClicked: { tabBar.currentIndex = 6; drawer.close(); }
             }
-//            MenuItem {
-//                text: tabBar.contentChildren[7].text
-//                onClicked: { tabBar.currentIndex = 7; drawer.close(); }
-//            }
+            //            MenuItem {
+            //                text: tabBar.contentChildren[7].text
+            //                onClicked: { tabBar.currentIndex = 7; drawer.close(); }
+            //            }
             MenuItem {
                 text: qsTr("Quit")
                 onClicked: { Qt.quit(); }

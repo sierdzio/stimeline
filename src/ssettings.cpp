@@ -2,6 +2,7 @@
 #include "tags.h"
 
 #include <QSettings>
+#include <QStandardPaths>
 
 /*!
  * \class SSettings
@@ -71,12 +72,15 @@ SSettings::~SSettings()
  */
 void SSettings::load()
 {
+    const QString defaultDataPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
     QSettings settings;
     autoLoadLastFile = settings.value(Tags::autoLoadLastFile, true).toBool();
     autoSaveOnExit = settings.value(Tags::autoSaveOnExit, true).toBool();
     useSimpleFileDialog = settings.value(Tags::useSimpleFileDialog, true).toBool();
-    lastOpenFilePath = settings.value(Tags::lastOpenFilePath).toString();
-    lastSaveFilePath = settings.value(Tags::lastSaveFilePath).toString();
+    lastOpenFilePath = settings.value(Tags::lastOpenFilePath,
+                                      defaultDataPath).toString();
+    lastSaveFilePath = settings.value(Tags::lastSaveFilePath,
+                                      defaultDataPath).toString();
     author = settings.value(Tags::author).toString();
 }
 

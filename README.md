@@ -23,3 +23,8 @@ sTimeline supports 2 major file saving "architectures":
 
 Both are very alike. In fact, a TMLN file is just a simple ZIP archive made from
 the JSON type + all aditional artifacts (pictures).
+
+## Compiling
+
+sTimeline requires Qt 5.8 and QUazip library. You can build it by simply running
+qmake and make, or you can use Qt Creator.
