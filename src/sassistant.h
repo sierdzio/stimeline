@@ -22,9 +22,9 @@ public:
 
     explicit SAssistant(QObject *parent = 0);
 
-    static int buttonMargin(); //! K
-    static QString extensionCompressed(); //! K
-    static QString extensionUncompressed(); //! K
+    static int buttonMargin(); //!< K
+    static QString extensionCompressed(); //!< K
+    static QString extensionUncompressed(); //!< K
     Q_INVOKABLE static QString typeToString(const QString &type);
     Q_INVOKABLE static QByteArray generateId();
     Q_INVOKABLE static QString directory(const QString &filePath);

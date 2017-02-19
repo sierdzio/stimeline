@@ -44,7 +44,8 @@ sTimeline supports 2 major file saving "architectures":
  - uncompressed (open) saves (.json)
 
 Both are very alike. In fact, a TMLN file is just a simple ZIP archive made from
-the JSON type + all aditional artifacts (pictures).
+the JSON type + all aditional artifacts (pictures). For more information on how
+file saving and loading work in sTimeline, see SSave class.
 
 ## Compiling
 

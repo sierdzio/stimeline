@@ -30,12 +30,6 @@ Q_LOGGING_CATEGORY(stimeline, "STimeline")
  */
 
 /*!
- * \fn STimeline::error(const QString &message)
- *
- * Emitted on error.
- */
-
-/*!
  * \property STimeline::eventModelProxy
  *
  * Used by QML to display events (sorted).
@@ -192,7 +186,7 @@ void STimeline::save(const QString &path) const
  * changed to \<file SHA1 checksum\>.\<original extension\>. This allows us to quickly
  * recognise when a similar file is already present in pictures directory and
  * refrain from storing it again. So, the "pictures" directory acts like a simple
- * cache/ deduplication storage.
+ * cache/ deduplicated storage.
  */
 QString STimeline::loadPicture(const QString &absolutePath)
 {
