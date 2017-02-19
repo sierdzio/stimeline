@@ -57,3 +57,23 @@ qmake and make, or you can use Qt Creator.
 sTimeline is Free Software, for details see LICENSE.md file.
 
 sTimeline depends on Qt Framework and QuaZIP library.
+
+## The looks
+
+Currently sTimeline sports only a basic UI. Much work in this area is planned.
+
+---
+
+![Event view](../screenshots/sTimeline-s1-2017-02-19.png)
+
+---
+
+![Settings](../screenshots/sTimeline-s2-2017-02-19.png)
+
+---
+
+![About box](../screenshots/sTimeline-s3-2017-02-19.png)
+
+---
+
+![Side panel](../screenshots/sTimeline-s4-2017-02-19.png)
