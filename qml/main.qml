@@ -179,30 +179,99 @@ ApplicationWindow {
 
         Page {
             id: pageCalendar
-            Column {
-                spacing: 15
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
+            Flickable {
+                anchors.fill: parent
+                flickableDirection: Flickable.VerticalFlick
+                contentHeight: calendarColumn.height
+                contentWidth: calendarColumn.width
 
-                Label {
-                    text: qsTr("Author")
+                Column {
+                    id: calendarColumn
+                    spacing: 15
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    //anchors.top: parent.top
+                    //anchors.bottom: parent.bottom
+
+                    Label {
+                        text: qsTr("Author")
+                    }
+                    TextField {
+                        placeholderText: qsTr("Name, surname or nickname")
+                        text: Timeline.settings.author
+                    }
+                    Label {
+                        text: qsTr("File location: %1").arg(Timeline.settings.lastOpenFilePath)
+                    }
+                    MenuSeparator {}
+                    Label {
+                        text: qsTr("Calendar name")
+                    }
+                    TextField {
+                        placeholderText: qsTr("Name of the calendar system")
+                        text: Timeline.calendar.name
+                    }
+                    Label {
+                        text: qsTr("Days in a week")
+                    }
+                    TextField {
+                        text: Timeline.calendar.daysInWeek
+                    }
+                    Label {
+                        text: qsTr("Days in a year")
+                    }
+                    TextField {
+                        text: Timeline.calendar.daysInYear
+                    }
+                    Label {
+                        text: qsTr("Months in a year")
+                    }
+                    TextField {
+                        // TODO: Tumbler instead of TextField?
+                        text: Timeline.calendar.monthsInYear
+                    }
+                    ListView {
+                        height: 150
+                        width: 150
+                        //Layout.fillWidth: true
+                        //clip: true
+                        model: Timeline.calendar.monthsInYear
+                        // TODO: make writable!
+                        delegate: Text { text: Timeline.calendar.monthName(index) }
+                    }
+                    Label {
+                        text: qsTr("Leap days per year")
+                    }
+                    TextField {
+                        placeholderText: "0.25 - one leap day per 4 years"
+                        // TODO: validation!
+                        text: Timeline.calendar.leapDayPerYear
+                    }
+                    Label {
+                        text: qsTr("Leap day in which month?")
+                    }
+                    TextField {
+                        placeholderText: "2 - February"
+                        text: Timeline.calendar.leapDayAddsToMonthNumber
+                    }
+                    Label {
+                        text: qsTr("Seconds in a minute")
+                    }
+                    TextField {
+                        text: Timeline.calendar.secondsInMinute
+                    }
+                    Label {
+                        text: qsTr("Minutes in an hour")
+                    }
+                    TextField {
+                        text: Timeline.calendar.minutesInHour
+                    }
+                    Label {
+                        text: qsTr("Hours in a day")
+                    }
+                    TextField {
+                        text: Timeline.calendar.hoursInDay
+                    }
                 }
-                TextField {
-                    placeholderText: qsTr("Name, surname or nickname")
-                    text: Timeline.settings.author
-                }
-                Label {
-                    text: qsTr("File location: %1").arg(Timeline.settings.lastOpenFilePath)
-                }
-                Label {
-                    text: qsTr("Calendar name")
-                }
-                TextField {
-                    placeholderText: qsTr("Name of the calendar system")
-                    text: Timeline.calendar.name
-                }
-                // TODO: calendar system settings
             }
         }
 
@@ -407,6 +476,7 @@ ApplicationWindow {
                 text: tabBar.contentChildren[7].text
                 onClicked: { tabBar.currentIndex = 7; drawer.close(); }
             }
+            MenuSeparator {}
             MenuItem {
                 text: qsTr("Quit")
                 onClicked: { Qt.quit(); }
