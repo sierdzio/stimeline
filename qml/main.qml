@@ -248,7 +248,7 @@ ApplicationWindow {
                     height: 600
                     width: 350
                     wrapMode: Text.WordWrap
-                    text: qsTr("This software uses Qt Framework. Visit qt.io for more information. This software is free and open source, distributed under WTFPL license (see LICENSE.md file). You can find the source code at https://github.com/sierdzio/stimeline")
+                    text: qsTr("This software uses Qt Framework. Visit qt.io for more information. It also uses QuaZIP library - see http://quazip.sourceforge.net. This software is free and open source, distributed under WTFPL license (see LICENSE.md file). You can find the source code at https://github.com/sierdzio/stimeline")
                 }
             }
         }
