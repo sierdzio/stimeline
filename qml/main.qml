@@ -178,6 +178,35 @@ ApplicationWindow {
         }
 
         Page {
+            id: pageCalendar
+            Column {
+                spacing: 15
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+
+                Label {
+                    text: qsTr("Author")
+                }
+                TextField {
+                    placeholderText: qsTr("Name, surname or nickname")
+                    text: Timeline.settings.author
+                }
+                Label {
+                    text: qsTr("File location: %1").arg(Timeline.settings.lastOpenFilePath)
+                }
+                Label {
+                    text: qsTr("Calendar name")
+                }
+                TextField {
+                    placeholderText: qsTr("Name of the calendar system")
+                    text: Timeline.calendar.name
+                }
+                // TODO: calendar system settings
+            }
+        }
+
+        Page {
             id: pageSettings
             Column {
                 spacing: 15
@@ -312,6 +341,8 @@ ApplicationWindow {
         TabButton {
             text: qsTr("Events")
         }
+        // TODO: merge People, Artifacts, Places, Maps into a submenu - they
+        // are less needed but clutter the view
         TabButton {
             text: qsTr("People")
         }
@@ -325,7 +356,10 @@ ApplicationWindow {
             text: qsTr("Maps")
         }
         TabButton {
-            text: qsTr("Settings")
+            text: qsTr("Calendar and settings")
+        }
+        TabButton {
+            text: qsTr("App settings")
         }
         TabButton {
             text: qsTr("About")
@@ -369,10 +403,10 @@ ApplicationWindow {
                 text: tabBar.contentChildren[6].text
                 onClicked: { tabBar.currentIndex = 6; drawer.close(); }
             }
-            //            MenuItem {
-            //                text: tabBar.contentChildren[7].text
-            //                onClicked: { tabBar.currentIndex = 7; drawer.close(); }
-            //            }
+            MenuItem {
+                text: tabBar.contentChildren[7].text
+                onClicked: { tabBar.currentIndex = 7; drawer.close(); }
+            }
             MenuItem {
                 text: qsTr("Quit")
                 onClicked: { Qt.quit(); }
