@@ -64,16 +64,16 @@ Currently sTimeline sports only a basic UI. Much work in this area is planned.
 
 ---
 
-![Event view](../screenshots/sTimeline-s1-2017-02-19.png)
+![Event view](doc/screenshots/sTimeline-s1-2017-02-19.png)
 
 ---
 
-![Settings](../screenshots/sTimeline-s2-2017-02-19.png)
+![Settings](doc/screenshots/sTimeline-s2-2017-02-19.png)
 
 ---
 
-![About box](../screenshots/sTimeline-s3-2017-02-19.png)
+![About box](doc/screenshots/sTimeline-s3-2017-02-19.png)
 
 ---
 
-![Side panel](../screenshots/sTimeline-s4-2017-02-19.png)
+![Side panel](doc/screenshots/sTimeline-s4-2017-02-19.png)
