@@ -13,5 +13,6 @@
         <file>qml/editors/SimpleLoadDialog.qml</file>
         <file>qml/editors/SimpleSaveDialog.qml</file>
         <file>qml/editors/FileDialogLoader.qml</file>
+        <file>qml/ObjectsPage.qml</file>
     </qresource>
 </RCC>

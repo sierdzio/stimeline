@@ -3,8 +3,8 @@ import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
 import QtGraphicalEffects 1.0
-import Assistant 1.0
 import CustomItems 1.0
+import Assistant 1.0
 
 import "views"
 import "cards"
@@ -101,80 +101,8 @@ ApplicationWindow {
             onClicked: openEditor(Assistant.generateId(), SObject.Event)
         }
 
-        SItemListView {
-            id: pagePeople
-            model: Timeline.personModel
-            delegate: ObjectCard {
-                objectId: model.id
-                type: SObject.Person
-                name: model.name
-                picturePath: model.picturePath
-                description: model.description
-                from: model.from
-                to: model.to
-                width: 350
-                height: 140
-                onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
-            }
-
-            onClicked: openEditor(Assistant.generateId(), SObject.Person)
-        }
-
-        SItemListView {
-            id: pageArtifacts
-            model: Timeline.artifactModel
-            delegate: ObjectCard {
-                objectId: model.id
-                type: SObject.Artifact
-                name: model.name
-                picturePath: model.picturePath
-                description: model.description
-                from: model.from
-                to: model.to
-                width: 350
-                height: 140
-                onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
-            }
-
-            onClicked: openEditor(Assistant.generateId(), SObject.Artifact)
-        }
-
-        SItemListView {
-            id: pagePlaces
-            model: Timeline.placeModel
-            delegate: ObjectCard {
-                objectId: model.id
-                type: SObject.Place
-                name: model.name
-                picturePath: model.picturePath
-                description: model.description
-                from: model.from
-                to: model.to
-                width: 350
-                height: 140
-                onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
-            }
-
-            onClicked: openEditor(Assistant.generateId(), SObject.Place)
-        }
-
-        SItemListView {
-            id: pageMaps
-            model: Timeline.mapModel
-            delegate: ObjectCard {
-                objectId: model.id
-                type: SObject.Map
-                name: model.name
-                picturePath: model.picturePath
-                description: model.description
-                from: model.from
-                to: model.to
-                width: 350
-                height: 140
-                onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
-            }
-
-            onClicked: openEditor(Assistant.generateId(), SObject.Map)
+        ObjectsPage {
+            id: pageObjects
         }
 
         Page {
@@ -189,20 +117,7 @@ ApplicationWindow {
                     id: calendarColumn
                     spacing: 15
                     anchors.horizontalCenter: parent.horizontalCenter
-                    //anchors.top: parent.top
-                    //anchors.bottom: parent.bottom
 
-                    Label {
-                        text: qsTr("Author")
-                    }
-                    TextField {
-                        placeholderText: qsTr("Name, surname or nickname")
-                        text: Timeline.settings.author
-                    }
-                    Label {
-                        text: qsTr("File location: %1").arg(Timeline.settings.lastOpenFilePath)
-                    }
-                    MenuSeparator {}
                     Label {
                         text: qsTr("Calendar name")
                     }
@@ -280,8 +195,19 @@ ApplicationWindow {
             Column {
                 spacing: 15
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
+
+                Label {
+                    text: qsTr("Author")
+                }
+                TextField {
+                    placeholderText: qsTr("Name, surname or nickname")
+                    text: Timeline.settings.author
+                }
+                Label {
+                    text: qsTr("File location: %1").arg(Timeline.settings.lastOpenFilePath)
+                }
+
+                MenuSeparator {}
 
                 Button {
                     text: qsTr("Load timeline")
@@ -346,7 +272,13 @@ ApplicationWindow {
                     height: 600
                     width: 350
                     wrapMode: Text.WordWrap
-                    text: qsTr("This software uses Qt Framework. Visit qt.io for more information. It also uses QuaZIP library - see http://quazip.sourceforge.net. This software is free and open source, distributed under WTFPL license (see LICENSE.md file). You can find the source code at https://github.com/sierdzio/stimeline")
+                    text: qsTr("This software uses Qt Framework. Visit qt.io for "
+                               + "more information. It also uses QuaZIP library "
+                               + "- see http://quazip.sourceforge.net. This "
+                               + "software is free and open source, distributed "
+                               + "under WTFPL license (see LICENSE.md file). You "
+                               + "can find the source code at "
+                               + "https://github.com/sierdzio/stimeline")
                 }
             }
         }
@@ -412,23 +344,26 @@ ApplicationWindow {
         }
         // TODO: merge People, Artifacts, Places, Maps into a submenu - they
         // are less needed but clutter the view
+//        TabButton {
+//            text: qsTr("People")
+//        }
+//        TabButton {
+//            text: qsTr("Artifacts")
+//        }
+//        TabButton {
+//            text: qsTr("Places")
+//        }
+//        TabButton {
+//            text: qsTr("Maps")
+//        }
         TabButton {
-            text: qsTr("People")
+            text: qsTr("Objects")
         }
         TabButton {
-            text: qsTr("Artifacts")
+            text: qsTr("Calendar")
         }
         TabButton {
-            text: qsTr("Places")
-        }
-        TabButton {
-            text: qsTr("Maps")
-        }
-        TabButton {
-            text: qsTr("Calendar and settings")
-        }
-        TabButton {
-            text: qsTr("App settings")
+            text: qsTr("Settings")
         }
         TabButton {
             text: qsTr("About")
@@ -464,18 +399,18 @@ ApplicationWindow {
                 text: tabBar.contentChildren[4].text
                 onClicked: { tabBar.currentIndex = 4; drawer.close(); }
             }
-            MenuItem {
-                text: tabBar.contentChildren[5].text
-                onClicked: { tabBar.currentIndex = 5; drawer.close(); }
-            }
-            MenuItem {
-                text: tabBar.contentChildren[6].text
-                onClicked: { tabBar.currentIndex = 6; drawer.close(); }
-            }
-            MenuItem {
-                text: tabBar.contentChildren[7].text
-                onClicked: { tabBar.currentIndex = 7; drawer.close(); }
-            }
+//            MenuItem {
+//                text: tabBar.contentChildren[5].text
+//                onClicked: { tabBar.currentIndex = 5; drawer.close(); }
+//            }
+//            MenuItem {
+//                text: tabBar.contentChildren[6].text
+//                onClicked: { tabBar.currentIndex = 6; drawer.close(); }
+//            }
+//            MenuItem {
+//                text: tabBar.contentChildren[7].text
+//                onClicked: { tabBar.currentIndex = 7; drawer.close(); }
+//            }
             MenuSeparator {}
             MenuItem {
                 text: qsTr("Quit")

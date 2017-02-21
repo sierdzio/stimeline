@@ -54,7 +54,7 @@ qmake and make, or you can use Qt Creator.
 
 ## Licenses
 
-sTimeline is Free Software, for details see LICENSE.md file.
+sTimeline is Free Software, for details see \ref license.
 
 sTimeline depends on Qt Framework and QuaZIP library.
 
