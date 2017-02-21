@@ -35,7 +35,9 @@ public:
     void fromJson(const QJsonArray &json);
 
     Q_INVOKABLE uint daysInMonth(const uint month) const;
+    Q_INVOKABLE void setDaysInMonth(const uint month, const uint days);
     Q_INVOKABLE QString monthName(const uint month) const;
+    Q_INVOKABLE void setMonthName(const uint month, const QString &name);
     Q_INVOKABLE bool isEarlier(const QString &date, const QString &other) const;
 
     quint64 duration(const SDateTime &from, const SDateTime &to) const;

@@ -180,6 +180,22 @@ uint SCalendar::daysInMonth(const uint month) const
 }
 
 /*!
+ * Sets the number of \a days in a \a month.
+ */
+void SCalendar::setDaysInMonth(const uint month, const uint days)
+{
+    if (month > uint(mMonths.size())) {
+        qCDebug(scalendar) << "Month number" << month << "exceeds number of months"
+                           << "in a year";
+        return;
+    }
+
+    const int mnth(month);
+    const QString name(mMonths.at(mnth).first);
+    mMonths.replace(mnth, {name, days});
+}
+
+/*!
  * Returns the name of the given \a month number.
  *
  * Month indexing starts with 0 (zero).
@@ -193,6 +209,22 @@ QString SCalendar::monthName(const uint month) const
     }
 
     return mMonths.at(int(month)).first;
+}
+
+/*!
+ * Sets the \a name of \a month.
+ */
+void SCalendar::setMonthName(const uint month, const QString &name)
+{
+    if (month > uint(mMonths.size())) {
+        qCDebug(scalendar) << "Month number" << month << "exceeds number of months"
+                           << "in a year";
+        return;
+    }
+
+    const int mnth(month);
+    const uint days(mMonths.at(mnth).second);
+    mMonths.replace(mnth, {name, days});
 }
 
 /*!

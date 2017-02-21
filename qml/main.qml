@@ -113,10 +113,9 @@ ApplicationWindow {
                 contentHeight: calendarColumn.height
                 contentWidth: calendarColumn.width
 
-                Column {
+                GridLayout {
                     id: calendarColumn
-                    spacing: 15
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    columns: 2
 
                     Label {
                         text: qsTr("Calendar name")
@@ -124,18 +123,21 @@ ApplicationWindow {
                     TextField {
                         placeholderText: qsTr("Name of the calendar system")
                         text: Timeline.calendar.name
+                        onTextChanged: Timeline.calendar.name = text
                     }
                     Label {
                         text: qsTr("Days in a week")
                     }
                     TextField {
                         text: Timeline.calendar.daysInWeek
+                        onTextChanged: Timeline.calendar.daysInWeek = text
                     }
                     Label {
                         text: qsTr("Days in a year")
                     }
                     TextField {
                         text: Timeline.calendar.daysInYear
+                        onTextChanged: Timeline.calendar.daysInYear = text
                     }
                     Label {
                         text: qsTr("Months in a year")
@@ -143,15 +145,27 @@ ApplicationWindow {
                     TextField {
                         // TODO: Tumbler instead of TextField?
                         text: Timeline.calendar.monthsInYear
+                        onTextChanged: Timeline.calendar.monthsInYear = text
+                    }
+                    Label {
+                        text: qsTr("Months")
                     }
                     ListView {
                         height: 150
                         width: 150
                         //Layout.fillWidth: true
-                        //clip: true
+                        clip: true
                         model: Timeline.calendar.monthsInYear
-                        // TODO: make writable!
-                        delegate: Text { text: Timeline.calendar.monthName(index) }
+                        delegate: Row {
+                            TextField {
+                                text: Timeline.calendar.monthName(index)
+                                onTextChanged: Timeline.calendar.setMonthName(index, text)
+                            }
+                            TextField {
+                                text: Timeline.calendar.daysInMonth(index)
+                                onTextChanged: Timeline.calendar.setDaysInMonth(index, text)
+                            }
+                        }
                     }
                     Label {
                         text: qsTr("Leap days per year")
@@ -160,6 +174,7 @@ ApplicationWindow {
                         placeholderText: "0.25 - one leap day per 4 years"
                         // TODO: validation!
                         text: Timeline.calendar.leapDayPerYear
+                        onTextChanged: Timeline.calendar.leapDayPerYear = text
                     }
                     Label {
                         text: qsTr("Leap day in which month?")
@@ -167,24 +182,28 @@ ApplicationWindow {
                     TextField {
                         placeholderText: "2 - February"
                         text: Timeline.calendar.leapDayAddsToMonthNumber
+                        onTextChanged: Timeline.calendar.leapDayAddsToMonthNumber = text
                     }
                     Label {
                         text: qsTr("Seconds in a minute")
                     }
                     TextField {
                         text: Timeline.calendar.secondsInMinute
+                        onTextChanged: Timeline.calendar.secondsInMinute = text
                     }
                     Label {
                         text: qsTr("Minutes in an hour")
                     }
                     TextField {
                         text: Timeline.calendar.minutesInHour
+                        onTextChanged: Timeline.calendar.minutesInHour = text
                     }
                     Label {
                         text: qsTr("Hours in a day")
                     }
                     TextField {
                         text: Timeline.calendar.hoursInDay
+                        onTextChanged: Timeline.calendar.hoursInDay = text
                     }
                 }
             }
@@ -192,16 +211,18 @@ ApplicationWindow {
 
         Page {
             id: pageSettings
-            Column {
+            ColumnLayout {
                 spacing: 15
-                anchors.horizontalCenter: parent.horizontalCenter
 
-                Label {
-                    text: qsTr("Author")
-                }
-                TextField {
-                    placeholderText: qsTr("Name, surname or nickname")
-                    text: Timeline.settings.author
+                RowLayout {
+                    Label {
+                        text: qsTr("Author")
+                    }
+                    TextField {
+                        placeholderText: qsTr("Name, surname or nickname")
+                        text: Timeline.settings.author
+                        onTextChanged: Timeline.settings.author = text
+                    }
                 }
                 Label {
                     text: qsTr("File location: %1").arg(Timeline.settings.lastOpenFilePath)
@@ -247,12 +268,8 @@ ApplicationWindow {
             Column {
                 spacing: 15
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                width: parent.width
 
                 Text {
-                    //Layout.alignment: Qt.AlignHCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: "sTimeline"
                     font {
@@ -261,15 +278,11 @@ ApplicationWindow {
                     }
                 }
                 Text {
-                    //Layout.alignment: Qt.AlignHCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: qsTr("Version %1").arg(Qt.application.version)
                 }
                 Item { height: 25; width: 1 }
                 Text {
-                    //Layout.alignment: Qt.AlignHCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    height: 600
                     width: 350
                     wrapMode: Text.WordWrap
                     text: qsTr("This software uses Qt Framework. Visit qt.io for "
@@ -344,18 +357,18 @@ ApplicationWindow {
         }
         // TODO: merge People, Artifacts, Places, Maps into a submenu - they
         // are less needed but clutter the view
-//        TabButton {
-//            text: qsTr("People")
-//        }
-//        TabButton {
-//            text: qsTr("Artifacts")
-//        }
-//        TabButton {
-//            text: qsTr("Places")
-//        }
-//        TabButton {
-//            text: qsTr("Maps")
-//        }
+        //        TabButton {
+        //            text: qsTr("People")
+        //        }
+        //        TabButton {
+        //            text: qsTr("Artifacts")
+        //        }
+        //        TabButton {
+        //            text: qsTr("Places")
+        //        }
+        //        TabButton {
+        //            text: qsTr("Maps")
+        //        }
         TabButton {
             text: qsTr("Objects")
         }
@@ -399,18 +412,18 @@ ApplicationWindow {
                 text: tabBar.contentChildren[4].text
                 onClicked: { tabBar.currentIndex = 4; drawer.close(); }
             }
-//            MenuItem {
-//                text: tabBar.contentChildren[5].text
-//                onClicked: { tabBar.currentIndex = 5; drawer.close(); }
-//            }
-//            MenuItem {
-//                text: tabBar.contentChildren[6].text
-//                onClicked: { tabBar.currentIndex = 6; drawer.close(); }
-//            }
-//            MenuItem {
-//                text: tabBar.contentChildren[7].text
-//                onClicked: { tabBar.currentIndex = 7; drawer.close(); }
-//            }
+            //            MenuItem {
+            //                text: tabBar.contentChildren[5].text
+            //                onClicked: { tabBar.currentIndex = 5; drawer.close(); }
+            //            }
+            //            MenuItem {
+            //                text: tabBar.contentChildren[6].text
+            //                onClicked: { tabBar.currentIndex = 6; drawer.close(); }
+            //            }
+            //            MenuItem {
+            //                text: tabBar.contentChildren[7].text
+            //                onClicked: { tabBar.currentIndex = 7; drawer.close(); }
+            //            }
             MenuSeparator {}
             MenuItem {
                 text: qsTr("Quit")

@@ -23,7 +23,7 @@ Popup {
 
         Label {
             id: fnLabel
-            text: qsTr("File name:")
+            text: qsTr("File name")
             Layout.fillWidth: true
         }
 
