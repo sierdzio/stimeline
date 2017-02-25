@@ -30,6 +30,7 @@ static const QByteArray places("Places");
 static const QByteArray maps("Maps");
 // Calendar:
 static const QByteArray calendar("Calendar");
+static const QByteArray defaultDateTime("defaultDateTime");
 static const QByteArray daysInWeek("daysInWeek");
 static const QByteArray daysInYear("daysInYear");
 static const QByteArray monthsInYear("monthsInYear");

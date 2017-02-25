@@ -88,16 +88,6 @@ Page {
         }
     }
 
-//    PageIndicator {
-//        id: indicator
-
-//        count: swipeView.count
-//        currentIndex: swipeView.currentIndex
-
-//        anchors.bottom: swipeView.bottom
-//        anchors.horizontalCenter: parent.horizontalCenter
-//    }
-
     footer: TabBar {
         property int previousIndex: -1
         property int __tempIndex: 0

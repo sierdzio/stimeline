@@ -32,11 +32,10 @@ Page {
             Label {
                 text: qsTr("Default date and time")
             }
-            // TODO: save default date time to JSON file.
-            // TODO: use default date time in all other parts of the application
             Label {
                 id: defaultDateTimeLabel
-                text: "1-1-1 1:1:1"
+                text: Timeline.calendar.defaultDateTime
+                onTextChanged: Timeline.calendar.defaultDateTime = text
 
                 MouseArea {
                     anchors.fill: parent

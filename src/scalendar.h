@@ -18,6 +18,7 @@ class SCalendar : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString name MEMBER mName NOTIFY nameChanged)
+    Q_PROPERTY(QString defaultDateTime MEMBER mDefaultDateTime NOTIFY defaultDateTimeChanged)
     Q_PROPERTY(uint daysInWeek MEMBER mDaysInWeek NOTIFY daysInWeekChanged)
     Q_PROPERTY(uint daysInYear MEMBER mDaysInYear NOTIFY daysInYearChanged)
     Q_PROPERTY(uint monthsInYear MEMBER mMonthsInYear NOTIFY monthsInYearChanged)
@@ -52,7 +53,8 @@ signals:
     void leapDayAddsToMonthNumberChanged(uint leapDayAddsToMonthNumber) const; //!< K
     void secondsInMinuteChanged(uint secondsInMinute) const; //!< K
     void minutesInHourChanged(uint minutesInHour) const; //!< K
-    void hoursInDayChanged(uint hoursInDay) const; //!< K
+    void hoursInDayChanged(uint hoursInDay) const; //!< K    
+    void defaultDateTimeChanged(const QString &defaultDateTime) const; //!< K
 
 private:
     void checkValidity();
@@ -60,6 +62,8 @@ private:
     bool mIsValid = false;
 
     QString mName = "Gregorian";
+    QString mDefaultDateTime = "1-1-1 1:1:1";
+
     // Date
     uint mDaysInWeek = 7;
     uint mDaysInYear = 365;

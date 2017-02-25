@@ -6,8 +6,10 @@ import "../"
 
 Popup {
     // TODO: use separator from Tags class
-    property string dateTime: dtYear.text + "-" + (dtMonth.currentIndex+1) + "-" + (dtDay.currentIndex+1)
-                              + " " + (dtHour.currentIndex+1) + ":" + (dtMinute.currentIndex+1) + ":"
+    property string dateTime: dtYear.text + "-" + (dtMonth.currentIndex+1) + "-"
+                              + (dtDay.currentIndex+1) + " "
+                              + (dtHour.currentIndex+1) + ":"
+                              + (dtMinute.currentIndex+1) + ":"
                               + (dtSecond.currentIndex+1) //"0001-01-01 01:01:01"
 
     signal finished()
@@ -17,8 +19,6 @@ Popup {
     onCanceled: close()
 
     id: root
-    //width: 800
-    //height: 600
     closePolicy: Popup.NoAutoClose
     modal: true
     focus: true

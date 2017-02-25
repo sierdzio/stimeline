@@ -4,7 +4,9 @@ Item {
     property string relativeSource
     Image {
         anchors.fill: parent
-        source: relativeSource.length > 0? "file://" + Timeline.basePicturePath() + "/" + relativeSource : ""
+        source: relativeSource.length > 0? "file://" + Timeline.basePicturePath()
+                                           + "/" + relativeSource
+                                         : ""
         fillMode: Image.PreserveAspectFit
     }
 }

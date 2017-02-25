@@ -15,5 +15,7 @@
         <file>qml/editors/FileDialogLoader.qml</file>
         <file>qml/ObjectsPage.qml</file>
         <file>qml/CalendarPage.qml</file>
+        <file>qml/SettingsPage.qml</file>
+        <file>qml/AboutPage.qml</file>
     </qresource>
 </RCC>

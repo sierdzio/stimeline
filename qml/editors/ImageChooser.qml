@@ -27,7 +27,7 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: dialog.open()
+        onDoubleClicked: dialog.open()
     }
 
     FileDialog {

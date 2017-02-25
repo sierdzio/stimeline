@@ -1,8 +1,6 @@
 import QtQuick 2.8
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.0
-import QtQuick.Dialogs 1.2
-import QtGraphicalEffects 1.0
 import CustomItems 1.0
 import Assistant 1.0
 
@@ -25,8 +23,8 @@ ApplicationWindow {
             editor.name = ""
             editor.picturePath = ""
             editor.description = ""
-            editor.from = "1-1-1 1:1:1"
-            editor.to = "1-1-1 1:1:1"
+            editor.from = Timeline.calendar.defaultDateTime
+            editor.to = Timeline.calendar.defaultDateTime
         } else {
             editor.name = name
             editor.picturePath = picturePath
@@ -36,19 +34,6 @@ ApplicationWindow {
         }
 
         editor.open()
-    }
-
-    FileDialogLoader {
-        id: fileDialog
-        isLoading: true
-        useSimpleDialog: Timeline.settings.useSimpleFileDialog
-        onAccepted: {
-            if (isLoading) {
-                Timeline.load(filePath)
-            } else {
-                Timeline.save(filePath)
-            }
-        }
     }
 
     ObjectEditor {
@@ -109,91 +94,12 @@ ApplicationWindow {
             id: pageCalendar
         }
 
-        Page {
+        SettingsPage {
             id: pageSettings
-            ColumnLayout {
-                spacing: 15
-
-                RowLayout {
-                    Label {
-                        text: qsTr("Author")
-                    }
-                    TextField {
-                        placeholderText: qsTr("Name, surname or nickname")
-                        text: Timeline.settings.author
-                        onTextChanged: Timeline.settings.author = text
-                    }
-                }
-                Label {
-                    text: qsTr("File location: %1").arg(Timeline.settings.lastOpenFilePath)
-                }
-
-                MenuSeparator {}
-
-                Button {
-                    text: qsTr("Load timeline")
-                    onClicked: {
-                        fileDialog.isLoading = true
-                        fileDialog.open()
-                    }
-                }
-                Button {
-                    text: qsTr("Save timeline")
-                    onClicked: {
-                        fileDialog.isLoading = false
-                        fileDialog.open()
-                    }
-                }
-                CheckBox {
-                    text: qsTr("Automatically load last opened file on startup")
-                    checked: Timeline.settings.autoLoadLastFile
-                    onCheckedChanged: Timeline.settings.autoLoadLastFile = checked
-                }
-                CheckBox {
-                    text: qsTr("Automatically save on exit")
-                    checked: Timeline.settings.autoSaveOnExit
-                    onCheckedChanged: Timeline.settings.autoSaveOnExit = checked
-                }
-                CheckBox {
-                    text: qsTr("Use simple file dialog")
-                    checked: Timeline.settings.useSimpleFileDialog
-                    onCheckedChanged: Timeline.settings.useSimpleFileDialog = checked
-                }
-            }
         }
 
-        Page {
+        AboutPage {
             id: pageAbout
-
-            Column {
-                spacing: 15
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: "sTimeline"
-                    font {
-                        bold: true
-                        pointSize: 24
-                    }
-                }
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: qsTr("Version %1").arg(Qt.application.version)
-                }
-                Item { height: 25; width: 1 }
-                Text {
-                    width: 350
-                    wrapMode: Text.WordWrap
-                    text: qsTr("This software uses Qt Framework. Visit qt.io for "
-                               + "more information. It also uses QuaZIP library "
-                               + "- see http://quazip.sourceforge.net. This "
-                               + "software is free and open source, distributed "
-                               + "under WTFPL license (see LICENSE.md file). You "
-                               + "can find the source code at "
-                               + "https://github.com/sierdzio/stimeline")
-                }
-            }
         }
     }
 
@@ -255,20 +161,6 @@ ApplicationWindow {
         TabButton {
             text: qsTr("Events")
         }
-        // TODO: merge People, Artifacts, Places, Maps into a submenu - they
-        // are less needed but clutter the view
-        //        TabButton {
-        //            text: qsTr("People")
-        //        }
-        //        TabButton {
-        //            text: qsTr("Artifacts")
-        //        }
-        //        TabButton {
-        //            text: qsTr("Places")
-        //        }
-        //        TabButton {
-        //            text: qsTr("Maps")
-        //        }
         TabButton {
             text: qsTr("Objects")
         }
@@ -312,18 +204,6 @@ ApplicationWindow {
                 text: tabBar.contentChildren[4].text
                 onClicked: { tabBar.currentIndex = 4; drawer.close(); }
             }
-            //            MenuItem {
-            //                text: tabBar.contentChildren[5].text
-            //                onClicked: { tabBar.currentIndex = 5; drawer.close(); }
-            //            }
-            //            MenuItem {
-            //                text: tabBar.contentChildren[6].text
-            //                onClicked: { tabBar.currentIndex = 6; drawer.close(); }
-            //            }
-            //            MenuItem {
-            //                text: tabBar.contentChildren[7].text
-            //                onClicked: { tabBar.currentIndex = 7; drawer.close(); }
-            //            }
             MenuSeparator {}
             MenuItem {
                 text: qsTr("Quit")

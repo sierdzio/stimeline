@@ -80,7 +80,7 @@ Popup {
 
         Label {
             id: fromLabel
-            text: "1-1-1 1:1:1"
+            text: Timeline.calendar.defaultDateTime
 
             MouseArea {
                 anchors.fill: parent
@@ -98,7 +98,7 @@ Popup {
 
         Label {
             id: toLabel
-            text: "1-1-1 1:1:1"
+            text: Timeline.calendar.defaultDateTime
 
             MouseArea {
                 anchors.fill: parent
