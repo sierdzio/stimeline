@@ -170,7 +170,7 @@ void SCalendar::fromJson(const QJsonArray &json)
  */
 uint SCalendar::daysInMonth(const uint month) const
 {
-    if (month > uint(mMonths.size())) {
+    if (month >= uint(mMonths.size())) {
         qCDebug(scalendar) << "Month number" << month << "exceeds number of months"
                            << "in a year";
         return 0;
@@ -184,7 +184,7 @@ uint SCalendar::daysInMonth(const uint month) const
  */
 void SCalendar::setDaysInMonth(const uint month, const uint days)
 {
-    if (month > uint(mMonths.size())) {
+    if (month >= uint(mMonths.size())) {
         qCDebug(scalendar) << "Month number" << month << "exceeds number of months"
                            << "in a year";
         return;
@@ -202,10 +202,10 @@ void SCalendar::setDaysInMonth(const uint month, const uint days)
  */
 QString SCalendar::monthName(const uint month) const
 {
-    if (month > uint(mMonths.size())) {
+    if (month >= uint(mMonths.size())) {
         qCDebug(scalendar) << "Month number" << month << "exceeds number of months"
                            << "in a year";
-        return 0;
+        return QString::null;
     }
 
     return mMonths.at(int(month)).first;
@@ -216,7 +216,7 @@ QString SCalendar::monthName(const uint month) const
  */
 void SCalendar::setMonthName(const uint month, const QString &name)
 {
-    if (month > uint(mMonths.size())) {
+    if (month >= uint(mMonths.size())) {
         qCDebug(scalendar) << "Month number" << month << "exceeds number of months"
                            << "in a year";
         return;
