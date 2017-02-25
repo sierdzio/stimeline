@@ -14,5 +14,6 @@
         <file>qml/editors/SimpleSaveDialog.qml</file>
         <file>qml/editors/FileDialogLoader.qml</file>
         <file>qml/ObjectsPage.qml</file>
+        <file>qml/CalendarPage.qml</file>
     </qresource>
 </RCC>
