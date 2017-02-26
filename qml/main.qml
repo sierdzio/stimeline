@@ -1,11 +1,9 @@
 import QtQuick 2.8
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.0
-import CustomItems 1.0
 import Assistant 1.0
 
-import "views"
-import "cards"
+import "pages"
 import "editors"
 
 ApplicationWindow {
@@ -67,23 +65,11 @@ ApplicationWindow {
         //            }
         //        }
 
-        SItemListView {
+        SObjectListPage {
             id: pageEvents
             model: Timeline.eventModelProxy
-            delegate: ObjectCard {
-                objectId: model.id
-                type: SObject.Event
-                name: model.name
-                picturePath: model.picturePath
-                description: model.description
-                from: model.from
-                to: model.to
-                width: 350
-                height: 140
-                onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
-            }
-
-            onClicked: openEditor(Assistant.generateId(), SObject.Event)
+            onEditRequest: openEditor(objectId, type, name, picturePath, description, from, to)
+            onAddObjectRequest: openEditor(Assistant.generateId(), SObject.Event)
         }
 
         ObjectsPage {

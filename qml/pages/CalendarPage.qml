@@ -1,7 +1,7 @@
 import QtQuick 2.8
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.1
-import "editors"
+import "../editors"
 
 Page {
     DateTimeEditor {
