@@ -109,6 +109,10 @@ void SSettings::save() const
     settings.setValue(Tags::author, author);
 }
 
+/*!
+ * Updates lastOpenFileName and lastOpenFileExtension based on file path passed
+ * in \a lastOpenFile.
+ */
 void SSettings::updateLastOpenedFileData(const QString &lastOpenFile)
 {
     const QFileInfo fi(lastOpenFile);

@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     app.setApplicationDisplayName("sTimeline");
     app.setApplicationName("sTimeline");
     app.setOrganizationName("sierdzio");
-    app.setOrganizationName("sierdzio"); // TODO: proper domain
+    app.setOrganizationDomain("org.hopto.sierdzio");
     app.setQuitOnLastWindowClosed(true);
 
     SSettings settings;
@@ -33,8 +33,9 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<SObject>("CustomItems", 1, 0, "SObject",
                                         "You cannot instantiate SObject ion QML");
     qmlRegisterSingletonType<SAssistant>("Assistant", 1, 0, "Assistant",
-                                            SAssistant::assistantSingletonProvider);
-    qmlRegisterType<EventTimelineView>("CustomItems", 1, 0, EventTimelineView::staticMetaObject.className());
+                                         SAssistant::assistantSingletonProvider);
+    qmlRegisterType<EventTimelineView>("CustomItems", 1, 0,
+                                       EventTimelineView::staticMetaObject.className());
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("Timeline", &timeline);

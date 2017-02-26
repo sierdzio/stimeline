@@ -30,6 +30,13 @@ Q_LOGGING_CATEGORY(scalendar, "SCalendar")
  */
 
 /*!
+ * \property SCalendar::defaultDateTime
+ *
+ * Default calendar date and time. This value is used for all newly created
+ * events, objects etc. as the default date and time.
+ */
+
+/*!
  * \property SCalendar::daysInWeek
  *
  * Number of days in a week. Default value is 7.
