@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
-    app.setApplicationVersion("0.2");
+    app.setApplicationVersion("0.3");
     app.setApplicationDisplayName("sTimeline");
     app.setApplicationName("sTimeline");
     app.setOrganizationName("sierdzio");

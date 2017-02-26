@@ -2,7 +2,7 @@
 
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "STimeline"
-PROJECT_NUMBER         = 0.2
+PROJECT_NUMBER         = 0.3
 PROJECT_BRIEF          = "Timeline application for writers"
 PROJECT_LOGO           =
 OUTPUT_DIRECTORY       = doc
