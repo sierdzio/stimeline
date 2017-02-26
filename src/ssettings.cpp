@@ -1,6 +1,7 @@
 #include "ssettings.h"
 #include "tags.h"
 
+#include <QFileInfo>
 #include <QSettings>
 #include <QStandardPaths>
 
@@ -40,9 +41,15 @@
  */
 
 /*!
- * \property SSettings::lastSaveFilePath
+ * \property SSettings::lastOpenFileName
  *
- * Path to most recently saved file.
+ * Name of the last opened file. Does not include extension.
+ */
+
+/*!
+ * \property SSettings::lastOpenFileExtension
+ *
+ * Extension of the last opened file.
  */
 
 /*!
@@ -57,6 +64,10 @@
 SSettings::SSettings(QObject *parent) : QObject(parent)
 {
     load();
+
+    // Automatically update lastOpenFileName and Extension
+    connect(this, &SSettings::lastOpenFilePathChanged,
+            this, &SSettings::updateLastOpenedFileData);
 }
 
 /*!
@@ -79,9 +90,10 @@ void SSettings::load()
     useSimpleFileDialog = settings.value(Tags::useSimpleFileDialog, true).toBool();
     lastOpenFilePath = settings.value(Tags::lastOpenFilePath,
                                       defaultDataPath).toString();
-    lastSaveFilePath = settings.value(Tags::lastSaveFilePath,
-                                      defaultDataPath).toString();
     author = settings.value(Tags::author).toString();
+
+    // Automatically populate last open file name and extension
+    updateLastOpenedFileData(lastOpenFilePath);
 }
 
 /*!
@@ -94,6 +106,14 @@ void SSettings::save() const
     settings.setValue(Tags::autoSaveOnExit, autoSaveOnExit);
     settings.setValue(Tags::useSimpleFileDialog, useSimpleFileDialog);
     settings.setValue(Tags::lastOpenFilePath, lastOpenFilePath);
-    settings.setValue(Tags::lastSaveFilePath, lastSaveFilePath);
     settings.setValue(Tags::author, author);
+}
+
+void SSettings::updateLastOpenedFileData(const QString &lastOpenFile)
+{
+    const QFileInfo fi(lastOpenFile);
+    lastOpenFileName = fi.baseName();
+    emit lastOpenFileNameChanged(lastOpenFileName);
+    lastOpenFileExtension = fi.suffix();
+    emit lastOpenFileExtensionChanged(lastOpenFileExtension);
 }

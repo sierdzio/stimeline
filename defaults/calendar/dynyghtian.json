@@ -1,5 +1,6 @@
 {
     "name": "Dynyghtian",
+    "defaultDateTime": "1000-1-1 1:1:1",
     "daysInWeek": 7,
     "daysInYear": 480,
     "monthsInYear": 12,

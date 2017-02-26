@@ -1,5 +1,6 @@
 {
     "name": "Gregorian",
+    "defaultDateTime": "2017-1-1 1:1:1",
     "daysInWeek": 7,
     "daysInYear": 365,
     "monthsInYear": 12,

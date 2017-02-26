@@ -48,7 +48,6 @@ static const QByteArray autoLoadLastFile("autoLoadLastFile");
 static const QByteArray autoSaveOnExit("autoSaveOnExit");
 static const QByteArray useSimpleFileDialog("useSimpleFileDialog");
 static const QByteArray lastOpenFilePath("lastOpenFilePath");
-static const QByteArray lastSaveFilePath("lastSaveFilePath");
 // Misc
 static const QByteArray dateSeparator("-");
 static const QByteArray timeSeparator(":");

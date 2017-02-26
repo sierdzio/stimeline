@@ -18,6 +18,14 @@ Popup {
     modal: true
     focus: true
 
+    Component.onCompleted: {
+        if (Timeline.settings.lastOpenFileExtension === "json") {
+            extensionJson.checked = true
+        } else if (Timeline.settings.lastOpenFileExtension === "tmln") {
+            extensionTmln.checked = true
+        }
+    }
+
     ColumnLayout {
         anchors.fill: parent
 
@@ -29,7 +37,7 @@ Popup {
 
         TextField {
             id: fileNameText
-            placeholderText: fnLabel.text
+            text: Timeline.settings.lastOpenFileName
             Layout.fillWidth: true
         }
 
