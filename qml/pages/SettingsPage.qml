@@ -34,6 +34,7 @@ Page {
         }
         Label {
             text: qsTr("File location: %1").arg(Timeline.settings.lastOpenFilePath)
+            wrapMode: Label.WrapAnywhere
         }
 
         MenuSeparator {}
