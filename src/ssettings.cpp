@@ -83,7 +83,10 @@ SSettings::~SSettings()
  */
 void SSettings::load()
 {
-    const QString defaultDataPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+    const QString defaultDataPath(
+                QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+                + "/sTimeline");
+
     QSettings settings;
     autoLoadLastFile = settings.value(Tags::autoLoadLastFile, true).toBool();
     autoSaveOnExit = settings.value(Tags::autoSaveOnExit, true).toBool();
