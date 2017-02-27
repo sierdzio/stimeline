@@ -1,6 +1,9 @@
 #include "ssettings.h"
 #include "tags.h"
 
+#include <QDebug>
+#include <QDir>
+#include <QFile>
 #include <QFileInfo>
 #include <QSettings>
 #include <QStandardPaths>
@@ -61,7 +64,10 @@
 /*!
  * Uses \a parent to join QObject hierarchy. Loads the settings.
  */
-SSettings::SSettings(QObject *parent) : QObject(parent)
+SSettings::SSettings(QObject *parent)
+    : QObject(parent),
+      defaultSettingsPath(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+                          + "/" + Tags::docFolderName)
 {
     load();
 
@@ -83,16 +89,35 @@ SSettings::~SSettings()
  */
 void SSettings::load()
 {
-    const QString defaultDataPath(
-                QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
-                + "/sTimeline");
+    const QDir data(defaultSettingsPath);
 
-    QSettings settings;
+    if (!data.exists()) {
+        qDebug() << "Documents dir not present. Creating...";
+        if (data.mkpath(defaultSettingsPath)) {
+            // Copy default calendars:
+            const QString qrcPath(":/defaults/calendar/");
+            for (const QString &fileName : QDir(qrcPath).entryList(QDir::Files)) {
+                const QString filePath(qrcPath + fileName);
+                qDebug() << "Copying file:" << filePath
+                         << data.absolutePath() + "/" + fileName
+                         << "Result:" <<
+                            QFile::copy(filePath,
+                                        data.absolutePath() + "/" + fileName);
+            }
+            qDebug() << "Done. Documents dir created and populated.";
+        } else {
+            qDebug() << "Oh no! Could not create the documents dir!";
+        }
+    }
+
+    QSettings settings(defaultSettingsPath + "/" + Tags::settingsFileName,
+                       QSettings::IniFormat);
     autoLoadLastFile = settings.value(Tags::autoLoadLastFile, true).toBool();
-    autoSaveOnExit = settings.value(Tags::autoSaveOnExit, true).toBool();
+    autoSaveOnExit = settings.value(Tags::autoSaveOnExit, false).toBool();
     useSimpleFileDialog = settings.value(Tags::useSimpleFileDialog, true).toBool();
     lastOpenFilePath = settings.value(Tags::lastOpenFilePath,
-                                      defaultDataPath).toString();
+                                      QString(defaultSettingsPath + "/timeline.json"))
+            .toString();
     author = settings.value(Tags::author).toString();
 
     // Automatically populate last open file name and extension
@@ -104,7 +129,8 @@ void SSettings::load()
  */
 void SSettings::save() const
 {
-    QSettings settings;
+    QSettings settings(defaultSettingsPath + "/" + Tags::settingsFileName,
+                       QSettings::IniFormat);
     settings.setValue(Tags::autoLoadLastFile, autoLoadLastFile);
     settings.setValue(Tags::autoSaveOnExit, autoSaveOnExit);
     settings.setValue(Tags::useSimpleFileDialog, useSimpleFileDialog);

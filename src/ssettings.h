@@ -31,6 +31,7 @@ public:
     QString lastOpenFileName;
     QString lastOpenFileExtension;
     QString author = "Testing Tom";
+    QString defaultSettingsPath;
 
 signals:
     void autoSaveOnExitChanged(bool newValue) const; //!< K

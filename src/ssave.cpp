@@ -111,6 +111,11 @@ bool SSave::save(const QString &path)
     const QFileInfo file(parsedPath);
     mSaveDataPath = parsedPath;
 
+    if (!QDir().mkpath(file.absolutePath())) {
+        qDebug(ssave) << "Could not make the path leading to save file location";
+        return false;
+    }
+
     if (file.suffix() == Tags::extensionUncompressed) {
         return saveUncompressed(parsedPath);
     } else if (file.suffix() == Tags::extensionCompressed) {

@@ -12,3 +12,7 @@ Short and incomplete list of what is left to be done here:
 - clean up temp dir after using it (save/ load)
 - make it possible to set 0 (zero) as minute, second etc.
 - add ability to choose default calendars
+- create <Documents>/sTimeline directory and use it as default file path. Store
+  default calendars there. Store settings there. Store log files as well
+- Errors: path is not created for simple
+  save dialog path (Android?)

@@ -12,6 +12,8 @@ namespace Tags {
 static const QByteArray picturesDir("pictures");
 static const QByteArray extensionCompressed("tmln");
 static const QByteArray extensionUncompressed("json");
+static const QByteArray docFolderName("sTimeline");
+static const QByteArray settingsFileName("settings.ini");
 // Metadata:
 static const QByteArray version("version");
 static const QByteArray timestamp("timestamp");

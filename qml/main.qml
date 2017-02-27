@@ -1,6 +1,7 @@
 import QtQuick 2.8
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.0
+import CustomItems 1.0
 import Assistant 1.0
 
 import "pages"
