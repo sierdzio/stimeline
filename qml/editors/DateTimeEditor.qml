@@ -6,7 +6,7 @@ import "../items"
 
 Popup {
     // TODO: use separator from Tags class
-    property string dateTime: dtYear.text + "-" + (dtMonth.currentIndex+1) + "-"
+    property string dateTime: dtYear.value + "-" + (dtMonth.currentIndex+1) + "-"
                               + (dtDay.currentIndex+1) + " "
                               + (dtHour.currentIndex) + ":"
                               + (dtMinute.currentIndex) + ":"
@@ -35,7 +35,7 @@ Popup {
     }
 
     function setDateTime(yyyy, MM, dd, hh, mm, ss) {
-        dtYear.text = yyyy;
+        dtYear.value = yyyy;
         dtMonth.currentIndex = MM-1;
         dtDay.currentIndex = dd-1;
         dtHour.currentIndex = hh;
@@ -48,7 +48,6 @@ Popup {
 
         Label {
             text: qsTr("Edit date and time ") + dateTime
-            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
 
@@ -57,26 +56,29 @@ Popup {
             title: qsTr("Date")
             Layout.fillWidth: true
 
-            RowLayout {
+            GridLayout {
+                columns: 3
                 Label {
-                    id: yearLabel
                     text: qsTr("Year")
                 }
-
-                TextField {
-                    id: dtYear
-                    width: 40
-                    horizontalAlignment: TextField.AlignRight
-                    validator: IntValidator {}
-                }
-
                 Label {
                     text: qsTr("Month")
                 }
+                Label {
+                    text: qsTr("Day")
+                }
 
+                SpinBox {
+                    id: dtYear
+                    editable: true
+                    from: -100000
+                    to: 100000
+                    Layout.minimumWidth: 140
+                    Layout.preferredWidth: 160
+                    Layout.maximumWidth: 200
+                }
                 Tumbler {
                     id: dtMonth
-                    height: yearLabel.height
                     model: Timeline.calendar.monthsInYear
                     visibleItemCount: 3
                     delegate: Text {
@@ -84,17 +86,13 @@ Popup {
                         height: paintedHeight
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
-                        opacity: 1 - Math.abs(Tumbler.displacement)
+                        opacity: 1.0 - Math.abs(Tumbler.displacement)
+                                 / (Tumbler.tumbler.visibleItemCount / 2)
                     }
                 }
-
-                Label {
-                    text: qsTr("Day")
-                }
-
                 STumbler {
                     id: dtDay
-                    height: yearLabel.height
+                    visibleItemCount: 3
                     model: Timeline.calendar.daysInMonth(dtMonth.currentIndex)
                 }
             }
@@ -104,37 +102,28 @@ Popup {
         GroupBox {
             title: qsTr("Time")
             Layout.fillWidth: true
-            height: hourLabel.height
 
-            RowLayout {
+            GridLayout {
                 Label {
-                    id: hourLabel
                     text: qsTr("Hour")
                 }
-
-                Tumbler {
-                    id: dtHour
-                    height: hourLabel.height
-                    model: Timeline.calendar.hoursInDay
-                }
-
                 Label {
                     text: qsTr("Minute")
                 }
-
-                Tumbler {
-                    id: dtMinute
-                    height: hourLabel.height
-                    model: Timeline.calendar.minutesInHour
-                }
-
                 Label {
                     text: qsTr("Second")
                 }
 
                 Tumbler {
+                    id: dtHour
+                    model: Timeline.calendar.hoursInDay
+                }
+                Tumbler {
+                    id: dtMinute
+                    model: Timeline.calendar.minutesInHour
+                }
+                Tumbler {
                     id: dtSecond
-                    height: hourLabel.height
                     model: Timeline.calendar.secondsInMinute
                 }
             }

@@ -7,6 +7,6 @@ Tumbler {
         height: paintedHeight
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        opacity: 1 - Math.abs(Tumbler.displacement)
+        opacity: 1.0 - Math.abs(Tumbler.displacement) / (Tumbler.tumbler.visibleItemCount / 2)
     }
 }
