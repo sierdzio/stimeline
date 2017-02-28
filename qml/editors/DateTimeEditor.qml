@@ -2,15 +2,15 @@ import QtQuick 2.8
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.1
 
-import "../"
+import "../items"
 
 Popup {
     // TODO: use separator from Tags class
     property string dateTime: dtYear.text + "-" + (dtMonth.currentIndex+1) + "-"
                               + (dtDay.currentIndex+1) + " "
-                              + (dtHour.currentIndex+1) + ":"
-                              + (dtMinute.currentIndex+1) + ":"
-                              + (dtSecond.currentIndex+1) //"0001-01-01 01:01:01"
+                              + (dtHour.currentIndex) + ":"
+                              + (dtMinute.currentIndex) + ":"
+                              + (dtSecond.currentIndex) //"0001-01-01 01:01:01"
 
     signal finished()
     signal canceled()
@@ -38,9 +38,9 @@ Popup {
         dtYear.text = yyyy;
         dtMonth.currentIndex = MM-1;
         dtDay.currentIndex = dd-1;
-        dtHour.currentIndex = hh-1;
-        dtMinute.currentIndex = mm-1;
-        dtSecond.currentIndex = ss-1;
+        dtHour.currentIndex = hh;
+        dtMinute.currentIndex = mm;
+        dtSecond.currentIndex = ss;
     }
 
     ColumnLayout {
@@ -59,11 +59,14 @@ Popup {
 
             RowLayout {
                 Label {
+                    id: yearLabel
                     text: qsTr("Year")
                 }
 
                 TextField {
                     id: dtYear
+                    width: 40
+                    horizontalAlignment: TextField.AlignRight
                     validator: IntValidator {}
                 }
 
@@ -73,6 +76,7 @@ Popup {
 
                 Tumbler {
                     id: dtMonth
+                    height: yearLabel.height
                     model: Timeline.calendar.monthsInYear
                     visibleItemCount: 3
                     delegate: Text {
@@ -90,6 +94,7 @@ Popup {
 
                 STumbler {
                     id: dtDay
+                    height: yearLabel.height
                     model: Timeline.calendar.daysInMonth(dtMonth.currentIndex)
                 }
             }
@@ -99,14 +104,17 @@ Popup {
         GroupBox {
             title: qsTr("Time")
             Layout.fillWidth: true
+            height: hourLabel.height
 
             RowLayout {
                 Label {
+                    id: hourLabel
                     text: qsTr("Hour")
                 }
 
-                STumbler {
+                Tumbler {
                     id: dtHour
+                    height: hourLabel.height
                     model: Timeline.calendar.hoursInDay
                 }
 
@@ -114,8 +122,9 @@ Popup {
                     text: qsTr("Minute")
                 }
 
-                STumbler {
+                Tumbler {
                     id: dtMinute
+                    height: hourLabel.height
                     model: Timeline.calendar.minutesInHour
                 }
 
@@ -123,8 +132,9 @@ Popup {
                     text: qsTr("Second")
                 }
 
-                STumbler {
+                Tumbler {
                     id: dtSecond
+                    height: hourLabel.height
                     model: Timeline.calendar.secondsInMinute
                 }
             }

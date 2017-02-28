@@ -148,7 +148,7 @@ bool SDateTime::operator<(const SDateTime &other) const {
 
 /*!
  * Parses \a dateTime and returns corresponding SDateTime object. On error,
- * a valid date is returned! (1-1-1 1:1:1)
+ * a valid date is returned! (1-1-1 0:0:0)
  *
  * \todo Add invalid/ null date concept.
  */

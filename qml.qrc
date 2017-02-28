@@ -2,11 +2,11 @@
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
         <file>qml/main.qml</file>
-        <file>qml/STumbler.qml</file>
         <file>qml/EventTimeline.qml</file>
         <file>qml/cards/ObjectCard.qml</file>
-        <file>qml/editors/ImageChooser.qml</file>
         <file>qml/items/SImage.qml</file>
+        <file>qml/items/STumbler.qml</file>
+        <file>qml/editors/ImageChooser.qml</file>
         <file>qml/editors/DateTimeEditor.qml</file>
         <file>qml/editors/ObjectEditor.qml</file>
         <file>qml/editors/SimpleLoadDialog.qml</file>

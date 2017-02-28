@@ -62,7 +62,7 @@ private:
     bool mIsValid = false;
 
     QString mName = "Gregorian";
-    QString mDefaultDateTime = "1-1-1 1:1:1";
+    QString mDefaultDateTime = "2017-1-1 0:0:0";
 
     // Date
     uint mDaysInWeek = 7;

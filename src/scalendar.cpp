@@ -145,7 +145,7 @@ void SCalendar::fromJson(const QJsonArray &json)
 {
     QJsonObject obj(json.first().toObject());
     mName = obj.value(Tags::name).toString();
-    mDefaultDateTime = obj.value(Tags::defaultDateTime).toString("1-1-1 1:1:1");
+    mDefaultDateTime = obj.value(Tags::defaultDateTime).toString("1-1-1 0:0:0");
     // Date
     mDaysInWeek = uint(obj.value(Tags::daysInWeek).toInt());
     mDaysInYear = uint(obj.value(Tags::daysInYear).toInt());
