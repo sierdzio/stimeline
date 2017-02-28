@@ -4,6 +4,8 @@ import QtQuick.Layouts 1.1
 import "../editors"
 
 Page {
+    id: root
+
     DateTimeEditor {
         id: dateTimeEditor
         onFinished: {
@@ -19,6 +21,7 @@ Page {
 
         GridLayout {
             id: calendarColumn
+            width: root.width
             columns: 2
 
             Label {

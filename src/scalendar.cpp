@@ -5,7 +5,6 @@
 #include <QJsonValue>
 #include <QJsonArray>
 
-#include <QLoggingCategory>
 #include <QDebug>
 Q_LOGGING_CATEGORY(scalendar, "SCalendar")
 

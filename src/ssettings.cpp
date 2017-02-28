@@ -1,12 +1,14 @@
 #include "ssettings.h"
 #include "tags.h"
 
-#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QSettings>
 #include <QStandardPaths>
+
+#include <QDebug>
+Q_LOGGING_CATEGORY(ssettings, "SSettings")
 
 /*!
  * \class SSettings
@@ -65,10 +67,15 @@
  * Uses \a parent to join QObject hierarchy. Loads the settings.
  */
 SSettings::SSettings(QObject *parent)
-    : QObject(parent),
-      defaultSettingsPath(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
-                          + "/" + Tags::docFolderName)
+    : QObject(parent)
 {
+#ifdef Q_OS_ANDROID
+    defaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+#else
+    defaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+#endif
+                          + "/" + Tags::docFolderName);
+
     load();
 
     // Automatically update lastOpenFileName and Extension
@@ -92,21 +99,21 @@ void SSettings::load()
     const QDir data(defaultSettingsPath);
 
     if (!data.exists()) {
-        qDebug() << "Documents dir not present. Creating...";
+        qDebug(ssettings) << "Documents dir not present. Creating...";
         if (data.mkpath(defaultSettingsPath)) {
             // Copy default calendars:
             const QString qrcPath(":/defaults/calendar/");
             for (const QString &fileName : QDir(qrcPath).entryList(QDir::Files)) {
                 const QString filePath(qrcPath + fileName);
-                qDebug() << "Copying file:" << filePath
+                qDebug(ssettings) << "Copying file:" << filePath
                          << data.absolutePath() + "/" + fileName
                          << "Result:" <<
                             QFile::copy(filePath,
                                         data.absolutePath() + "/" + fileName);
             }
-            qDebug() << "Done. Documents dir created and populated.";
+            qDebug(ssettings) << "Done. Documents dir created and populated.";
         } else {
-            qDebug() << "Oh no! Could not create the documents dir!";
+            qDebug(ssettings) << "Oh no! Could not create the documents dir!";
         }
     }
 

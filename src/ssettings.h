@@ -3,6 +3,9 @@
 #include <QString>
 #include <QObject>
 
+#include <QLoggingCategory>
+Q_DECLARE_LOGGING_CATEGORY(ssettings)
+
 class SSettings : public QObject
 {
     Q_OBJECT

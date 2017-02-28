@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.0
 import "../editors"
 
 Page {
-    id: pageSettings
+    id: root
 
     FileDialogLoader {
         id: fileDialog
@@ -19,54 +19,66 @@ Page {
         }
     }
 
-    ColumnLayout {
-        spacing: 15
+    Flickable {
+        anchors.fill: parent
+        flickableDirection: Flickable.VerticalFlick
+        contentHeight: column.height
+        contentWidth: column.width
 
-        RowLayout {
+        ColumnLayout {
+            id: column
+            width: root.width
+            spacing: 15
+
+            RowLayout {
+                Layout.fillWidth: true
+
+                Label {
+                    text: qsTr("Author")
+                }
+                TextField {
+                    placeholderText: qsTr("Name, surname or nickname")
+                    text: Timeline.settings.author
+                    onTextChanged: Timeline.settings.author = text
+                }
+            }
             Label {
-                text: qsTr("Author")
+                text: qsTr("File location: %1").arg(Timeline.settings.lastOpenFilePath)
+                wrapMode: Label.WrapAtWordBoundaryOrAnywhere
+                Layout.fillWidth: true
             }
-            TextField {
-                placeholderText: qsTr("Name, surname or nickname")
-                text: Timeline.settings.author
-                onTextChanged: Timeline.settings.author = text
-            }
-        }
-        Label {
-            text: qsTr("File location: %1").arg(Timeline.settings.lastOpenFilePath)
-            wrapMode: Label.WrapAnywhere
-        }
 
-        MenuSeparator {}
+            MenuSeparator { Layout.fillWidth: true }
 
-        Button {
-            text: qsTr("Load timeline")
-            onClicked: {
-                fileDialog.isLoading = true
-                fileDialog.open()
+            Button {
+                text: qsTr("Load timeline")
+                onClicked: {
+                    fileDialog.isLoading = true
+                    fileDialog.open()
+                }
             }
-        }
-        Button {
-            text: qsTr("Save timeline")
-            onClicked: {
-                fileDialog.isLoading = false
-                fileDialog.open()
+            Button {
+                text: qsTr("Save timeline")
+                onClicked: {
+                    fileDialog.isLoading = false
+                    fileDialog.open()
+                }
             }
-        }
-        CheckBox {
-            text: qsTr("Automatically load last opened file on startup")
-            checked: Timeline.settings.autoLoadLastFile
-            onCheckedChanged: Timeline.settings.autoLoadLastFile = checked
-        }
-        CheckBox {
-            text: qsTr("Automatically save on exit")
-            checked: Timeline.settings.autoSaveOnExit
-            onCheckedChanged: Timeline.settings.autoSaveOnExit = checked
-        }
-        CheckBox {
-            text: qsTr("Use simple file dialog")
-            checked: Timeline.settings.useSimpleFileDialog
-            onCheckedChanged: Timeline.settings.useSimpleFileDialog = checked
+            CheckBox {
+                text: qsTr("Automatically load last opened file on startup")
+                checked: Timeline.settings.autoLoadLastFile
+                onCheckedChanged: Timeline.settings.autoLoadLastFile = checked
+            }
+            CheckBox {
+                text: qsTr("Automatically save on exit")
+                checked: Timeline.settings.autoSaveOnExit
+                onCheckedChanged: Timeline.settings.autoSaveOnExit = checked
+            }
+            CheckBox {
+                text: qsTr("Use simple file dialog")
+                checked: Timeline.settings.useSimpleFileDialog
+                onCheckedChanged: Timeline.settings.useSimpleFileDialog = checked
+            }
         }
     }
 }
