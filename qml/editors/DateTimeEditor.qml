@@ -6,7 +6,7 @@ import "../items"
 
 Popup {
     // TODO: use separator from Tags class
-    property string dateTime: dtYear.value + "-" + (dtMonth.currentIndex+1) + "-"
+    property string dateTime: dtYear.text + "-" + (dtMonth.currentIndex+1) + "-"
                               + (dtDay.currentIndex+1) + " "
                               + (dtHour.currentIndex) + ":"
                               + (dtMinute.currentIndex) + ":"
@@ -35,7 +35,7 @@ Popup {
     }
 
     function setDateTime(yyyy, MM, dd, hh, mm, ss) {
-        dtYear.value = yyyy;
+        dtYear.text = yyyy;
         dtMonth.currentIndex = MM-1;
         dtDay.currentIndex = dd-1;
         dtHour.currentIndex = hh;
@@ -68,14 +68,18 @@ Popup {
                     text: qsTr("Day")
                 }
 
-                SpinBox {
+//                SpinBox {
+//                    id: dtYear
+//                    editable: true
+//                    from: -100000
+//                    to: 100000
+//                    Layout.minimumWidth: 140
+//                    Layout.preferredWidth: 160
+//                    Layout.maximumWidth: 200
+//                }
+                TextField {
                     id: dtYear
-                    editable: true
-                    from: -100000
-                    to: 100000
-                    Layout.minimumWidth: 140
-                    Layout.preferredWidth: 160
-                    Layout.maximumWidth: 200
+                    validator: IntValidator {}
                 }
                 Tumbler {
                     id: dtMonth

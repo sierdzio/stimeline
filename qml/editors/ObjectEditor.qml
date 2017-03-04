@@ -78,17 +78,14 @@ Popup {
             text: qsTr("From")
         }
 
-        Label {
+        Button {
             id: fromLabel
             text: Timeline.calendar.defaultDateTime
 
-            MouseArea {
-                anchors.fill: parent
-                onDoubleClicked: {
-                    __editControl = parent;
-                    dateTimeEditor.setDateTimeFromString(parent.text);
-                    dateTimeEditor.open();
-                }
+            onClicked: {
+                __editControl = fromLabel;
+                dateTimeEditor.setDateTimeFromString(text);
+                dateTimeEditor.open();
             }
         }
 
@@ -96,17 +93,14 @@ Popup {
             text: qsTr("To")
         }
 
-        Label {
+        Button {
             id: toLabel
             text: Timeline.calendar.defaultDateTime
 
-            MouseArea {
-                anchors.fill: parent
-                onDoubleClicked: {
-                    __editControl = parent;
-                    dateTimeEditor.setDateTimeFromString(parent.text);
-                    dateTimeEditor.open();
-                }
+            onClicked: {
+                __editControl = toLabel;
+                dateTimeEditor.setDateTimeFromString(text);
+                dateTimeEditor.open();
             }
         }
 

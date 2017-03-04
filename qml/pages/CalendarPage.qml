@@ -35,17 +35,14 @@ Page {
             Label {
                 text: qsTr("Default date and time")
             }
-            Label {
+            Button {
                 id: defaultDateTimeLabel
                 text: Timeline.calendar.defaultDateTime
                 onTextChanged: Timeline.calendar.defaultDateTime = text
 
-                MouseArea {
-                    anchors.fill: parent
-                    onDoubleClicked: {
-                        dateTimeEditor.setDateTimeFromString(parent.text);
-                        dateTimeEditor.open();
-                    }
+                onClicked: {
+                    dateTimeEditor.setDateTimeFromString(text);
+                    dateTimeEditor.open();
                 }
             }
             Label {
@@ -54,6 +51,7 @@ Page {
             TextField {
                 text: Timeline.calendar.daysInWeek
                 onTextChanged: Timeline.calendar.daysInWeek = text
+                validator: IntValidator { bottom: 0 }
             }
             Label {
                 text: qsTr("Days in a year")
@@ -61,14 +59,15 @@ Page {
             TextField {
                 text: Timeline.calendar.daysInYear
                 onTextChanged: Timeline.calendar.daysInYear = text
+                validator: IntValidator { bottom: 0 }
             }
             Label {
                 text: qsTr("Months in a year")
             }
             TextField {
-                // TODO: Tumbler instead of TextField?
                 text: Timeline.calendar.monthsInYear
                 onTextChanged: Timeline.calendar.monthsInYear = text
+                validator: IntValidator { bottom: 0 }
             }
             Label {
                 text: qsTr("Months")
@@ -76,7 +75,6 @@ Page {
             ListView {
                 height: 150
                 width: 150
-                //Layout.fillWidth: true
                 clip: true
                 model: Timeline.calendar.monthsInYear
                 delegate: Row {
@@ -95,9 +93,9 @@ Page {
             }
             TextField {
                 placeholderText: "0.25 - one leap day per 4 years"
-                // TODO: validation!
                 text: Timeline.calendar.leapDayPerYear
                 onTextChanged: Timeline.calendar.leapDayPerYear = text
+                validator: DoubleValidator {}
             }
             Label {
                 text: qsTr("Leap day in which month?")
@@ -106,6 +104,7 @@ Page {
                 placeholderText: "2 - February"
                 text: Timeline.calendar.leapDayAddsToMonthNumber
                 onTextChanged: Timeline.calendar.leapDayAddsToMonthNumber = text
+                validator: IntValidator { bottom: 0 }
             }
             Label {
                 text: qsTr("Seconds in a minute")
@@ -113,6 +112,7 @@ Page {
             TextField {
                 text: Timeline.calendar.secondsInMinute
                 onTextChanged: Timeline.calendar.secondsInMinute = text
+                validator: IntValidator { bottom: 0 }
             }
             Label {
                 text: qsTr("Minutes in an hour")
@@ -120,6 +120,7 @@ Page {
             TextField {
                 text: Timeline.calendar.minutesInHour
                 onTextChanged: Timeline.calendar.minutesInHour = text
+                validator: IntValidator { bottom: 0 }
             }
             Label {
                 text: qsTr("Hours in a day")
@@ -127,6 +128,7 @@ Page {
             TextField {
                 text: Timeline.calendar.hoursInDay
                 onTextChanged: Timeline.calendar.hoursInDay = text
+                validator: IntValidator { bottom: 0 }
             }
         }
     }

@@ -10,9 +10,5 @@ Short and incomplete list of what is left to be done here:
 - object description - text elide fixes + add ability to expand the item to show
   whole text
 - clean up temp dir after using it (save/ load)
-- make it possible to set 0 (zero) as minute, second etc.
-- add ability to choose default calendars
-- create <Documents>/sTimeline directory and use it as default file path. Store
-  default calendars there. Store settings there. Store log files as well
-- Errors: path is not created for simple
-  save dialog path (Android?)
+- BUG: sometimes it is not possible to edit datetime (Android?)
+- BUG: popups do not fit on Android
