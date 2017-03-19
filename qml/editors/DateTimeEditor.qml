@@ -93,11 +93,12 @@ Popup {
                         opacity: 1.0 - Math.abs(Tumbler.displacement)
                                  / (Tumbler.tumbler.visibleItemCount / 2)
                     }
+
+                    onCurrentIndexChanged: dtDay.model = Timeline.calendar.daysInMonth(currentIndex)
                 }
                 STumbler {
                     id: dtDay
                     visibleItemCount: 3
-                    model: Timeline.calendar.daysInMonth(dtMonth.currentIndex)
                 }
             }
         }

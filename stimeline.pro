@@ -1,6 +1,7 @@
 QT += core gui qml quick quickcontrols2
 
 CONFIG += c++14
+#CONFIG += sanitizer sanitize_address
 
 DEFINES *= QT_USE_QSTRINGBUILDER
 
