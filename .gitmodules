@@ -1,0 +1,3 @@
+[submodule "3rdParty/qt-supermacros"]
+	path = 3rdParty/qt-supermacros
+	url = http://gitlab.unique-conception.org/qt-qml-tricks/qt-supermacros.git
