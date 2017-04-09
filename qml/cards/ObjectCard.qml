@@ -1,5 +1,5 @@
 import QtQuick 2.8
-import QtQuick.Layouts 1.1
+import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
 import Assistant 1.0
 import "../items"
@@ -34,12 +34,9 @@ Frame {
         onClicked: Timeline.model(type).removeObject(objectId)
     }
 
-    GridLayout {
+    ColumnLayout {
         anchors.fill: parent
         anchors.margins: 5
-        columnSpacing: 5
-        rowSpacing: 5
-        columns: 2
 
         Label {
             id: objectIdLabel
@@ -57,6 +54,7 @@ Frame {
             id: picturePathLabel
             width: 40
             height: 40
+            visible: relativeSource.length !== 0
         }
 
         Label {
@@ -72,17 +70,19 @@ Frame {
             elide: Text.ElideRight
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             maximumLineCount: 2
-            Layout.columnSpan: 2
+            //Layout.columnSpan: 2
         }
 
-        Label {
-            id: fromLabel
-            text: "default"
-        }
+        RowLayout {
+            Label {
+                id: fromLabel
+                text: "default"
+            }
 
-        Label {
-            id: toLabel
-            text: "default"
+            Label {
+                id: toLabel
+                text: "default"
+            }
         }
     }
 }

@@ -26,8 +26,8 @@ Page {
             description: model.description
             from: model.from
             to: model.to
-            width: 350
-            height: 140
+            width: (view.width > 450)? 450 : view.width
+            height: 160
             onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
         }
     }
