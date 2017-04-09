@@ -5,8 +5,8 @@ CONFIG += c++14
 
 DEFINES *= QT_USE_QSTRINGBUILDER
 
-INCLUDEPATH += /include/quazip
-LIBS += -lquazip
+LIBS += -lz
+include(3rdParty/quazip/quazip.pri)
 
 HEADERS += \
     src/tags.h \
@@ -52,7 +52,9 @@ DISTFILES += \
 OTHER_FILES += \
     .gitignore \
     stimeline.doxyfile \
-    exampleData/example1.json
+    exampleData/example1.json \
+    3rdParty/quazip/version.txt \
+    3rdParty/quazip/COPYING
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -63,8 +65,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-
-contains(ANDROID_TARGET_ARCH,x86) {
-    ANDROID_EXTRA_LIBS = \
-        $$PWD/../../qt/5.8/android_x86/lib/libquazip.so
-}
