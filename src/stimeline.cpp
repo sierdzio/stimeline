@@ -91,10 +91,10 @@ STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
     qRegisterMetaType<STimeline*>();
     init();
 
-    if (settings->autoLoadLastFile) {
+    if (settings->autoLoadLastFile()) {
         qCInfo(stimeline) << "Automatically loading last saved file:"
-                          << settings->lastOpenFilePath;
-        load(settings->lastOpenFilePath);
+                          << settings->lastOpenFilePath();
+        load(settings->lastOpenFilePath());
     }
 }
 
@@ -104,10 +104,10 @@ STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
  */
 STimeline::~STimeline()
 {
-    if (mSettings->autoSaveOnExit) {
+    if (mSettings->autoSaveOnExit()) {
         qCInfo(stimeline) << "Automatically saving current timeline to file:"
-                          << mSettings->lastOpenFilePath;
-        save(mSettings->lastOpenFilePath);
+                          << mSettings->lastOpenFilePath();
+        save(mSettings->lastOpenFilePath());
     }
 }
 
@@ -124,14 +124,14 @@ void STimeline::load(const QString &path)
     }
 
     if (mSettings) {
-        mSettings->lastOpenFilePath = parsedPath;
+        mSettings->setLastOpenFilePath(parsedPath);
     }
 
     mPictureCache = load.pictureCache();
     mRuntimeDataPath = load.runtimeDataPath();
 
     QJsonObject mainObj(load.json());
-    mSettings->author = mainObj.value(Tags::author).toString();
+    mSettings->setAuthor(mainObj.value(Tags::author).toString());
 
     mCalendar->fromJson(mainObj.value(Tags::calendar).toArray());
     mEventModel->fromJson(mainObj.value(Tags::events).toArray());
@@ -156,7 +156,7 @@ void STimeline::save(const QString &path) const
     // Add metadata
     mainObj.insert(Tags::version, QCoreApplication::applicationVersion());
     mainObj.insert(Tags::timestamp, QDateTime::currentDateTimeUtc().toString(Qt::ISODate));
-    mainObj.insert(Tags::author, mSettings->author); // TODO: plug in author from app settings
+    mainObj.insert(Tags::author, mSettings->author());
 
     mainObj.insert(Tags::calendar, mCalendar->toJson());
     mainObj.insert(Tags::events, mEventModel->toJson());
@@ -173,7 +173,7 @@ void STimeline::save(const QString &path) const
     }
 
     if (mSettings) {
-        mSettings->lastOpenFilePath = parsedPath;
+        mSettings->setLastOpenFilePath(parsedPath);
     }
 }
 

@@ -72,7 +72,7 @@ SSettings::SSettings(QObject *parent)
 #ifdef Q_OS_ANDROID
     defaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
 #else
-    defaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+    mDefaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
 #endif
                           + "/" + Tags::docFolderName);
 
@@ -96,11 +96,11 @@ SSettings::~SSettings()
  */
 void SSettings::load()
 {
-    const QDir data(defaultSettingsPath);
+    const QDir data(mDefaultSettingsPath);
 
     if (!data.exists()) {
         qDebug(ssettings) << "Documents dir not present. Creating...";
-        if (data.mkpath(defaultSettingsPath)) {
+        if (data.mkpath(mDefaultSettingsPath)) {
             // Copy default calendars:
             const QString qrcPath(":/defaults/calendar/");
             for (const QString &fileName : QDir(qrcPath).entryList(QDir::Files)) {
@@ -117,18 +117,18 @@ void SSettings::load()
         }
     }
 
-    QSettings settings(defaultSettingsPath + "/" + Tags::settingsFileName,
+    QSettings settings(mDefaultSettingsPath + "/" + Tags::settingsFileName,
                        QSettings::IniFormat);
-    autoLoadLastFile = settings.value(Tags::autoLoadLastFile, true).toBool();
-    autoSaveOnExit = settings.value(Tags::autoSaveOnExit, false).toBool();
-    useSimpleFileDialog = settings.value(Tags::useSimpleFileDialog, true).toBool();
-    lastOpenFilePath = settings.value(Tags::lastOpenFilePath,
-                                      QString(defaultSettingsPath + "/timeline.json"))
+    mAutoLoadLastFile = settings.value(Tags::autoLoadLastFile, true).toBool();
+    mAutoSaveOnExit = settings.value(Tags::autoSaveOnExit, false).toBool();
+    mUseSimpleFileDialog = settings.value(Tags::useSimpleFileDialog, true).toBool();
+    mLastOpenFilePath = settings.value(Tags::lastOpenFilePath,
+                                      QString(mDefaultSettingsPath + "/timeline.json"))
             .toString();
-    author = settings.value(Tags::author).toString();
+    mAuthor = settings.value(Tags::author).toString();
 
     // Automatically populate last open file name and extension
-    updateLastOpenedFileData(lastOpenFilePath);
+    updateLastOpenedFileData(mLastOpenFilePath);
 }
 
 /*!
@@ -136,13 +136,111 @@ void SSettings::load()
  */
 void SSettings::save() const
 {
-    QSettings settings(defaultSettingsPath + "/" + Tags::settingsFileName,
+    QSettings settings(mDefaultSettingsPath + "/" + Tags::settingsFileName,
                        QSettings::IniFormat);
-    settings.setValue(Tags::autoLoadLastFile, autoLoadLastFile);
-    settings.setValue(Tags::autoSaveOnExit, autoSaveOnExit);
-    settings.setValue(Tags::useSimpleFileDialog, useSimpleFileDialog);
-    settings.setValue(Tags::lastOpenFilePath, lastOpenFilePath);
-    settings.setValue(Tags::author, author);
+    settings.setValue(Tags::autoLoadLastFile, mAutoLoadLastFile);
+    settings.setValue(Tags::autoSaveOnExit, mAutoSaveOnExit);
+    settings.setValue(Tags::useSimpleFileDialog, mUseSimpleFileDialog);
+    settings.setValue(Tags::lastOpenFilePath, mLastOpenFilePath);
+    settings.setValue(Tags::author, mAuthor);
+}
+
+bool SSettings::autoLoadLastFile() const
+{
+    return mAutoLoadLastFile;
+}
+
+bool SSettings::autoSaveOnExit() const
+{
+    return mAutoSaveOnExit;
+}
+
+bool SSettings::useSimpleFileDialog() const
+{
+    return mUseSimpleFileDialog;
+}
+
+QString SSettings::lastOpenFilePath() const
+{
+    return mLastOpenFilePath;
+}
+
+QString SSettings::lastOpenFileName() const
+{
+    return mLastOpenFileName;
+}
+
+QString SSettings::lastOpenFileExtension() const
+{
+    return mLastOpenFileExtension;
+}
+
+QString SSettings::author() const
+{
+    return mAuthor;
+}
+
+void SSettings::setAutoLoadLastFile(bool autoLoadLastFile)
+{
+    if (mAutoLoadLastFile == autoLoadLastFile)
+        return;
+
+    mAutoLoadLastFile = autoLoadLastFile;
+    emit autoLoadLastFileChanged(autoLoadLastFile);
+}
+
+void SSettings::setAutoSaveOnExit(bool autoSaveOnExit)
+{
+    if (mAutoSaveOnExit == autoSaveOnExit)
+        return;
+
+    mAutoSaveOnExit = autoSaveOnExit;
+    emit autoSaveOnExitChanged(autoSaveOnExit);
+}
+
+void SSettings::setUseSimpleFileDialog(bool useSimpleFileDialog)
+{
+    if (mUseSimpleFileDialog == useSimpleFileDialog)
+        return;
+
+    mUseSimpleFileDialog = useSimpleFileDialog;
+    emit useSimpleFileDialogChanged(useSimpleFileDialog);
+}
+
+void SSettings::setLastOpenFilePath(QString lastOpenFilePath)
+{
+    if (mLastOpenFilePath == lastOpenFilePath)
+        return;
+
+    mLastOpenFilePath = lastOpenFilePath;
+    emit lastOpenFilePathChanged(lastOpenFilePath);
+}
+
+void SSettings::setLastOpenFileName(QString lastOpenFileName)
+{
+    if (mLastOpenFileName == lastOpenFileName)
+        return;
+
+    mLastOpenFileName = lastOpenFileName;
+    emit lastOpenFileNameChanged(lastOpenFileName);
+}
+
+void SSettings::setLastOpenFileExtension(QString lastOpenFileExtension)
+{
+    if (mLastOpenFileExtension == lastOpenFileExtension)
+        return;
+
+    mLastOpenFileExtension = lastOpenFileExtension;
+    emit lastOpenFileExtensionChanged(lastOpenFileExtension);
+}
+
+void SSettings::setAuthor(QString author)
+{
+    if (mAuthor == author)
+        return;
+
+    mAuthor = author;
+    emit authorChanged(author);
 }
 
 /*!
@@ -152,8 +250,8 @@ void SSettings::save() const
 void SSettings::updateLastOpenedFileData(const QString &lastOpenFile)
 {
     const QFileInfo fi(lastOpenFile);
-    lastOpenFileName = fi.baseName();
-    emit lastOpenFileNameChanged(lastOpenFileName);
-    lastOpenFileExtension = fi.suffix();
-    emit lastOpenFileExtensionChanged(lastOpenFileExtension);
+    mLastOpenFileName = fi.baseName();
+    emit lastOpenFileNameChanged(mLastOpenFileName);
+    mLastOpenFileExtension = fi.suffix();
+    emit lastOpenFileExtensionChanged(mLastOpenFileExtension);
 }
