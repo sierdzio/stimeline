@@ -4,9 +4,11 @@ CONFIG += c++14
 #CONFIG += sanitizer sanitize_address
 
 DEFINES *= QT_USE_QSTRINGBUILDER
+DEFINES += QTQMLTRICKS_NO_PREFIX_ON_GETTERS
 
 LIBS += -lz
 include(3rdParty/quazip/quazip.pri)
+include(3rdParty/qt-supermacros/QtSuperMacros.pri)
 
 HEADERS += \
     src/tags.h \
@@ -54,7 +56,9 @@ OTHER_FILES += \
     stimeline.doxyfile \
     exampleData/example1.json \
     3rdParty/quazip/version.txt \
-    3rdParty/quazip/COPYING
+    3rdParty/quazip/COPYING \
+    3rdParty/qt-supermacros/LICENSE.md \
+    3rdParty/qt-supermacros/README.md
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
