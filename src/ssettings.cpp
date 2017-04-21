@@ -70,7 +70,7 @@ SSettings::SSettings(QObject *parent)
     : QObject(parent)
 {
 #ifdef Q_OS_ANDROID
-    defaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+    mDefaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
 #else
     mDefaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
 #endif

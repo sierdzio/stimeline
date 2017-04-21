@@ -5,6 +5,7 @@ CONFIG += c++14
 
 DEFINES *= QT_USE_QSTRINGBUILDER
 DEFINES += QTQMLTRICKS_NO_PREFIX_ON_GETTERS
+QMAKE_CXXFLAGS += -Werror
 
 LIBS += -lz
 include(3rdParty/quazip/quazip.pri)
