@@ -27,6 +27,7 @@ class SObject
 
     friend class SObjectModel;
     friend class SObjectSortProxyModel;
+    friend class SObjectTest;
 
 public:
     enum class InitialisationOption {
