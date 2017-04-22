@@ -8,6 +8,7 @@ LIBS += -lz
 include(../stimeline.pri)
 include(3rdParty/quazip/quazip.pri)
 include(3rdParty/qt-supermacros/QtSuperMacros.pri)
+DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
     tags.h \
@@ -44,17 +45,20 @@ DISTFILES += \
     ../LICENSE.md \
     ../defaults/calendar/dynyghtian.json \
     ../todo.md \
-    ../android/AndroidManifest.xml \
-    ../android/src/stimeline/SaveIntent.java \
-    ../android/gradle/wrapper/gradle-wrapper.jar \
-    ../android/gradlew \
-    ../android/res/values/libs.xml \
-    ../android/build.gradle \
-    ../android/gradle/wrapper/gradle-wrapper.properties \
-    ../android/gradlew.bat \
-    ../android/gradlew \
-    ../android/build.gradle \
-    ../android/gradlew.bat
+#    ../android/AndroidManifest.xml \
+#    ../android/src/stimeline/SaveIntent.java \
+#    ../android/gradle/wrapper/gradle-wrapper.jar \
+#    ../android/gradlew \
+#    ../android/res/values/libs.xml \
+#    ../android/build.gradle \
+#    ../android/gradle/wrapper/gradle-wrapper.properties \
+#    ../android/gradlew.bat \
+#    ../android/gradlew \
+#    ../android/build.gradle \
+#    ../android/gradlew.bat \
+#    ../android/AndroidManifest.xml \
+#    ../android/res/values/libs.xml \
+#    ../android/build.gradle
 
 OTHER_FILES += \
     ../.gitignore \
@@ -67,11 +71,12 @@ OTHER_FILES += \
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
+QML_DESIGNER_IMPORT_PATH =
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../android
+#ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../android
 
