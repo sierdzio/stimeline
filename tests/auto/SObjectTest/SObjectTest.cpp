@@ -95,6 +95,9 @@ void SObjectTest::testJson()
     QVERIFY(obj.mDescription == "BBB");
     QVERIFY(obj.mFrom.toString() == "1-1-3 1:1:4");
     QVERIFY(obj.mTo.toString() == "1-1-3 1:1:7");
+
+    const QJsonObject result = obj.toJson();
+    QVERIFY(doc.object() == result);
 }
 
 QTEST_MAIN(SObjectTest)
