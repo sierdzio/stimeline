@@ -1,0 +1,8 @@
+{
+  "description": "BBB",
+  "from": "1-1-3 1:1:4",
+  "id": "1c462dec69dfc2ada12db5a02e4dceaf04b40ef6",
+  "name": "Event 2",
+  "to": "1-1-3 1:1:7",
+  "type": "Event"
+}

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/testData">
+        <file>sobject1.json</file>
+    </qresource>
+</RCC>
