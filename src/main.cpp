@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     app.setApplicationDisplayName("sTimeline");
     app.setApplicationName("sTimeline");
     app.setOrganizationName("sierdzio");
-    app.setOrganizationDomain("org.hopto.sierdzio");
+    app.setOrganizationDomain("org.stimeline");
     app.setQuitOnLastWindowClosed(true);
 
     SSettings settings;

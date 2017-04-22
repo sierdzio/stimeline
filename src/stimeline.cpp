@@ -20,6 +20,10 @@
 #include <QDateTime>
 #include <QDebug>
 
+#ifdef Q_OS_ANDROID
+#include <QAndroidJniObject>
+#endif
+
 Q_LOGGING_CATEGORY(stimeline, "STimeline")
 
 /*!
@@ -150,7 +154,11 @@ void STimeline::save(const QString &path) const
 {
     const QString parsedPath(SAssistant::cleanPath(path));
 
-
+#ifdef Q_OS_ANDROID
+    // Temp try. Does not work.
+//    QAndroidJniObject obj("stimeline/SaveIntent");
+//    obj.callMethod<void>("save");
+#endif
     QJsonObject mainObj;
 
     // Add metadata

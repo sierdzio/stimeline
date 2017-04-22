@@ -1,5 +1,9 @@
 QT += core gui qml quick quickcontrols2
 
+android {
+    QT += androidextras
+}
+
 LIBS += -lz
 include(../stimeline.pri)
 include(3rdParty/quazip/quazip.pri)
@@ -40,7 +44,17 @@ DISTFILES += \
     ../LICENSE.md \
     ../defaults/calendar/dynyghtian.json \
     ../todo.md \
-    ../android/AndroidManifest.xml
+    ../android/AndroidManifest.xml \
+    ../android/src/stimeline/SaveIntent.java \
+    ../android/gradle/wrapper/gradle-wrapper.jar \
+    ../android/gradlew \
+    ../android/res/values/libs.xml \
+    ../android/build.gradle \
+    ../android/gradle/wrapper/gradle-wrapper.properties \
+    ../android/gradlew.bat \
+    ../android/gradlew \
+    ../android/build.gradle \
+    ../android/gradlew.bat
 
 OTHER_FILES += \
     ../.gitignore \
