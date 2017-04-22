@@ -5,6 +5,7 @@ CONFIG += qt warn_on depend_includepath testcase
 TEMPLATE = app
 
 include(../../data/testData.pri)
+include(../../testConfig.pri)
 
 INCDIR = ../../../src
 INCLUDEPATH += $$INCDIR
