@@ -17,6 +17,7 @@ class SSettings : public QObject
     Q_PROPERTY(QString lastOpenFileName READ lastOpenFileName WRITE setLastOpenFileName NOTIFY lastOpenFileNameChanged)
     Q_PROPERTY(QString lastOpenFileExtension READ lastOpenFileExtension WRITE setLastOpenFileExtension NOTIFY lastOpenFileExtensionChanged)
     Q_PROPERTY(QString author READ author WRITE setAuthor NOTIFY authorChanged)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
 
 public:
     explicit SSettings(QObject *parent = 0);
@@ -31,16 +32,18 @@ public:
     QString lastOpenFilePath() const;
     QString lastOpenFileName() const;
     QString lastOpenFileExtension() const;
-    QString author() const;
+    QString author() const;    
+    QString name() const;
 
 public slots:
     void setAutoLoadLastFile(bool autoLoadLastFile);
     void setAutoSaveOnExit(bool autoSaveOnExit);
     void setUseSimpleFileDialog(bool useSimpleFileDialog);
-    void setLastOpenFilePath(QString lastOpenFilePath);
-    void setLastOpenFileName(QString lastOpenFileName);
-    void setLastOpenFileExtension(QString lastOpenFileExtension);
-    void setAuthor(QString author);
+    void setLastOpenFilePath(const QString &lastOpenFilePath);
+    void setLastOpenFileName(const QString &lastOpenFileName);
+    void setLastOpenFileExtension(const QString &lastOpenFileExtension);
+    void setAuthor(const QString &author);
+    void setName(const QString &name);
 
 signals:
     void autoSaveOnExitChanged(bool newValue) const; //!< K
@@ -49,7 +52,8 @@ signals:
     void lastOpenFilePathChanged(const QString &newPath) const; //!< K
     void lastOpenFileNameChanged(const QString &mLastOpenFileName) const; //!< K
     void lastOpenFileExtensionChanged(const QString &mLastOpenFileExtension) const; //!< K
-    void authorChanged(const QString &mAuthor) const; //!< K
+    void authorChanged(const QString &mAuthor) const; //!< K    
+    void nameChanged(const QString &name); //!< K
 
 protected slots:
     void updateLastOpenedFileData(const QString &lastOpenFile);
@@ -63,4 +67,5 @@ private:
     QString mLastOpenFileExtension;
     QString mAuthor = "Testing Tom";
     QString mDefaultSettingsPath;
+    QString mName;
 };

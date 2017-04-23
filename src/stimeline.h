@@ -32,6 +32,7 @@ public:
 public slots:
     void load(const QString &path);
     void save(const QString &path) const;
+    void exportSave() const;
     QString loadPicture(const QString &absolutePath);
     // TODO: make property
     QString basePicturePath() const;

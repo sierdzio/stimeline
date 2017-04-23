@@ -70,7 +70,7 @@ SSettings::SSettings(QObject *parent)
     : QObject(parent)
 {
 #ifdef Q_OS_ANDROID
-    mDefaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+    mDefaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)//AppDataLocation)
 #else
     mDefaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
 #endif
@@ -180,6 +180,11 @@ QString SSettings::author() const
     return mAuthor;
 }
 
+QString SSettings::name() const
+{
+    return mName;
+}
+
 void SSettings::setAutoLoadLastFile(bool autoLoadLastFile)
 {
     if (mAutoLoadLastFile == autoLoadLastFile)
@@ -207,7 +212,7 @@ void SSettings::setUseSimpleFileDialog(bool useSimpleFileDialog)
     emit useSimpleFileDialogChanged(useSimpleFileDialog);
 }
 
-void SSettings::setLastOpenFilePath(QString lastOpenFilePath)
+void SSettings::setLastOpenFilePath(const QString &lastOpenFilePath)
 {
     if (mLastOpenFilePath == lastOpenFilePath)
         return;
@@ -216,7 +221,7 @@ void SSettings::setLastOpenFilePath(QString lastOpenFilePath)
     emit lastOpenFilePathChanged(lastOpenFilePath);
 }
 
-void SSettings::setLastOpenFileName(QString lastOpenFileName)
+void SSettings::setLastOpenFileName(const QString &lastOpenFileName)
 {
     if (mLastOpenFileName == lastOpenFileName)
         return;
@@ -225,7 +230,7 @@ void SSettings::setLastOpenFileName(QString lastOpenFileName)
     emit lastOpenFileNameChanged(lastOpenFileName);
 }
 
-void SSettings::setLastOpenFileExtension(QString lastOpenFileExtension)
+void SSettings::setLastOpenFileExtension(const QString &lastOpenFileExtension)
 {
     if (mLastOpenFileExtension == lastOpenFileExtension)
         return;
@@ -234,13 +239,22 @@ void SSettings::setLastOpenFileExtension(QString lastOpenFileExtension)
     emit lastOpenFileExtensionChanged(lastOpenFileExtension);
 }
 
-void SSettings::setAuthor(QString author)
+void SSettings::setAuthor(const QString &author)
 {
     if (mAuthor == author)
         return;
 
     mAuthor = author;
     emit authorChanged(author);
+}
+
+void SSettings::setName(const QString &name)
+{
+    if (mName == name)
+        return;
+
+    mName = name;
+    emit nameChanged(name);
 }
 
 /*!

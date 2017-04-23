@@ -12,3 +12,5 @@ Short and incomplete list of what is left to be done here:
 - clean up temp dir after using it (save/ load)
 - BUG: sometimes it is not possible to edit datetime (Android?)
 - BUG: popups do not fit on Android
+- make Android Intent use ContentProvider to share files
+- prompt for storage permission

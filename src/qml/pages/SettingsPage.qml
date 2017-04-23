@@ -42,6 +42,18 @@ Page {
                     onTextChanged: Timeline.settings.author = text
                 }
             }
+            RowLayout {
+                Layout.fillWidth: true
+
+                Label {
+                    text: qsTr("Timeline name")
+                }
+                TextField {
+                    placeholderText: qsTr("Name")
+                    text: Timeline.settings.name
+                    onTextChanged: Timeline.settings.name = text
+                }
+            }
             Label {
                 text: qsTr("File location: %1").arg(Timeline.settings.lastOpenFilePath)
                 wrapMode: Label.WrapAtWordBoundaryOrAnywhere
@@ -62,6 +74,13 @@ Page {
                 onClicked: {
                     fileDialog.isLoading = false
                     fileDialog.open()
+                }
+            }
+            Button {
+                text: qsTr("Export timeline")
+                visible: Qt.platform.os === "android"
+                onClicked: {
+                    Timeline.exportSave()
                 }
             }
             CheckBox {

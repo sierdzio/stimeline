@@ -18,9 +18,11 @@
 #include <QFile>
 #include <QCoreApplication>
 #include <QDateTime>
+#include <QStandardPaths>S
 #include <QDebug>
 
 #ifdef Q_OS_ANDROID
+#include <QtAndroid>
 #include <QAndroidJniObject>
 #endif
 
@@ -154,11 +156,6 @@ void STimeline::save(const QString &path) const
 {
     const QString parsedPath(SAssistant::cleanPath(path));
 
-#ifdef Q_OS_ANDROID
-    // Temp try. Does not work.
-//    QAndroidJniObject obj("stimeline/SaveIntent");
-//    obj.callMethod<void>("save");
-#endif
     QJsonObject mainObj;
 
     // Add metadata
@@ -177,12 +174,32 @@ void STimeline::save(const QString &path) const
     save.setJson(mainObj);
 
     if (!save.save(parsedPath)) {
+        // TODO: fix. Why save() returns false on Android?
+        qDebug(stimeline) << "Save not successful?";
         return;
     }
 
     if (mSettings) {
         mSettings->setLastOpenFilePath(parsedPath);
     }
+}
+
+/*!
+ * Creates a temporary sTimeline archive (.tmln) and "exports" it. Meaning:
+ * on Android the file will be sent via Intent. You can then choose with which
+ * app to work on it further (send by mail, save on disk, share via messenger
+ * and so on).
+ */
+void STimeline::exportSave() const
+{
+#ifdef Q_OS_ANDROID
+    const QString path(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+                       + "/" + mSettings->name());
+    QAndroidJniObject string = QAndroidJniObject::fromString(path);
+    QtAndroid::androidActivity().callMethod<void>("save", "(Ljava/lang/String;)V",
+                                                  string.object<jstring>());
+    qDebug(stimeline) << "After JNI";
+#endif
 }
 
 /*!
