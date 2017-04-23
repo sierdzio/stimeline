@@ -45,26 +45,15 @@ RESOURCES += \
 DISTFILES += \
     ../README.md \
     ../LICENSE.md \
-    defaults/calendar/dynyghtian.json \
     ../todo.md \
+    defaults/calendar/dynyghtian.json \
     android/AndroidManifest.xml \
-    android/src/stimeline/SaveIntent.java \
-#    android/gradle/wrapper/gradle-wrapper.jar \
-#    android/gradlew \
-#    android/res/values/libs.xml \
-#    android/build.gradle \
-#    android/gradle/wrapper/gradle-wrapper.properties \
-#    android/gradlew.bat \
-#    android/gradlew \
-#    android/build.gradle \
-#    android/gradlew.bat \
-#    android/AndroidManifest.xml \
-#    android/res/values/libs.xml \
-#    android/build.gradle
+    android/src/stimeline/SaveIntent.java
 
 OTHER_FILES += \
     ../.gitignore \
     ../stimeline.doxyfile \
+    ../.clang-format \
     exampleData/example1.json \
     3rdParty/quazip/version.txt \
     3rdParty/quazip/COPYING \
