@@ -47,6 +47,7 @@ DISTFILES += \
     ../LICENSE.md \
     ../todo.md \
     defaults/calendar/dynyghtian.json \
+    defaults/calendar/gregorian.json \
     android/AndroidManifest.xml \
     android/src/stimeline/SaveIntent.java
 

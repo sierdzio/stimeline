@@ -18,7 +18,7 @@
 #include <QFile>
 #include <QCoreApplication>
 #include <QDateTime>
-#include <QStandardPaths>S
+#include <QStandardPaths>
 #include <QDebug>
 
 #ifdef Q_OS_ANDROID

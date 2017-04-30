@@ -1,3 +1,5 @@
 TEMPLATE = subdirs
 
-SUBDIRS += SObjectTest
+SUBDIRS += SObjectTest \
+    SDateTimeTest \
+    SCalendarTest

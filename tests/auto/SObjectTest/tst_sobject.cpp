@@ -12,33 +12,11 @@ class SObjectTest : public QObject
 {
     Q_OBJECT
 
-public:
-    SObjectTest();
-    ~SObjectTest();
-
 private slots:
-    void initTestCase();
-    void cleanupTestCase();
     void testDefaults();
     void testConversions();
     void testJson();
 };
-
-SObjectTest::SObjectTest()
-{
-}
-
-SObjectTest::~SObjectTest()
-{
-}
-
-void SObjectTest::initTestCase()
-{
-}
-
-void SObjectTest::cleanupTestCase()
-{
-}
 
 void SObjectTest::testDefaults()
 {
@@ -101,4 +79,4 @@ void SObjectTest::testJson()
 }
 
 QTEST_MAIN(SObjectTest)
-#include "SObjectTest.moc"
+#include "tst_sobject.moc"

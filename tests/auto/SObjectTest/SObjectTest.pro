@@ -1,8 +1,8 @@
-QT += testlib
-QT += gui
-CONFIG += qt warn_on depend_includepath testcase
+QT = core testlib
 
+TARGET = tst_sobject
 TEMPLATE = app
+CONFIG += qt warn_on depend_includepath testcase
 
 include(../../data/testData.pri)
 include(../../testConfig.pri)
@@ -13,4 +13,4 @@ HEADERS += $$INCDIR/sobject.h $$INCDIR/sdatetime.h $$INCDIR/sassistant.h \
            $$INCDIR/tags.h
 SOURCES += $$INCDIR/sobject.cpp $$INCDIR/sdatetime.cpp $$INCDIR/sassistant.cpp
 
-SOURCES += SObjectTest.cpp
+SOURCES += tst_sobject.cpp
