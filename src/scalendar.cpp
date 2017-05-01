@@ -269,21 +269,21 @@ quint64 SCalendar::duration(const SDateTime &from, const SDateTime &to) const
 quint64 SCalendar::secondsInDateTime(const SDateTime &dateTime) const
 {
     // Secs
-    quint64 result = dateTime.second;
+    quint64 result = dateTime.second();
     // Minutes
-    result += dateTime.minute * mSecondsInMinute;
+    result += dateTime.minute() * mSecondsInMinute;
     // Hours
     const quint64 secondsInHour = mMinutesInHour * mSecondsInMinute;
-    result += dateTime.hour * secondsInHour;
+    result += dateTime.hour() * secondsInHour;
     // Days
     const quint64 secondsInDay = secondsInHour * mHoursInDay;
-    result += dateTime.day * secondsInDay;
+    result += dateTime.day() * secondsInDay;
     // Months
-    const quint64 secondsInMonth = secondsInDay * daysInMonth(dateTime.month);
-    result += dateTime.month * secondsInMonth;
+    const quint64 secondsInMonth = secondsInDay * daysInMonth(dateTime.month());
+    result += dateTime.month() * secondsInMonth;
     // Years
     const quint64 secondsInYear = secondsInDay * mDaysInYear;
-    result += quint64(dateTime.year) * secondsInYear;
+    result += quint64(dateTime.year()) * secondsInYear;
     return result;
 }
 

@@ -13,19 +13,19 @@ private Q_SLOTS:
     void testOperators();
 
 private:
-    QString mDate1 = "2017-04-30 13:06:59";
+    QString mDate1 = "2017-4-30 13:6:59";
 };
 
 void SDateTimeTest::testStringOperators()
 {
     SDateTime dt1 = SDateTime::fromString(mDate1);
-    QVERIFY(dt1.day == 30);
-    QVERIFY(dt1.month == 04);
-    QVERIFY(dt1.year == 2017);
-    QVERIFY(dt1.hour == 13);
-    QVERIFY(dt1.minute == 6);
-    QVERIFY(dt1.second == 59);
-    qDebug() << dt1.toString(); // TODO: decide how to resolve this (output is "2017-4-30 13:6:59")
+    QVERIFY(dt1.day() == 30);
+    QVERIFY(dt1.month() == 04);
+    QVERIFY(dt1.year() == 2017);
+    QVERIFY(dt1.hour() == 13);
+    QVERIFY(dt1.minute() == 6);
+    QVERIFY(dt1.second() == 59);
+    qDebug() << "Date time string:" << mDate1 << "after conversion:" << dt1.toString();
     QVERIFY(dt1.toString() == mDate1);
 }
 

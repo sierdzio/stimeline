@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <QByteArray>
 #include <QObject>
 
 #include <QLoggingCategory>
@@ -10,12 +11,12 @@ class SDateTime
 {
     Q_GADGET
 
-    Q_PROPERTY(uint day MEMBER day)
-    Q_PROPERTY(uint month MEMBER month)
-    Q_PROPERTY(int year MEMBER year)
-    Q_PROPERTY(uint second MEMBER second)
-    Q_PROPERTY(uint minute MEMBER minute)
-    Q_PROPERTY(uint hour MEMBER hour)
+    Q_PROPERTY(uint day READ day WRITE setDay)
+    Q_PROPERTY(uint month READ month WRITE setMonth)
+    Q_PROPERTY(int year READ year WRITE setYear)
+    Q_PROPERTY(uint second READ second WRITE setSecond)
+    Q_PROPERTY(uint minute READ minute WRITE setMinute)
+    Q_PROPERTY(uint hour READ hour WRITE setHour)
 
 public:
     SDateTime();
@@ -25,12 +26,32 @@ public:
     bool operator<(const SDateTime &other) const;
 
     static SDateTime fromString(const QString &dateTime);
+    static SDateTime fromString(const QByteArray &dateTime);
     QString toString() const;
 
-    uint day = 1;
-    uint month = 1;
-    int year = 1;
-    uint second = 1;
-    uint minute = 1;
-    uint hour = 1;
+    uint day() const;
+    uint month() const;
+    int year() const;
+    uint second() const;
+    uint minute() const;
+    uint hour() const;
+
+public slots:
+    void setDay(const uint day);
+    void setMonth(const uint month);
+    void setYear(const int year);
+    void setSecond(const uint second);
+    void setMinute(const uint minute);
+    void setHour(const uint hour);
+
+private:
+    void updateStringRepresentation();
+
+    QByteArray mStringRepresentation;
+    uint mDay = 1;
+    uint mMonth = 1;
+    int mYear = 1;
+    uint mSecond = 1;
+    uint mMinute = 1;
+    uint mHour = 1;
 };
