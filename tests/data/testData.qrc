@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/testData">
         <file>sobject1.json</file>
+        <file>scalendar1.json</file>
     </qresource>
 </RCC>
