@@ -174,7 +174,7 @@ void SCalendar::fromJson(const QJsonArray &json)
 /*!
  * Returns the number of days in given \a month.
  *
- * Month indexing starts with 0 (zero).
+ * \warning Month indexing starts with 0 (zero)!
  */
 uint SCalendar::daysInMonth(const uint month) const
 {
@@ -189,6 +189,8 @@ uint SCalendar::daysInMonth(const uint month) const
 
 /*!
  * Sets the number of \a days in a \a month.
+ *
+ * \warning Month indexing starts with 0 (zero)!
  */
 void SCalendar::setDaysInMonth(const uint month, const uint days)
 {
@@ -206,7 +208,7 @@ void SCalendar::setDaysInMonth(const uint month, const uint days)
 /*!
  * Returns the name of the given \a month number.
  *
- * Month indexing starts with 0 (zero).
+ * \warning Month indexing starts with 0 (zero)!
  */
 QString SCalendar::monthName(const uint month) const
 {
@@ -221,6 +223,8 @@ QString SCalendar::monthName(const uint month) const
 
 /*!
  * Sets the \a name of \a month.
+ *
+ * \warning Month indexing starts with 0 (zero)!
  */
 void SCalendar::setMonthName(const uint month, const QString &name)
 {
@@ -284,6 +288,8 @@ quint64 SCalendar::secondsInDateTime(const SDateTime &dateTime) const
     // Years
     const quint64 secondsInYear = secondsInDay * mDaysInYear;
     result += quint64(dateTime.year()) * secondsInYear;
+    // Add leap years:
+    // TODO: add leap year time calculation
     return result;
 }
 

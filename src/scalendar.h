@@ -28,6 +28,8 @@ class SCalendar : public QObject
     Q_PROPERTY(uint minutesInHour MEMBER mMinutesInHour NOTIFY minutesInHourChanged)
     Q_PROPERTY(uint hoursInDay MEMBER mHoursInDay NOTIFY hoursInDayChanged)
 
+    friend class SCalendarTest;
+
 public:
     SCalendar(QObject *parent = nullptr);
     bool isValid() const;
