@@ -70,7 +70,7 @@ private:
     uint mDaysInWeek = 7;
     uint mDaysInYear = 365;
     uint mMonthsInYear = 12;
-    qreal mLeapDayPerYear = 0.25;
+    qreal mLeapDayPerYear = 0.2425; //0.25;
     uint mLeapDayAddsToMonthNumber = 2;
 
     // Months

@@ -4,7 +4,7 @@
     "daysInWeek": 7,
     "daysInYear": 365,
     "monthsInYear": 12,
-    "leapDayPerYear": 0.25,
+    "leapDayPerYear": 0.2425,
     "leapDayAddsToMonthNumber": 2,
     "Months": [
         {"January": 31},

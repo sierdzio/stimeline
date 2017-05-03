@@ -265,10 +265,12 @@ quint64 SCalendar::duration(const SDateTime &from, const SDateTime &to) const
 }
 
 /*!
- * Retuns number of seconds between zero date (0-0-0 0:0:0) and \a dateTime,
+ * Retuns number of seconds between zero date (1-1-1 0:0:0) and \a dateTime,
  * based on this SCalendar instance definition of calendar.
  *
- * WARNING: method does not check for out of bounds error.
+ * \warning method does not check for out of bounds error.
+ *
+ * \warning leap years are not taken into account
  */
 quint64 SCalendar::secondsInDateTime(const SDateTime &dateTime) const
 {
@@ -281,15 +283,18 @@ quint64 SCalendar::secondsInDateTime(const SDateTime &dateTime) const
     result += dateTime.hour() * secondsInHour;
     // Days
     const quint64 secondsInDay = secondsInHour * mHoursInDay;
-    result += dateTime.day() * secondsInDay;
+    result += (dateTime.day() - 1) * secondsInDay;
     // Months
     const quint64 secondsInMonth = secondsInDay * daysInMonth(dateTime.month());
-    result += dateTime.month() * secondsInMonth;
+    result += (dateTime.month() - 1) * secondsInMonth;
     // Years
     const quint64 secondsInYear = secondsInDay * mDaysInYear;
-    result += quint64(dateTime.year()) * secondsInYear;
+    const int effectiveYears = dateTime.year() - 1;
+    result += quint64(qAbs(effectiveYears)) * secondsInYear;
     // Add leap years:
     // TODO: add leap year time calculation
+    result += qreal(effectiveYears * mLeapDayPerYear) * secondsInDay;
+    //mLeapDayPerYear * secondsInDay * dateTime.year();
     return result;
 }
 

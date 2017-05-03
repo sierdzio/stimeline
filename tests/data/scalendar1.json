@@ -44,7 +44,7 @@
             "defaultDateTime": "2017-1-1 0:0:0",
             "hoursInDay": 24,
             "leapDayAddsToMonthNumber": 2,
-            "leapDayPerYear": 0.25,
+            "leapDayPerYear": 0.2425,
             "minutesInHour": 60,
             "monthsInYear": 12,
             "name": "Gregorian",
