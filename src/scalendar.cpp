@@ -293,8 +293,10 @@ quint64 SCalendar::secondsInDateTime(const SDateTime &dateTime) const
     result += quint64(qAbs(effectiveYears)) * secondsInYear;
     // Add leap years:
     // TODO: add leap year time calculation
-    result += qreal(effectiveYears * mLeapDayPerYear) * secondsInDay;
-    //mLeapDayPerYear * secondsInDay * dateTime.year();
+    if (effectiveYears * mLeapDayPerYear > 1.0) {
+        result += qreal(effectiveYears * mLeapDayPerYear) * secondsInDay;
+        //mLeapDayPerYear * secondsInDay * dateTime.year();
+    }
     return result;
 }
 

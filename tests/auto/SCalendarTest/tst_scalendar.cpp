@@ -25,6 +25,8 @@ private Q_SLOTS:
     void testCalendarTimeLogic();
 
 private:
+    void countSeconds(const SCalendar &cal, const QString &date, const quint64 shouldBe) const;
+
     QJsonArray mCalendarArray;
 };
 
@@ -91,16 +93,22 @@ void SCalendarTest::testCalendarTimeLogic()
     QVERIFY(cal.duration(date2, date1) == 8);
 
     // For comparison, see https://www.timeanddate.com/date/durationresult.html?y1=0001&m1=01&d1=01&y2=2017&m2=04&d2=30&h1=0&i1=0&s1=0&h2=13&i2=06&s2=59
-    const quint64 seconds1 = cal.secondsInDateTime(date1);
-    qDebug() << "Seconds in DT:" << seconds1;
-    qDebug() << "    Should be:" << 63629327219;
-    //QVERIFY(seconds1 == 63629327219);
+    countSeconds(cal, date1, 63629327219);
+    countSeconds(cal, "1000-1-1 0:0:0", 31525977600);
+    countSeconds(cal, "100-1-1 0:0:0", 3124137600);
+    countSeconds(cal, "2-1-1 0:0:0", 31536000);
+    countSeconds(cal, "1-2-1 0:0:0", 2678400);
+    countSeconds(cal, "1-1-10 0:0:0", 777600);
+    countSeconds(cal, "1-1-2 0:0:0", 86400);
+    countSeconds(cal, "1-1-1 0:1:0", 60);
+}
 
-    const QString date3("1-1-1 0:1:0");
-    const quint64 seconds2 = cal.secondsInDateTime(date3);
-    qDebug() << "Seconds in DT:" << seconds2;
-    qDebug() << "    Should be:" << 60;
-    QVERIFY(seconds2 == 60);
+void SCalendarTest::countSeconds(const SCalendar &cal, const QString &date, const quint64 shouldBe) const
+{
+    const quint64 seconds = cal.secondsInDateTime(date);
+    qDebug() << "Seconds in DT:" << seconds;
+    qDebug() << "....Should be:" << shouldBe << "delta:" << qint64(seconds - shouldBe);
+    //QVERIFY(seconds6 == 3124137600);
 }
 
 QTEST_MAIN(SCalendarTest)
