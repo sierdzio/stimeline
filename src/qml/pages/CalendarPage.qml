@@ -5,6 +5,7 @@ import "../editors"
 
 Page {
     id: root
+    property string _empty: ""
 
     DateTimeEditor {
         id: dateTimeEditor
@@ -22,7 +23,10 @@ Page {
 
         onAccepted: {
             if (isLoading) {
+                root._empty = "1"
                 Timeline.loadCalendar(filePath)
+                // Reset months model
+                root._empty = ""
             } else {
                 Timeline.saveCalendar(filePath)
             }
@@ -51,9 +55,7 @@ Page {
                     text: qsTr("Load")
                     onClicked: {
                         fileDialog.isLoading = true
-                        monthView.model = 0
                         fileDialog.open()
-                        monthView.model = Timeline.calendar.monthsInYear
                     }
                 }
                 Button {
@@ -120,11 +122,11 @@ Page {
                 model: Timeline.calendar.monthsInYear
                 delegate: Row {
                     TextField {
-                        text: Timeline.calendar.monthName(index)
+                        text: Timeline.calendar.monthName(index) + root._empty
                         onTextChanged: Timeline.calendar.setMonthName(index, text)
                     }
                     TextField {
-                        text: Timeline.calendar.daysInMonth(index)
+                        text: Timeline.calendar.daysInMonth(index) + root._empty
                         onTextChanged: Timeline.calendar.setDaysInMonth(index, text)
                     }
                 }
