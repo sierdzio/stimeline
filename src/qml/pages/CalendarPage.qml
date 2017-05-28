@@ -13,6 +13,22 @@ Page {
         }
     }
 
+    FileDialogLoader {
+        id: fileDialog
+        isLoading: true
+        useSimpleDialog: true
+        allowCompressedSave: false
+        startDir: Timeline.settings.configDir
+
+        onAccepted: {
+            if (isLoading) {
+                Timeline.loadCalendar(filePath)
+            } else {
+                Timeline.saveCalendar(filePath)
+            }
+        }
+    }
+
     Flickable {
         anchors.fill: parent
         flickableDirection: Flickable.VerticalFlick
@@ -24,6 +40,30 @@ Page {
             width: root.width
             columns: 2
 
+            Row {
+                Layout.columnSpan: 2
+
+                Label {
+                    text: qsTr("Calendar definition")
+                }
+
+                Button {
+                    text: qsTr("Load")
+                    onClicked: {
+                        fileDialog.isLoading = true
+                        monthView.model = 0
+                        fileDialog.open()
+                        monthView.model = Timeline.calendar.monthsInYear
+                    }
+                }
+                Button {
+                    text: qsTr("Save")
+                    onClicked: {
+                        fileDialog.isLoading = false
+                        fileDialog.open()
+                    }
+                }
+            }
             Label {
                 text: qsTr("Calendar name")
             }
@@ -73,6 +113,7 @@ Page {
                 text: qsTr("Months")
             }
             ListView {
+                id: monthView
                 height: 150
                 width: 150
                 clip: true

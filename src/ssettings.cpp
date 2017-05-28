@@ -40,6 +40,12 @@ Q_LOGGING_CATEGORY(ssettings, "SSettings")
  */
 
 /*!
+ * \property SSettings::configDir
+ *
+ * Path where config files are stored, as well as default calendars.
+ */
+
+/*!
  * \property SSettings::lastOpenFilePath
  *
  * Path to most recently opened file.
@@ -70,11 +76,11 @@ SSettings::SSettings(QObject *parent)
     : QObject(parent)
 {
 #ifdef Q_OS_ANDROID
-    mDefaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)//AppDataLocation)
+    mConfigDir = (QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)//AppDataLocation)
 #else
-    mDefaultSettingsPath = (QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+    mConfigDir = (QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
 #endif
-                          + "/" + Tags::docFolderName);
+                 + "/" + Tags::docFolderName);
 
     load();
 
@@ -96,11 +102,11 @@ SSettings::~SSettings()
  */
 void SSettings::load()
 {
-    const QDir data(mDefaultSettingsPath);
+    const QDir data(mConfigDir);
 
     if (!data.exists()) {
         qDebug(ssettings) << "Documents dir not present. Creating...";
-        if (data.mkpath(mDefaultSettingsPath)) {
+        if (data.mkpath(mConfigDir)) {
             // Copy default calendars:
             const QString qrcPath(":/defaults/calendar/");
             for (const QString &fileName : QDir(qrcPath).entryList(QDir::Files)) {
@@ -117,13 +123,13 @@ void SSettings::load()
         }
     }
 
-    QSettings settings(mDefaultSettingsPath + "/" + Tags::settingsFileName,
+    QSettings settings(mConfigDir + "/" + Tags::settingsFileName,
                        QSettings::IniFormat);
     mAutoLoadLastFile = settings.value(Tags::autoLoadLastFile, true).toBool();
     mAutoSaveOnExit = settings.value(Tags::autoSaveOnExit, false).toBool();
     mUseSimpleFileDialog = settings.value(Tags::useSimpleFileDialog, true).toBool();
     mLastOpenFilePath = settings.value(Tags::lastOpenFilePath,
-                                      QString(mDefaultSettingsPath + "/timeline.json"))
+                                      QString(mConfigDir + "/timeline.json"))
             .toString();
     mAuthor = settings.value(Tags::author).toString();
 
@@ -136,7 +142,7 @@ void SSettings::load()
  */
 void SSettings::save() const
 {
-    QSettings settings(mDefaultSettingsPath + "/" + Tags::settingsFileName,
+    QSettings settings(mConfigDir + "/" + Tags::settingsFileName,
                        QSettings::IniFormat);
     settings.setValue(Tags::autoLoadLastFile, mAutoLoadLastFile);
     settings.setValue(Tags::autoSaveOnExit, mAutoSaveOnExit);
@@ -158,6 +164,11 @@ bool SSettings::autoSaveOnExit() const
 bool SSettings::useSimpleFileDialog() const
 {
     return mUseSimpleFileDialog;
+}
+
+QString SSettings::configDir() const
+{
+    return mConfigDir;
 }
 
 QString SSettings::lastOpenFilePath() const
@@ -185,6 +196,7 @@ QString SSettings::name() const
     return mName;
 }
 
+
 void SSettings::setAutoLoadLastFile(bool autoLoadLastFile)
 {
     if (mAutoLoadLastFile == autoLoadLastFile)
@@ -210,6 +222,15 @@ void SSettings::setUseSimpleFileDialog(bool useSimpleFileDialog)
 
     mUseSimpleFileDialog = useSimpleFileDialog;
     emit useSimpleFileDialogChanged(useSimpleFileDialog);
+}
+
+void SSettings::setConfigDir(const QString &configDir)
+{
+    if (mConfigDir == configDir)
+        return;
+
+    mConfigDir = configDir;
+    emit configDirChanged(mConfigDir);
 }
 
 void SSettings::setLastOpenFilePath(const QString &lastOpenFilePath)

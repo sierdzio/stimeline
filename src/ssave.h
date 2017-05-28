@@ -20,6 +20,8 @@ public:
     bool load(const QString &path);
     bool save(const QString &path);
 
+    bool loadCalendar(const QString &path);
+
     QJsonObject json() const;
     void setJson(const QJsonObject &json);
 

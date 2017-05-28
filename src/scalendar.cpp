@@ -168,6 +168,18 @@ void SCalendar::fromJson(const QJsonArray &json)
     mHoursInDay = uint(obj.value(Tags::hoursInDay).toInt());
 
     checkValidity();
+
+    emit nameChanged(mName);
+    emit defaultDateTimeChanged(mDefaultDateTime);
+    emit daysInWeekChanged(mDaysInWeek);
+    emit daysInYearChanged(mDaysInYear);
+    emit monthsInYearChanged(mMonthsInYear);
+    emit leapDayPerYearChanged(mLeapDayPerYear);
+    emit leapDayAddsToMonthNumberChanged(mLeapDayAddsToMonthNumber);
+    emit secondsInMinuteChanged(mSecondsInMinute);
+    emit minutesInHourChanged(mMinutesInHour);
+    emit hoursInDayChanged(mHoursInDay);
+
     qCDebug(scalendar()) << mName << "calendar loaded. Valid:" << mIsValid;
 }
 

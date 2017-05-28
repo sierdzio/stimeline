@@ -30,9 +30,14 @@ public:
     ~STimeline();
 
 public slots:
+    void clear();
     void load(const QString &path);
     void save(const QString &path) const;
     void exportSave() const;
+
+    void loadCalendar(const QString &path);
+    void saveCalendar(const QString &path) const;
+
     QString loadPicture(const QString &absolutePath);
     // TODO: make property
     QString basePicturePath() const;

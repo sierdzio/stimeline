@@ -9,6 +9,7 @@ Popup {
     property alias fileName: fileNameText.text
     property string fileExtension: extensionJson.checked? Assistant.extensionUncompressed
                                                         : Assistant.extensionCompressed
+    property bool allowCompressedSave: true
 
     signal accepted()
     signal rejected()
@@ -55,6 +56,7 @@ Popup {
         RadioButton {
             id: extensionTmln
             text: qsTr("Compressed timeline (.%1)").arg(Assistant.extensionCompressed)
+            visible: allowCompressedSave
 
             ToolTip.visible: pressed
             ToolTip.text: qsTr("Timeline data and all attached pictures are stored "

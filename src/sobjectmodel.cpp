@@ -74,6 +74,21 @@ QVariant SObjectModel::data(const QModelIndex &index, int role) const
     }
 }
 
+bool SObjectModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    beginRemoveRows(parent, row, count);
+    //mObjects.clear();
+    mObjects.remove(row, count);
+    endRemoveRows();
+
+    return true;
+}
+
+void SObjectModel::clear()
+{
+    removeRows(0, mObjects.count(), QModelIndex());
+}
+
 /*!
  * Returns a JSON array containing all SObjects withing this model.
  */

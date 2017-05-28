@@ -24,7 +24,9 @@ public:
     QHash<int, QByteArray> roleNames() const override;
     virtual int rowCount(const QModelIndex &parent) const override;
     virtual QVariant data(const QModelIndex &index, int role) const override;
+    bool removeRows(int row, int count, const QModelIndex &parent) override;
 
+    void clear();
     QJsonArray toJson() const;
     void fromJson(const QJsonArray &json);
 

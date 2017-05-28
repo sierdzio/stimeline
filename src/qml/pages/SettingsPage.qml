@@ -1,6 +1,7 @@
 import QtQuick 2.8
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.0
+import QtQuick.Dialogs 1.2
 import "../editors"
 
 Page {
@@ -17,6 +18,15 @@ Page {
                 Timeline.save(filePath)
             }
         }
+    }
+
+    MessageDialog {
+        id: newDocumentConfirm
+        title: qsTr("New timeline")
+        text: qsTr("Do you want to clear current timeline and start a new one?")
+        standardButtons: StandardButton.Yes | StandardButton.No
+
+        onYes: Timeline.clear()
     }
 
     Flickable {
@@ -60,8 +70,12 @@ Page {
                 Layout.fillWidth: true
             }
 
-            MenuSeparator { Layout.fillWidth: true }
+            //MenuSeparator { Layout.fillWidth: true }
 
+            Button {
+                text: qsTr("New timeline")
+                onClicked: newDocumentConfirm.open()
+            }
             Button {
                 text: qsTr("Load timeline")
                 onClicked: {

@@ -9,6 +9,8 @@ import Assistant 1.0
 Loader {
     property bool isLoading: true
     property bool useSimpleDialog: false
+    property bool allowCompressedSave: true
+    property string startDir: Assistant.directory(Timeline.settings.lastOpenFilePath)
 
     signal accepted(string filePath)
     signal rejected()
@@ -57,7 +59,7 @@ Loader {
         id: normalFileDialog
         FileDialog {
             title: qsTr("Please choose a timeline file")
-            folder: Timeline.settings.lastOpenFilePath
+            folder: startDir
             nameFilters: ["Open timeline (*." + Assistant.extensionUncompressed + ")",
                 "Compressed timeline (*." + Assistant.extensionCompressed + ")"]
             visible: true
@@ -74,6 +76,7 @@ Loader {
 
         SimpleLoadDialog {
             id: sld
+            dirPath: startDir
             onAccepted: root.accepted(absoluteFilePath)
             onRejected: root.rejected()
             Component.onCompleted: sld.open()
@@ -85,9 +88,11 @@ Loader {
 
         SimpleSaveDialog {
             id: ssd
+            dirPath: startDir
             onAccepted: root.accepted(absoluteFilePath)
             onRejected: root.rejected()
             Component.onCompleted: ssd.open()
+            allowCompressedSave: root.allowCompressedSave
         }
     }
 

@@ -118,6 +118,25 @@ STimeline::~STimeline()
 }
 
 /*!
+ * Clears current timeline, all objects and calendars
+ */
+void STimeline::clear()
+{
+    mSettings->setName(QString::null);
+
+    //QString mRuntimeDataPath;
+    //QVector<QByteArray> mPictureCache;
+    //SCalendar *mCalendar = nullptr;
+    mEventModel->clear();
+    mPersonModel->clear();
+    mArtifactModel->clear();
+    mPlaceModel->clear();
+    mMapModel->clear();
+
+    mEventModelProxy->sort(0);
+}
+
+/*!
  * Loads the whole timeline from a file under \a path.
  */
 void STimeline::load(const QString &path)
@@ -200,6 +219,45 @@ void STimeline::exportSave() const
                                                   string.object<jstring>());
     qDebug(stimeline) << "After JNI";
 #endif
+}
+
+/*!
+ * Load calendar definition from \a path file. The file can be just calendar
+ * definition or full sTimeline save file - only calendar will be extracted
+ * from it.
+ *
+ * \a path can also point to compressed timeline file.
+ */
+void STimeline::loadCalendar(const QString &path)
+{
+    const QString parsedPath(SAssistant::cleanPath(path));
+
+    SSave load;
+    if (!load.load(path)) {
+        return;
+    }
+
+    const QJsonObject object(load.json());
+    const QJsonArray calendar(object.value(Tags::calendar).toArray());
+    mCalendar->fromJson(calendar);
+}
+
+/*!
+ * Saves current calendar definition to file \a path. File will be saved as
+ * uncompressed JSON.
+ */
+void STimeline::saveCalendar(const QString &path) const
+{
+    QJsonObject object;
+    object.insert(Tags::calendar, mCalendar->toJson());
+
+    SSave save(mRuntimeDataPath);
+    save.setJson(object);
+
+    if (!save.save(path)) {
+        qDebug(stimeline) << "Could not save calendar";
+        return;
+    }
 }
 
 /*!

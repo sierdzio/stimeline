@@ -14,3 +14,4 @@ Short and incomplete list of what is left to be done here:
 - BUG: popups do not fit on Android
 - make Android Intent use ContentProvider to share files
 - prompt for storage permission
+- BUG: when loading different calendar, month names and lengths are not updated
