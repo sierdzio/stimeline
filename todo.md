@@ -19,5 +19,4 @@ Short and incomplete list of what is left to be done here:
 - close event editor when Enter is pressed
 - Ctrl+S should save current file
 - Long text in event card should wrap
-- Add scrollbar for event views
 - Check dirty before exiting (do you want to save changes?)
