@@ -14,4 +14,10 @@ Short and incomplete list of what is left to be done here:
 - BUG: popups do not fit on Android
 - make Android Intent use ContentProvider to share files
 - prompt for storage permission
-- BUG: when loading different calendar, month names and lengths are not updated
+- "event folding" into "chapters". Add ability to group events together
+  and fold (hide) all these events under single item. User can click "+" button
+- close event editor when Enter is pressed
+- Ctrl+S should save current file
+- Long text in event card should wrap
+- Add scrollbar for event views
+- Check dirty before exiting (do you want to save changes?)

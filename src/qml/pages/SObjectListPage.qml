@@ -17,6 +17,9 @@ Page {
         anchors.fill: parent
         spacing: 15
         clip: true
+        ScrollBar.vertical: ScrollBar {
+            policy: ScrollBar.AlwaysOn
+        }
 
         delegate: ObjectCard {
             objectId: model.id
