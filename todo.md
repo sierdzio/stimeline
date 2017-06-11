@@ -20,3 +20,4 @@ Short and incomplete list of what is left to be done here:
 - Ctrl+S should save current file
 - Long text in event card should wrap
 - Check dirty before exiting (do you want to save changes?)
+- add undo/ redo

@@ -15,6 +15,62 @@ Frame {
 
     signal edit()
 
+    ColumnLayout {
+        anchors.fill: parent
+        anchors.margins: 5
+
+        Label {
+            id: objectIdLabel
+            text: "default"
+            visible: false
+            Layout.fillWidth: true
+        }
+
+        Label {
+            id: typeLabel
+            text: "No type"
+            visible: false
+            Layout.fillWidth: true
+        }
+
+        SImage {
+            id: picturePathLabel
+            width: 40
+            height: 40
+            visible: relativeSource.length !== 0
+        }
+
+        Label {
+            id: nameLabel
+            text: "default"
+            Layout.fillWidth: true
+        }
+
+        // TODO: make description small & fading away when it is big.
+        // Add a button to show it all
+        Label {
+            id: descriptionLabel
+            text: "default"
+            elide: Text.ElideRight
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+            maximumLineCount: 2
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+        }
+
+        RowLayout {
+            Label {
+                id: fromLabel
+                text: "default"
+            }
+
+            Label {
+                id: toLabel
+                text: "default"
+            }
+        }
+    }    
+
     MouseArea {
         anchors.fill: parent
         onDoubleClicked: edit();
@@ -32,57 +88,5 @@ Frame {
         font.pointSize: 8
 
         onClicked: Timeline.model(type).removeObject(objectId)
-    }
-
-    ColumnLayout {
-        anchors.fill: parent
-        anchors.margins: 5
-
-        Label {
-            id: objectIdLabel
-            text: "default"
-            visible: false
-        }
-
-        Label {
-            id: typeLabel
-            text: "No type"
-            visible: false
-        }
-
-        SImage {
-            id: picturePathLabel
-            width: 40
-            height: 40
-            visible: relativeSource.length !== 0
-        }
-
-        Label {
-            id: nameLabel
-            text: "default"
-        }
-
-        // TODO: make description small & fading away when it is big.
-        // Add a button to show it all
-        Label {
-            id: descriptionLabel
-            text: "default"
-            elide: Text.ElideRight
-            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            maximumLineCount: 2
-            //Layout.columnSpan: 2
-        }
-
-        RowLayout {
-            Label {
-                id: fromLabel
-                text: "default"
-            }
-
-            Label {
-                id: toLabel
-                text: "default"
-            }
-        }
     }
 }
