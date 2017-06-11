@@ -18,6 +18,7 @@ Frame {
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 5
+        spacing: 5
 
         Label {
             id: objectIdLabel
@@ -43,17 +44,17 @@ Frame {
         Label {
             id: nameLabel
             text: "default"
+            font.bold: true
             Layout.fillWidth: true
         }
 
-        // TODO: make description small & fading away when it is big.
-        // Add a button to show it all
+        // Add a button to show whole description
         Label {
             id: descriptionLabel
             text: "default"
             elide: Text.ElideRight
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            maximumLineCount: 2
+            maximumLineCount: 4
             Layout.fillHeight: true
             Layout.fillWidth: true
         }
@@ -62,6 +63,10 @@ Frame {
             Label {
                 id: fromLabel
                 text: "default"
+            }
+
+            Label {
+                text: " | "
             }
 
             Label {

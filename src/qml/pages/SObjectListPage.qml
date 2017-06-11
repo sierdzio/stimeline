@@ -29,9 +29,7 @@ Page {
             description: model.description
             from: model.from
             to: model.to
-            //width: (view.width > 450)? 450 : view.width
-            //height: 160
-            width: 500 //view.width
+            width: (view.width > Assistant.cardWidth)? Assistant.cardWidth : view.width
             height: 200
             onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
         }

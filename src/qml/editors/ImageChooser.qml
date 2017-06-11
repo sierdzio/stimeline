@@ -1,4 +1,4 @@
-import QtQuick 2.8
+import QtQuick 2.9
 import QtQuick.Dialogs 1.2
 
 Rectangle {
@@ -27,28 +27,38 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        onDoubleClicked: dialog.open()
+        onDoubleClicked: {
+            dialogLoader.sourceComponent = dialogComponent
+            dialogLoader.item.open()
+        }
     }
 
-    FileDialog {
-        id: dialog
-        title: qsTr("Please choose a picture")
-        folder: Timeline.settings.lastOpenFilePath
-        nameFilters: ["Pictures (*.png *.jpeg *.jpg)"]
-        visible: false
-        selectExisting : true
-        selectFolder : false
-        selectMultiple : false
-        onAccepted: {
-            root.__pathBase = "file://" + Timeline.basePicturePath() + "/"
-            root.__fileName = Timeline.loadPicture(dialog.fileUrls)
-            image.source = root.__pathBase + root.__fileName
-            root.path = root.__fileName
-            console.log("You chose picture: " + dialog.fileUrls
-                        + "Changing picture to: " + image.source)
-        }
-        onRejected: {
-            console.log("Picture loading canceled")
+    Loader {
+        id: dialogLoader
+    }
+
+    Component {
+        id: dialogComponent
+        FileDialog {
+            id: dialog
+            title: qsTr("Please choose a picture")
+            folder: Timeline.settings.lastOpenFilePath
+            nameFilters: ["Pictures (*.png *.jpeg *.jpg)"]
+            visible: false
+            selectExisting : true
+            selectFolder : false
+            selectMultiple : false
+            onAccepted: {
+                root.__pathBase = "file://" + Timeline.basePicturePath() + "/"
+                root.__fileName = Timeline.loadPicture(dialog.fileUrls)
+                image.source = root.__pathBase + root.__fileName
+                root.path = root.__fileName
+                console.log("You chose picture: " + dialog.fileUrls
+                            + "Changing picture to: " + image.source)
+            }
+            onRejected: {
+                console.log("Picture loading canceled")
+            }
         }
     }
 

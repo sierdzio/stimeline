@@ -45,6 +45,14 @@ int SAssistant::buttonMargin()
 }
 
 /*!
+ * Returns default width of object card.
+ */
+int SAssistant::cardWidth()
+{
+    return 500;
+}
+
+/*!
  * Returns the file extension for compressed save.
  */
 QString SAssistant::extensionCompressed()

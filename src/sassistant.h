@@ -10,6 +10,7 @@ class SAssistant : public QObject
     Q_OBJECT
 
     Q_PROPERTY(int buttonMargin READ buttonMargin CONSTANT)
+    Q_PROPERTY(int cardWidth READ cardWidth CONSTANT)
     Q_PROPERTY(QString extensionCompressed READ extensionCompressed CONSTANT)
     Q_PROPERTY(QString extensionUncompressed READ extensionUncompressed CONSTANT)
 
@@ -23,6 +24,7 @@ public:
     explicit SAssistant(QObject *parent = 0);
 
     static int buttonMargin(); //!< K
+    static int cardWidth(); //!< K
     static QString extensionCompressed(); //!< K
     static QString extensionUncompressed(); //!< K
     Q_INVOKABLE static QString typeToString(const QString &type);
