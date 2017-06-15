@@ -3,7 +3,6 @@ Short and incomplete list of what is left to be done here:
 - unit tests, especially for SEvent, STimeline, SCalendar and SDateTime classes
 - whole GUI, obviously
 - support for file attachments
-- support JSON and binary JSON load/ save
 - nice GUI for timeline, with smooth zooming and swiping (EventTimeline)
 - use magic macros for Q_OBJECTS
 - add null datetime (when it is not set)
@@ -18,6 +17,5 @@ Short and incomplete list of what is left to be done here:
   and fold (hide) all these events under single item. User can click "+" button
 - close event editor when Enter is pressed
 - Ctrl+S should save current file
-- Long text in event card should wrap
 - Check dirty before exiting (do you want to save changes?)
 - add undo/ redo

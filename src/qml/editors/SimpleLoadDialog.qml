@@ -4,17 +4,14 @@ import QtQuick.Controls 2.1
 import Qt.labs.folderlistmodel 2.1
 import Assistant 1.0
 
-Popup {
+Dialog {
     property string absoluteFilePath: (folderView.currentItem? dirPath + "/" + folderView.currentItem.text : dirPath)
     property string dirPath: Assistant.directory(Timeline.settings.lastOpenFilePath)
-
-    signal accepted()
-    signal rejected()
 
     id: root
     closePolicy: Popup.NoAutoClose
     modal: true
-    focus: true
+    standardButtons: Dialog.Ok | Dialog.Cancel
 
     ColumnLayout {
         anchors.fill: parent
@@ -56,21 +53,6 @@ Popup {
             anchors.fill: folderView
             onClicked: {
                 folderView.currentIndex = folderView.indexAt(mouse.x, mouse.y)
-            }
-        }
-
-        DialogButtonBox {
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignRight
-            standardButtons: DialogButtonBox.Ok | DialogButtonBox.Cancel
-
-            onAccepted: {
-                console.log("Accepted load: " + absoluteFilePath)
-                root.accepted()
-            }
-            onRejected: {
-                console.log("Rejected load")
-                root.rejected()
             }
         }
 

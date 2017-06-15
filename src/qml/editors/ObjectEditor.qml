@@ -3,7 +3,7 @@ import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.1
 import Assistant 1.0
 
-Popup {
+Dialog {
     property string objectId: ""
     property string type: ""
     property alias name: nameLabel.text
@@ -12,20 +12,15 @@ Popup {
     property alias from: fromLabel.text
     property alias to: toLabel.text
     property var __editControl: fromLabel
-    signal finished()
-    signal canceled()
-
-    onFinished: close()
-    onCanceled: close()
 
     id: root
     closePolicy: Popup.NoAutoClose
     modal: true
-    focus: true
+    standardButtons: Dialog.Ok | Dialog.Cancel
 
     DateTimeEditor {
         id: dateTimeEditor
-        onFinished: {
+        onAccepted: {
             __editControl.text = dateTimeEditor.dateTime
             if (!Timeline.calendar.isEarlier(fromLabel.text, toLabel.text)) {
                 toLabel.text = fromLabel.text
@@ -102,16 +97,6 @@ Popup {
                 dateTimeEditor.setDateTimeFromString(text);
                 dateTimeEditor.open();
             }
-        }
-
-        Button {
-            text: qsTr("OK")
-            onClicked: root.finished()
-        }
-
-        Button {
-            text: qsTr("Cancel")
-            onClicked: root.canceled()
         }
     }
 }

@@ -9,9 +9,7 @@ Page {
 
     DateTimeEditor {
         id: dateTimeEditor
-        onFinished: {
-            defaultDateTimeLabel.text = dateTimeEditor.dateTime
-        }
+        onAccepted: defaultDateTimeLabel.text = dateTimeEditor.dateTime
     }
 
     FileDialogLoader {

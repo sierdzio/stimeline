@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.1
 
 import "../items"
 
-Popup {
+Dialog {
     // TODO: use separator from Tags class
     property string dateTime: dtYear.text + "-" + (dtMonth.currentIndex+1) + "-"
                               + (dtDay.currentIndex+1) + " "
@@ -12,16 +12,10 @@ Popup {
                               + (dtMinute.currentIndex) + ":"
                               + (dtSecond.currentIndex) //"0001-01-01 01:01:01"
 
-    signal finished()
-    signal canceled()
-
-    onFinished: close()
-    onCanceled: close()
-
     id: root
     closePolicy: Popup.NoAutoClose
     modal: true
-    focus: true
+    standardButtons: Dialog.Ok | Dialog.Cancel
 
     function setDateTimeFromString(dateTimeString) {
         // TODO: use separator from Tags class
@@ -68,15 +62,15 @@ Popup {
                     text: qsTr("Day")
                 }
 
-//                SpinBox {
-//                    id: dtYear
-//                    editable: true
-//                    from: -100000
-//                    to: 100000
-//                    Layout.minimumWidth: 140
-//                    Layout.preferredWidth: 160
-//                    Layout.maximumWidth: 200
-//                }
+                //                SpinBox {
+                //                    id: dtYear
+                //                    editable: true
+                //                    from: -100000
+                //                    to: 100000
+                //                    Layout.minimumWidth: 140
+                //                    Layout.preferredWidth: 160
+                //                    Layout.maximumWidth: 200
+                //                }
                 TextField {
                     id: dtYear
                     validator: IntValidator {}
@@ -131,19 +125,6 @@ Popup {
                     id: dtSecond
                     model: Timeline.calendar.secondsInMinute
                 }
-            }
-        }
-
-        DialogButtonBox {
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignRight
-            standardButtons: DialogButtonBox.Ok | DialogButtonBox.Cancel
-
-            onAccepted: {
-                root.finished()
-            }
-            onRejected: {
-                root.canceled()
             }
         }
     }

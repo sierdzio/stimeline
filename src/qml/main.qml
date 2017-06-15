@@ -40,7 +40,7 @@ ApplicationWindow {
         x: (parent.width/2) - (width/2)
         y: (parent.height/2) - (height/2)
 
-        onFinished: Timeline.model(editor.type).updateObject(editor.objectId,
+        onAccepted: Timeline.model(editor.type).updateObject(editor.objectId,
                                                              editor.type,
                                                              editor.name,
                                                              editor.picturePath,

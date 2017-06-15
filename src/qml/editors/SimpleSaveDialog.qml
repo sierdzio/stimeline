@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.1
 import Assistant 1.0
 
-Popup {
+Dialog {
     property string absoluteFilePath: dirPath + "/" + fileName + "." + fileExtension
     property string dirPath: Assistant.directory(Timeline.settings.lastOpenFilePath)
     property alias fileName: fileNameText.text
@@ -11,13 +11,10 @@ Popup {
                                                         : Assistant.extensionCompressed
     property bool allowCompressedSave: true
 
-    signal accepted()
-    signal rejected()
-
     id: root
     closePolicy: Popup.NoAutoClose
     modal: true
-    focus: true
+    standardButtons: Dialog.Ok | Dialog.Cancel
 
     Component.onCompleted: {
         if (Timeline.settings.lastOpenFileExtension === "json") {
@@ -61,21 +58,6 @@ Popup {
             ToolTip.visible: pressed
             ToolTip.text: qsTr("Timeline data and all attached pictures are stored "
                                + "in a single ZIP archive.")
-        }
-
-        DialogButtonBox {
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignRight
-            standardButtons: DialogButtonBox.Ok | DialogButtonBox.Cancel
-
-            onAccepted: {
-                console.log("Accepted save: " + absoluteFilePath)
-                root.accepted()
-            }
-            onRejected: {
-                console.log("Rejected save")
-                root.rejected()
-            }
         }
 
         Label {
