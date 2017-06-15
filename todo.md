@@ -16,6 +16,5 @@ Short and incomplete list of what is left to be done here:
 - "event folding" into "chapters". Add ability to group events together
   and fold (hide) all these events under single item. User can click "+" button
 - close event editor when Enter is pressed
-- Ctrl+S should save current file
 - Check dirty before exiting (do you want to save changes?)
 - add undo/ redo

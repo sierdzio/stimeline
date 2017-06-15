@@ -35,6 +35,7 @@ ApplicationWindow {
         editor.open()
     }
 
+
     ObjectEditor {
         id: editor
         x: (parent.width/2) - (width/2)
@@ -51,6 +52,15 @@ ApplicationWindow {
     }
 
     SwipeView {
+        focus: true
+        Keys.onPressed: {
+            if ((event.key === Qt.Key_S) && (event.modifiers & Qt.ControlModifier)) {
+                console.log("Saving from shortcut: " + Timeline.settings.lastOpenFilePath);
+                Timeline.save(Timeline.settings.lastOpenFilePath)
+                event.accepted = true;
+            }
+        }
+
         id: swipeView
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
