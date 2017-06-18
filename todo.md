@@ -15,6 +15,8 @@ Short and incomplete list of what is left to be done here:
 - prompt for storage permission
 - "event folding" into "chapters". Add ability to group events together
   and fold (hide) all these events under single item. User can click "+" button
+- add tags for events/ objects
+- add searching/ filtering
 - close event editor when Enter is pressed
 - Check dirty before exiting (do you want to save changes?)
 - add undo/ redo

@@ -2,6 +2,7 @@
 
 #include "sdatetime.h"
 
+#include <QVector>
 #include <QByteArray>
 #include <QString>
 #include <QJsonObject>
@@ -9,6 +10,8 @@
 
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(sevent)
+
+using TagContainer = QVector<quint64>;
 
 class SObjectModel;
 class SObjectSortProxyModel;
@@ -24,6 +27,8 @@ class SObject
     Q_PROPERTY(QString description MEMBER mDescription)
     Q_PROPERTY(SDateTime from MEMBER mFrom)
     Q_PROPERTY(SDateTime to MEMBER mTo)
+    Q_PROPERTY(TagContainer tags MEMBER mTags)
+    Q_PROPERTY(TagContainer plots MEMBER mPlots)
 
     friend class SObjectModel;
     friend class SObjectSortProxyModel;
@@ -59,6 +64,8 @@ public:
     static QString typeToString(const int type);
     static QString typeToString(const ObjectType type);
     static ObjectType stringToType(const QString &type);
+    static QString joinTags(const TagContainer &tags);
+    static TagContainer splitTags(const QString &tags);
 
 private:
     QByteArray mId;
@@ -68,4 +75,6 @@ private:
     QString mDescription;
     SDateTime mFrom;
     SDateTime mTo;
+    TagContainer mTags;
+    TagContainer mPlots;
 };

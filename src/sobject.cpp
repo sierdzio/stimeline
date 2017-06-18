@@ -139,6 +139,8 @@ QJsonObject SObject::toJson() const
     result.insert(Tags::description, QJsonValue(mDescription));
     result.insert(Tags::from, QJsonValue(mFrom.toString()));
     result.insert(Tags::to, QJsonValue(mTo.toString()));
+    result.insert(Tags::tags, QJsonValue(joinTags(mTags)));
+    result.insert(Tags::plots, QJsonValue(joinTags(mPlots)));
 
     return result;
 }
@@ -204,4 +206,30 @@ SObject::ObjectType SObject::stringToType(const QString &type)
 
     return ObjectType(QMetaEnum::fromType<SObject::ObjectType>()
                       .keyToValue(type.toLatin1().constData()));
+}
+
+QString SObject::joinTags(const TagContainer &tags)
+{
+    QString result;
+
+    for (const auto value : tags) {
+        if (!result.isEmpty())
+            result += Tags::tagSeparator;
+
+        result += QString::number(value);
+    }
+
+    return result;
+}
+
+TagContainer SObject::splitTags(const QString &tags)
+{
+    const QStringList list(tags.split(Tags::tagSeparator));
+    TagContainer result;
+
+    for (const QString value : list) {
+        result.append(value.toULongLong());
+    }
+
+    return result;
 }

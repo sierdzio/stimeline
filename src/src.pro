@@ -23,7 +23,8 @@ HEADERS += \
     sobjectmodel.h \
     sassistant.h \
     sobjectsortproxymodel.h \
-    ssave.h
+    ssave.h \
+    sobjecttags.h
 
 SOURCES += \
     main.cpp \
@@ -36,7 +37,8 @@ SOURCES += \
     sobjectmodel.cpp \
     sassistant.cpp \
     sobjectsortproxymodel.cpp \
-    ssave.cpp
+    ssave.cpp \
+    sobjecttags.cpp
 
 RESOURCES += \
     qml.qrc \

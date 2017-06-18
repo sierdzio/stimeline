@@ -45,6 +45,10 @@ static const QByteArray hoursInDay("hoursInDay");
 // DateTime
 static const QByteArray from("from");
 static const QByteArray to("to");
+// Tags
+static const QByteArray tags("tags");
+//Plots
+static const QByteArray plots("plots");
 // Settings
 static const QByteArray autoLoadLastFile("autoLoadLastFile");
 static const QByteArray autoSaveOnExit("autoSaveOnExit");
@@ -53,4 +57,5 @@ static const QByteArray lastOpenFilePath("lastOpenFilePath");
 // Misc
 static const QByteArray dateSeparator("-");
 static const QByteArray timeSeparator(":");
+static const QByteArray tagSeparator(";");
 }
