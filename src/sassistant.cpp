@@ -124,7 +124,6 @@ QString SAssistant::cleanPath(const QString &urlPath)
  */
 QString SAssistant::directory(const QString &filePath)
 {
-    //return QDir(filePath).absolutePath();
     return QFileInfo(filePath).absolutePath();
 }
 

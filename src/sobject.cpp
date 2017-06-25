@@ -84,6 +84,20 @@ Q_LOGGING_CATEGORY(sevent, "SEvent")
  */
 
 /*!
+ * \property SObject:tags
+ *
+ * Contains tags associated with the object. Tags make it easier to search,
+ * filter and organize objects.
+ */
+
+/*!
+ * \property SObject:plots
+ *
+ * Contains plots associated with the object. Plots are consistent packages
+ * of objects, arranged in a particular order.
+ */
+
+/*!
  * Default constructor. It will automatically generate a random ID for the SEvent
  * if \a option is set to SEvent::InitialiseId.
  */
@@ -157,6 +171,8 @@ void SObject::fromJson(const QJsonObject &json)
     mDescription = json.value(Tags::description).toString();
     mFrom = SDateTime(json.value(Tags::from).toString());
     mTo = SDateTime(json.value(Tags::to).toString());
+    mTags = splitTags(json.value(Tags::tags).toString());
+    mPlots = splitTags(json.value(Tags::plots).toString());
 
     //qCDebug(sevent).noquote() << "Event loaded from JSON. Data:\n" << toString();
 }
@@ -227,7 +243,7 @@ TagContainer SObject::splitTags(const QString &tags)
     const QStringList list(tags.split(Tags::tagSeparator));
     TagContainer result;
 
-    for (const QString value : list) {
+    for (const QString &value : list) {
         result.append(value.toULongLong());
     }
 

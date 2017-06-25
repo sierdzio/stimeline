@@ -13,7 +13,6 @@ include(3rdParty/qt-supermacros/QtSuperMacros.pri)
 TARGET = sTimeline
 
 HEADERS += \
-    tags.h \
     stimeline.h \
     scalendar.h \
     sdatetime.h \
@@ -24,7 +23,8 @@ HEADERS += \
     sassistant.h \
     sobjectsortproxymodel.h \
     ssave.h \
-    sobjecttags.h
+    sobjecttags.h \
+    tags.h
 
 SOURCES += \
     main.cpp \

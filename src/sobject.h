@@ -11,7 +11,7 @@
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(sevent)
 
-using TagContainer = QVector<quint64>;
+using TagContainer = QVector<uint>;
 
 class SObjectModel;
 class SObjectSortProxyModel;
@@ -29,6 +29,7 @@ class SObject
     Q_PROPERTY(SDateTime to MEMBER mTo)
     Q_PROPERTY(TagContainer tags MEMBER mTags)
     Q_PROPERTY(TagContainer plots MEMBER mPlots)
+    //Q_PROPERTY(Plot chapter MEMBER mChapter)
 
     friend class SObjectModel;
     friend class SObjectSortProxyModel;

@@ -6,6 +6,7 @@
 #include "sassistant.h"
 #include "ssave.h"
 #include "tags.h"
+#include "sobjecttags.h"
 
 #include "quazip.h"
 #include "quazipfile.h"
@@ -95,6 +96,8 @@ STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
     qRegisterMetaType<SSettings*>();
     qRegisterMetaType<SCalendar*>();
     qRegisterMetaType<STimeline*>();
+    qRegisterMetaType<SObjectTags*>();
+
     init();
 
     if (settings->autoLoadLastFile()) {
@@ -132,6 +135,7 @@ void STimeline::clear()
     mArtifactModel->clear();
     mPlaceModel->clear();
     mMapModel->clear();
+    mTags->clear();
 
     mEventModelProxy->sort(0);
 }
@@ -164,6 +168,7 @@ void STimeline::load(const QString &path)
     mArtifactModel->fromJson(mainObj.value(Tags::artifacts).toArray());
     mPlaceModel->fromJson(mainObj.value(Tags::places).toArray());
     mMapModel->fromJson(mainObj.value(Tags::maps).toArray());
+    mTags->fromJson(mainObj.value(Tags::tags).toArray());
 
     mEventModelProxy->sort(0);
 }
@@ -188,6 +193,7 @@ void STimeline::save(const QString &path) const
     mainObj.insert(Tags::artifacts, mArtifactModel->toJson());
     mainObj.insert(Tags::places, mPlaceModel->toJson());
     mainObj.insert(Tags::maps, mMapModel->toJson());
+    mainObj.insert(Tags::tags, mTags->toJson());
 
     SSave save(mRuntimeDataPath);
     save.setJson(mainObj);
@@ -356,4 +362,5 @@ void STimeline::init()
     mArtifactModel = new SObjectModel(this);
     mPlaceModel = new SObjectModel(this);
     mMapModel = new SObjectModel(this);
+    mTags = new SObjectTags(this);
 }

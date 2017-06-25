@@ -26,7 +26,7 @@ void SObjectTags::fromJson(const QJsonArray &json)
     for (const QJsonValue &i: json) {
         const QJsonObject obj(i.toObject());
         bool ok = false;
-        const quint64 key(obj.keys().first().toULongLong(&ok));
+        const uint key(obj.keys().first().toUInt(&ok));
 
         if (!ok) {
             qDebug() << "ERROR: could not read Tag key" << obj;
@@ -35,28 +35,34 @@ void SObjectTags::fromJson(const QJsonArray &json)
 
         const QString value(obj.value(obj.keys().first()).toString());
         mTags.insert(key, value);
-        mId++;
     }
 }
 
-QString SObjectTags::tag(const quint64 id) const
+void SObjectTags::clear()
+{
+    mTags.clear();
+}
+
+QString SObjectTags::value(const uint id) const
 {
     return mTags.value(id);
 }
 
-quint64 SObjectTags::id(const QString &tag) const
+uint SObjectTags::key(const QString &tag) const
 {
     return mTags.key(tag);
 }
 
 bool SObjectTags::addTag(const QString &tag)
 {
-    if (mTags.key(tag) != 0) {
-        qDebug() << "Tag alread exists" << mTags.key(tag) << tag;
+    const QString aTag(tag.toLower()); // TODO: locale-aware toLower()!
+    const uint id = qHash(aTag);
+
+    if (mTags.contains(id)) {
+        qDebug() << "Tag alread exists" << id << aTag;
         return false;
     }
 
-    mId++;
-    mTags.insert(mId, tag);
+    mTags.insert(id, aTag);
     return true;
 }
