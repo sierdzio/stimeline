@@ -199,6 +199,29 @@ void SObjectModel::removeObject(const QString &id)
     endRemoveRows();
 }
 
+void SObjectModel::updateObject(const SObject &obj)
+{
+    qDebug() << "UPDATE:" << obj.mId << obj.mType << obj.mName;
+
+    const int index = findObjectIndex(obj.mId);
+
+    // Event does not exist - create it instead
+    if (index == -1) {
+        //addObject(obj.mId, obj.mType, obj.mName, obj.picturePath, obj.description, obj.from, obj.to);
+        return;
+    }
+
+    const QModelIndex modelIndex(createIndex(index, 0));
+    mObjects.replace(index, obj);
+
+    emit dataChanged(modelIndex, modelIndex);
+}
+
+SObject SObjectModel::object(const QString &id) const
+{
+    return mObjects.at(findObjectIndex(id.toLatin1()));
+}
+
 /*!
  * Returns event index in mEvents vector, denoting location of event with \a id,
  * or -1 if no such event is found.

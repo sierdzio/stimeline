@@ -46,6 +46,8 @@ public slots:
                       const QString &from,
                       const QString &to);
     void removeObject(const QString &id);
+    void updateObject(const SObject &obj);
+    SObject object(const QString &id) const;
 
 protected:
     int findObjectIndex(const QByteArray &id) const;

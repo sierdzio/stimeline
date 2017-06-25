@@ -177,6 +177,11 @@ void SObject::fromJson(const QJsonObject &json)
     //qCDebug(sevent).noquote() << "Event loaded from JSON. Data:\n" << toString();
 }
 
+SObject SObject::me() const
+{
+    return *this;
+}
+
 /*!
  * Returns type name for given type number (QML often passes numbers as strings).
  */

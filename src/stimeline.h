@@ -26,7 +26,6 @@ class STimeline : public QObject
     Q_PROPERTY(SSettings* settings MEMBER mSettings CONSTANT)
     Q_PROPERTY(SCalendar* calendar MEMBER mCalendar CONSTANT)
     Q_PROPERTY(SObjectTags* tags MEMBER mTags CONSTANT)
-    // mTags
 
 public:
     STimeline(SSettings *settings = nullptr, QObject *parent = nullptr);

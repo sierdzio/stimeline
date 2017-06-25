@@ -61,6 +61,8 @@ public:
     QJsonObject toJson() const;
     void fromJson(const QJsonObject &json);
 
+    Q_INVOKABLE SObject me() const;
+
     static QString typeToString(const QString &type);
     static QString typeToString(const int type);
     static QString typeToString(const ObjectType type);

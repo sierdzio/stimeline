@@ -41,14 +41,25 @@ ApplicationWindow {
         x: (parent.width/2) - (width/2)
         y: (parent.height/2) - (height/2)
 
-        onAccepted: Timeline.model(editor.type).updateObject(editor.objectId,
-                                                             editor.type,
-                                                             editor.name,
-                                                             editor.picturePath,
-                                                             editor.description,
-                                                             editor.from,
-                                                             editor.to
-                                                             )
+        onAccepted: {
+            var obj = Timeline.model(editor.type).object(editor.objectId)
+            obj.type = editor.type
+            obj.type = editor.name
+            obj.description = editor.description
+            Timeline.model(editor.type).updateObject(obj)
+
+            // ^TODO: use gadgets directly^
+        }
+
+//        onAccepted: Timeline.model(editor.type).updateObject(editor.objectId,
+//                                                             editor.type,
+//                                                             editor.name,
+//                                                             editor.picturePath,
+//                                                             editor.description,
+//                                                             editor.from,
+//                                                             editor.to,
+//                                                             editor.tags
+//                                                             )
     }
 
     SwipeView {

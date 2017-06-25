@@ -11,6 +11,7 @@ Dialog {
     property alias description: descriptionLabel.text
     property alias from: fromLabel.text
     property alias to: toLabel.text
+    property alias tags: tagsLabel.text
     property var __editControl: fromLabel
 
     id: root
@@ -97,6 +98,14 @@ Dialog {
                 dateTimeEditor.setDateTimeFromString(text);
                 dateTimeEditor.open();
             }
+        }
+
+        Label {
+            text: qsTr("Tags")
+        }
+
+        TextField {
+            id: tagsLabel
         }
     }
 }
