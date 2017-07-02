@@ -101,12 +101,9 @@ Q_LOGGING_CATEGORY(sevent, "SEvent")
  * Default constructor. It will automatically generate a random ID for the SEvent
  * if \a option is set to SEvent::InitialiseId.
  */
-SObject::SObject(SObject::InitialisationOption option, ObjectType type)
-    : mType(type)
+SObject::SObject(ObjectType type)
+    : mId(SAssistant::generateId()), mType(type)
 {
-    if (option == InitialisationOption::InitialiseId) {
-        mId = SAssistant::generateId();
-    }
 }
 
 /*!

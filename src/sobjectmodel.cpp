@@ -127,6 +127,7 @@ void SObjectModel::addObject(const SObject &obj)
  */
 void SObjectModel::removeObject(const QString &id)
 {
+    qDebug() << "REMOVE:" << id;
     const int index = findObjectIndex(id.toLatin1());
 
     if (index == -1) {

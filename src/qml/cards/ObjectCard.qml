@@ -80,6 +80,6 @@ Frame {
         text: qsTr("DEL")
         font.pointSize: 8
 
-        onClicked: Timeline.model(type).removeObject(object.id)
+        onClicked: Timeline.model(object.type).removeObject(object.id)
     }
 }

@@ -36,10 +36,6 @@ class SObject
     friend class SObjectTest;
 
 public:
-    enum class InitialisationOption {
-        InitialiseId,
-        DoNotInitialiseId
-    };
 
     enum class ObjectType {
         None = 0,
@@ -51,8 +47,7 @@ public:
     };
     Q_ENUM(ObjectType)
 
-    SObject(InitialisationOption option = InitialisationOption::InitialiseId,
-            ObjectType type = ObjectType::None);
+    SObject(ObjectType type = ObjectType::None);
     SObject(const QJsonObject &from);
 
     QByteArray id() const; //!< K
@@ -72,7 +67,6 @@ public:
 
 private:
     QByteArray mId;
-    ObjectType mType = ObjectType::None;
     QString mName;
     QString mPicturePath;
     QString mDescription;
@@ -80,6 +74,7 @@ private:
     SDateTime mTo;
     TagContainer mTags;
     TagContainer mPlots;
+    ObjectType mType = ObjectType::None;
 };
 
 Q_DECLARE_METATYPE(SObject*);

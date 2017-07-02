@@ -58,7 +58,7 @@ Q_LOGGING_CATEGORY(sdatetime, "SDateTime")
  */
 SDateTime::SDateTime()
 {
-    //qDebug(sdatetime) << "Empty SDateTime";
+    updateStringRepresentation();
 }
 
 /*!
