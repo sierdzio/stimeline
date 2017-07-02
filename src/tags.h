@@ -19,6 +19,8 @@ static const QByteArray version("version");
 static const QByteArray timestamp("timestamp");
 static const QByteArray author("author");
 // Objects:
+static const QByteArray sobject("sobject");
+static const int        sobjectRole(Qt::UserRole + 1);
 static const QByteArray id("id");
 static const QByteArray type("type");
 static const QByteArray name("name");

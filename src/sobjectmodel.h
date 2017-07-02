@@ -31,20 +31,7 @@ public:
     void fromJson(const QJsonArray &json);
 
 public slots:
-    void addObject(const QString &id,
-                   const QString &type,
-                   const QString &name,
-                   const QString &picturePath,
-                   const QString &description,
-                   const QString &from,
-                   const QString &to);
-    void updateObject(const QString &id,
-                      const QString &type,
-                      const QString &name,
-                      const QString &picturePath,
-                      const QString &description,
-                      const QString &from,
-                      const QString &to);
+    void addObject(const SObject &obj);
     void removeObject(const QString &id);
     void updateObject(const SObject &obj);
     SObject object(const QString &id) const;
@@ -53,4 +40,5 @@ protected:
     int findObjectIndex(const QByteArray &id) const;
 
     QVector<SObject> mObjects;
+    const QHash<int, QByteArray> mRoleNames;
 };

@@ -1,5 +1,7 @@
 #include "sobjectsortproxymodel.h"
 #include "sdatetime.h"
+#include "sobject.h"
+#include "tags.h"
 
 //#include <QDebug>
 
@@ -24,11 +26,11 @@ SObjectSortProxyModel::SObjectSortProxyModel(QObject *parent)
 bool SObjectSortProxyModel::lessThan(const QModelIndex &left,
                                      const QModelIndex &right) const
 {
-    const int role = Qt::UserRole + 6;
-    const QVariant leftData = sourceModel()->data(left, role);
-    const QVariant rightData = sourceModel()->data(right, role);
-    const SDateTime leftDT(leftData.toString());
-    const SDateTime rightDT(rightData.toString());
+    const int role = Tags::sobjectRole;
+    const SObject leftObject = sourceModel()->data(left, role).value<SObject>();
+    const SObject rightObject = sourceModel()->data(right, role).value<SObject>();
+    const SDateTime leftDT(leftObject.mFrom);
+    const SDateTime rightDT(rightObject.mFrom);
     const bool result = leftDT < rightDT;
 
     //qDebug() << "Less than. L:" << leftDT.toString()

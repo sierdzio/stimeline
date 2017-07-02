@@ -177,6 +177,11 @@ void SObject::fromJson(const QJsonObject &json)
     //qCDebug(sevent).noquote() << "Event loaded from JSON. Data:\n" << toString();
 }
 
+/*!
+ * Returns this object. This method looks silly, I know, but the reason for its
+ * existence is that this is the only way to interact with SObject directly
+ * in QML.
+ */
 SObject SObject::me() const
 {
     return *this;

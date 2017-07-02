@@ -22,7 +22,7 @@ Page {
         }
 
         delegate: ObjectCard {
-            object: root.model.object(model.id)
+            object: sobject.me()
             width: (view.width > Assistant.cardWidth)? Assistant.cardWidth : view.width
             height: 200
             onEdit: openEditor(object)
@@ -34,7 +34,7 @@ Page {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         anchors.margins: Assistant.buttonMargin
-        text: "+"
+        text: "+" // No translation needed.
         font.bold: true
         radius: 15
 
