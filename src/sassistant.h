@@ -2,6 +2,9 @@
 
 #include <QObject>
 
+#include "sobject.h"
+#include "sdatetime.h"
+
 class QQmlEngine;
 class QJSEngine;
 
@@ -33,6 +36,14 @@ public:
     static QByteArray fileChecksum(const QString &filePath);
     static QString cleanPath(const QString &urlPath);
 
+    Q_INVOKABLE SObject defaultObject() const;
+    Q_INVOKABLE SDateTime defaultDateTime() const;
+    Q_INVOKABLE SDateTime dateFromString(const QString &dateTime) const;
+
     // Define the singleton type provider function (callback).
     static QObject *assistantSingletonProvider(QQmlEngine *engine, QJSEngine *scriptEngine);
+
+private:
+    const SObject mDefaultObject;
+    const SDateTime mDefaultDateTime;
 };

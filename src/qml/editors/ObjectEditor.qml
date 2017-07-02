@@ -4,14 +4,7 @@ import QtQuick.Layouts 1.1
 import Assistant 1.0
 
 Dialog {
-    property string objectId: ""
-    property string type: ""
-    property alias name: nameLabel.text
-    property alias picturePath: picturePathLabel.path
-    property alias description: descriptionLabel.text
-    property alias from: fromLabel.text
-    property alias to: toLabel.text
-    property alias tags: tagsLabel.text
+    property var object: Assistant.defaultObject()
     property var __editControl: fromLabel
 
     id: root
@@ -22,10 +15,13 @@ Dialog {
     DateTimeEditor {
         id: dateTimeEditor
         onAccepted: {
-            __editControl.text = dateTimeEditor.dateTime
+            __editControl.text = dateTimeEditor.dateTime.toString()
             if (!Timeline.calendar.isEarlier(fromLabel.text, toLabel.text)) {
                 toLabel.text = fromLabel.text
             }
+
+            object.from = Assistant.dateFromString(fromLabel.text)
+            object.to = Assistant.dateFromString(toLabel.text)
         }
     }
 
@@ -34,13 +30,15 @@ Dialog {
         columns: 2
 
         Label {
-            text: qsTr("Edit %1").arg(Assistant.typeToString(type)) // TODO: translate Type!
+            text: qsTr("Edit %1").arg(Assistant.typeToString(object.type))
             Layout.columnSpan: 2
         }
 
         ImageChooser {
             id: picturePathLabel
             Layout.columnSpan: 2
+            path: object.picturePath
+            onPathChanged: object.picturePath = path
         }
 
         Label {
@@ -49,6 +47,8 @@ Dialog {
 
         TextField {
             id: nameLabel
+            text: object.name
+            onTextChanged: object.name = text
         }
 
         Label {
@@ -59,8 +59,9 @@ Dialog {
             TextArea.flickable: TextArea {
                 id: descriptionLabel
                 wrapMode: TextArea.Wrap
-                width: parent.width
-                //height: 200
+                width: parent.widthS
+                text: object.description
+                onTextChanged: object.description = text
             }
 
             height: 200
@@ -76,12 +77,12 @@ Dialog {
 
         Button {
             id: fromLabel
-            text: Timeline.calendar.defaultDateTime
+            text: object.from.toString()
 
             onClicked: {
-                __editControl = fromLabel;
-                dateTimeEditor.setDateTimeFromString(text);
-                dateTimeEditor.open();
+                __editControl = fromLabel
+                dateTimeEditor.dateTime = Assistant.dateFromString(text)
+                dateTimeEditor.open()
             }
         }
 
@@ -91,12 +92,12 @@ Dialog {
 
         Button {
             id: toLabel
-            text: Timeline.calendar.defaultDateTime
+            text: object.to.toString()
 
             onClicked: {
-                __editControl = toLabel;
-                dateTimeEditor.setDateTimeFromString(text);
-                dateTimeEditor.open();
+                __editControl = toLabel
+                dateTimeEditor.dateTime = Assistant.dateFromString(text)
+                dateTimeEditor.open()
             }
         }
 
@@ -106,6 +107,8 @@ Dialog {
 
         TextField {
             id: tagsLabel
+            //text: object.tags
+            //onTextChanged: object.tags
         }
     }
 }

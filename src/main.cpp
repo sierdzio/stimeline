@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     SSettings settings;
     STimeline timeline(&settings);
 
+    qRegisterMetaType<SObject>();
     qmlRegisterUncreatableType<SObject>("CustomItems", 1, 0, "SObject",
                                         "You cannot instantiate SObject ion QML");
     qmlRegisterSingletonType<SAssistant>("Assistant", 1, 0, "Assistant",

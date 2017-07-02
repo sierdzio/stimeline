@@ -119,6 +119,21 @@ QString SAssistant::cleanPath(const QString &urlPath)
     return urlPath;
 }
 
+SObject SAssistant::defaultObject() const
+{
+    return mDefaultObject;
+}
+
+SDateTime SAssistant::defaultDateTime() const
+{
+    return mDefaultDateTime;
+}
+
+SDateTime SAssistant::dateFromString(const QString &dateTime) const
+{
+    return SDateTime::fromString(dateTime);
+}
+
 /*!
  * Returns directory leading to \a filePath.
  */

@@ -24,3 +24,4 @@ Short and incomplete list of what is left to be done here:
   plots in different order than chronologically)
 - add "chapters" - special kind of plot, which organizes objects into
   distinctive, chronological parts. Maybe some other name: Eras, Stories, Parts
+- lower amount of conversion to and from SDateTime

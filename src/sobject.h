@@ -72,7 +72,7 @@ public:
 
 private:
     QByteArray mId;
-    ObjectType mType;
+    ObjectType mType = ObjectType::None;
     QString mName;
     QString mPicturePath;
     QString mDescription;
@@ -81,3 +81,5 @@ private:
     TagContainer mTags;
     TagContainer mPlots;
 };
+
+Q_DECLARE_METATYPE(SObject*);

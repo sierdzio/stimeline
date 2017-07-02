@@ -1,41 +1,17 @@
 import QtQuick 2.8
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.1
+import Assistant 1.0
 
 import "../items"
 
 Dialog {
-    // TODO: use separator from Tags class
-    property string dateTime: dtYear.text + "-" + (dtMonth.currentIndex+1) + "-"
-                              + (dtDay.currentIndex+1) + " "
-                              + (dtHour.currentIndex) + ":"
-                              + (dtMinute.currentIndex) + ":"
-                              + (dtSecond.currentIndex) //"0001-01-01 01:01:01"
+    property var dateTime: Assistant.defaultDateTime()
 
     id: root
     closePolicy: Popup.NoAutoClose
     modal: true
     standardButtons: Dialog.Ok | Dialog.Cancel
-
-    function setDateTimeFromString(dateTimeString) {
-        // TODO: use separator from Tags class
-        // Or use SDateTime object directly here...
-        var dt = dateTimeString.split(" ");
-        var dateStr = dt[0].split("-");
-        var timeStr = dt[1].split(":")
-
-        setDateTime(dateStr[0], dateStr[1], dateStr[2],
-                    timeStr[0], timeStr[1], timeStr[2]);
-    }
-
-    function setDateTime(yyyy, MM, dd, hh, mm, ss) {
-        dtYear.text = yyyy;
-        dtMonth.currentIndex = MM-1;
-        dtDay.currentIndex = dd-1;
-        dtHour.currentIndex = hh;
-        dtMinute.currentIndex = mm;
-        dtSecond.currentIndex = ss;
-    }
 
     ColumnLayout {
         anchors.fill: parent
@@ -62,19 +38,13 @@ Dialog {
                     text: qsTr("Day")
                 }
 
-                //                SpinBox {
-                //                    id: dtYear
-                //                    editable: true
-                //                    from: -100000
-                //                    to: 100000
-                //                    Layout.minimumWidth: 140
-                //                    Layout.preferredWidth: 160
-                //                    Layout.maximumWidth: 200
-                //                }
                 TextField {
                     id: dtYear
+                    text: dateTime.year
+                    onTextChanged: dateTime.year = text
                     validator: IntValidator {}
                 }
+
                 Tumbler {
                     id: dtMonth
                     model: Timeline.calendar.monthsInYear
@@ -88,11 +58,18 @@ Dialog {
                                  / (Tumbler.tumbler.visibleItemCount / 2)
                     }
 
-                    onCurrentIndexChanged: dtDay.model = Timeline.calendar.daysInMonth(currentIndex)
+                    currentIndex: dateTime.month - 1
+                    onCurrentIndexChanged: {
+                        dateTime.month = currentIndex + 1
+                        dtDay.model = Timeline.calendar.daysInMonth(currentIndex)
+                    }
                 }
+
                 STumbler {
                     id: dtDay
                     visibleItemCount: 3
+                    currentIndex: dateTime.day - 1
+                    onCurrentIndexChanged: dateTime.day = currentIndex + 1
                 }
             }
         }
@@ -116,14 +93,20 @@ Dialog {
                 Tumbler {
                     id: dtHour
                     model: Timeline.calendar.hoursInDay
+                    currentIndex: dateTime.hour
+                    onCurrentIndexChanged: dateTime.hour = currentIndex
                 }
                 Tumbler {
                     id: dtMinute
                     model: Timeline.calendar.minutesInHour
+                    currentIndex: dateTime.minute
+                    onCurrentIndexChanged: dateTime.minute = currentIndex
                 }
                 Tumbler {
                     id: dtSecond
                     model: Timeline.calendar.secondsInMinute
+                    currentIndex: dateTime.second
+                    onCurrentIndexChanged: dateTime.second = currentIndex
                 }
             }
         }

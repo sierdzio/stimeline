@@ -98,6 +98,7 @@ STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
     qRegisterMetaType<STimeline*>();
     qRegisterMetaType<SObjectTags*>();
     qRegisterMetaType<SObject>();
+    qRegisterMetaType<SDateTime>();
 
     init();
 

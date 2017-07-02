@@ -22,16 +22,10 @@ Page {
         }
 
         delegate: ObjectCard {
-            objectId: model.id
-            type: SObject.Event
-            name: model.name
-            picturePath: model.picturePath
-            description: model.description
-            from: model.from
-            to: model.to
+            object: root.model.object(model.id)
             width: (view.width > Assistant.cardWidth)? Assistant.cardWidth : view.width
             height: 200
-            onEdit: openEditor(objectId, type, name, picturePath, description, from, to)
+            onEdit: openEditor(object)
         }
     }
 

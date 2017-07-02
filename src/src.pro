@@ -12,6 +12,10 @@ include(3rdParty/qt-supermacros/QtSuperMacros.pri)
 
 TARGET = sTimeline
 
+raspberry {
+    target.path = /home/pi/Desktop
+}
+
 HEADERS += \
     stimeline.h \
     scalendar.h \
@@ -69,7 +73,7 @@ QML_DESIGNER_IMPORT_PATH =
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+else: unix:!android:!raspberry: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

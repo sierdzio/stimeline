@@ -249,7 +249,7 @@ TagContainer SObject::splitTags(const QString &tags)
     TagContainer result;
 
     for (const QString &value : list) {
-        result.append(value.toULongLong());
+        result.append(value.toUInt());
     }
 
     return result;

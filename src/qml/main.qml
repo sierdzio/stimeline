@@ -14,52 +14,24 @@ ApplicationWindow {
     height: 800
     title: qsTr("sTimeline - v") + Qt.application.version
 
-    function openEditor(objectId, type, name, picturePath, description, from, to) {
-        editor.objectId = objectId
-        editor.type = type
-
-        if (typeof name === "undefined") {
-            editor.name = ""
-            editor.picturePath = ""
-            editor.description = ""
-            editor.from = Timeline.calendar.defaultDateTime
-            editor.to = Timeline.calendar.defaultDateTime
-        } else {
-            editor.name = name
-            editor.picturePath = picturePath
-            editor.description = description
-            editor.from = from
-            editor.to = to
-        }
-
+    function openEditor(object) {
+        editor.object = object
         editor.open()
     }
 
+    function openEmptyEditor(type) {
+        var object = Assistant.defaultObject()
+        object.type = type
+        editor.object = object
+        editor.open()
+    }
 
     ObjectEditor {
         id: editor
         x: (parent.width/2) - (width/2)
         y: (parent.height/2) - (height/2)
 
-        onAccepted: {
-            var obj = Timeline.model(editor.type).object(editor.objectId)
-            obj.type = editor.type
-            obj.type = editor.name
-            obj.description = editor.description
-            Timeline.model(editor.type).updateObject(obj)
-
-            // ^TODO: use gadgets directly^
-        }
-
-//        onAccepted: Timeline.model(editor.type).updateObject(editor.objectId,
-//                                                             editor.type,
-//                                                             editor.name,
-//                                                             editor.picturePath,
-//                                                             editor.description,
-//                                                             editor.from,
-//                                                             editor.to,
-//                                                             editor.tags
-//                                                             )
+        onAccepted: Timeline.model(editor.object.type).updateObject(editor.object)
     }
 
     SwipeView {
@@ -76,22 +48,22 @@ ApplicationWindow {
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
 
-        //        Page {
-        //            id: pageTimeline
+        // Page {
+        //     id: pageTimeline
 
-        //            EventTimeline {
-        //                id: eventTimeline
-        //                height: parent.height/2
-        //                focus: true
-        //                anchors.fill: parent
-        //            }
-        //        }
+        //     EventTimeline {
+        //         id: eventTimeline
+        //         height: parent.height/2
+        //         focus: true
+        //         anchors.fill: parent
+        //     }
+        // }
 
         SObjectListPage {
             id: pageEvents
-            model: Timeline.eventModelProxy
-            onEditRequest: openEditor(objectId, type, name, picturePath, description, from, to)
-            onAddObjectRequest: openEditor(Assistant.generateId(), SObject.Event)
+            model: Timeline.eventModel //Timeline.eventModelProxy
+            onEditRequest: openEditor(object)
+            onAddObjectRequest: openEmptyEditor(SObject.Event)
         }
 
         ObjectsPage {

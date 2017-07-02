@@ -13,29 +13,29 @@ Page {
         SObjectListPage {
             id: pagePeople
             model: Timeline.personModel
-            onEditRequest: openEditor(objectId, type, name, picturePath, description, from, to)
-            onAddObjectRequest: openEditor(Assistant.generateId(), SObject.Person)
+            onEditRequest: openEditor(object)
+            onAddObjectRequest: openEmptyEditor(SObject.Person)
         }
 
         SObjectListPage {
             id: pageArtifacts
             model: Timeline.artifactModel
-            onEditRequest: openEditor(objectId, type, name, picturePath, description, from, to)
-            onAddObjectRequest: openEditor(Assistant.generateId(), SObject.Artifact)
+            onEditRequest: openEditor(object)
+            onAddObjectRequest: openEmptyEditor(SObject.Artifact)
         }
 
         SObjectListPage {
             id: pagePlaces
             model: Timeline.placeModel
-            onEditRequest: openEditor(objectId, type, name, picturePath, description, from, to)
-            onAddObjectRequest: openEditor(Assistant.generateId(), SObject.Place)
+            onEditRequest: openEditor(object)
+            onAddObjectRequest: openEmptyEditor(SObject.Place)
         }
 
         SObjectListPage {
             id: pageMaps
             model: Timeline.mapModel
-            onEditRequest: openEditor(objectId, type, name, picturePath, description, from, to)
-            onAddObjectRequest: openEditor(Assistant.generateId(), SObject.Map)
+            onEditRequest: openEditor(object)
+            onAddObjectRequest: openEmptyEditor(SObject.Map)
         }
     }
 

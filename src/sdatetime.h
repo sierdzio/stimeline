@@ -25,9 +25,9 @@ public:
     bool operator!=(const SDateTime &other) const;
     bool operator<(const SDateTime &other) const;
 
-    static SDateTime fromString(const QString &dateTime);
     static SDateTime fromString(const QByteArray &dateTime);
-    QString toString() const;
+    Q_INVOKABLE static SDateTime fromString(const QString &dateTime);
+    Q_INVOKABLE QString toString() const;
 
     uint day() const;
     uint month() const;

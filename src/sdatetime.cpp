@@ -156,7 +156,7 @@ bool SDateTime::operator<(const SDateTime &other) const {
  *
  * \todo Add invalid/ null date concept.
  */
-SDateTime SDateTime::fromString(const QString &dateTime)
+SDateTime SDateTime::fromString(const QByteArray &dateTime)
 {
     return SDateTime(dateTime);
 }
@@ -167,7 +167,7 @@ SDateTime SDateTime::fromString(const QString &dateTime)
  *
  * \todo Add invalid/ null date concept.
  */
-SDateTime SDateTime::fromString(const QByteArray &dateTime)
+SDateTime SDateTime::fromString(const QString &dateTime)
 {
     return SDateTime(dateTime);
 }
