@@ -7,8 +7,11 @@
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(stimeline)
 
+#include "sobject.h"
+
 class SCalendar;
 class SSettings;
+//class SObject;
 class SObjectModel;
 class SObjectSortProxyModel;
 class SObjectTags;
@@ -46,6 +49,9 @@ public slots:
 
     SObjectModel *model(const QString &type) const;
     SObjectModel *model(const int type) const;
+
+    void addTag(SObject object, const QString &tag);
+    void removeTag(SObject object, const uint id);
 
 private:
     void init();

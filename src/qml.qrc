@@ -17,5 +17,8 @@
         <file>qml/pages/CalendarPage.qml</file>
         <file>qml/pages/SettingsPage.qml</file>
         <file>qml/pages/AboutPage.qml</file>
+        <file>qml/items/TagContainer.qml</file>
+        <file>qml/items/Tag.qml</file>
+        <file>qml/editors/TagEditor.qml</file>
     </qresource>
 </RCC>

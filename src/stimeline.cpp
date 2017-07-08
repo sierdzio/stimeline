@@ -349,6 +349,27 @@ SObjectModel *STimeline::model(const int type) const
     }
 }
 
+void STimeline::addTag(SObject object, const QString &tag)
+{
+    const uint id = mTags->addTag(tag);
+    if (!object.mTags.contains(id)) {
+        object.mTags.append(id);
+        model(int(object.mType))->updateObject(object);
+    }
+
+    qDebug() << "Add tag" << id << tag;
+}
+
+void STimeline::removeTag(SObject object, const uint id)
+{
+    mTags->removeTag(id);
+    if (!object.mTags.removeOne(id))
+        qDebug() << "Tag not removed from object.";
+    model(int(object.mType))->updateObject(object);
+
+    qDebug() << "Remove tag" << id;
+}
+
 /*!
  * Initializes a new STimeline object.
  */

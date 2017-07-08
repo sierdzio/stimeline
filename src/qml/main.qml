@@ -28,10 +28,15 @@ ApplicationWindow {
 
     ObjectEditor {
         id: editor
-        x: (parent.width/2) - (width/2)
-        y: (parent.height/2) - (height/2)
-
         onAccepted: Timeline.model(editor.object.type).updateObject(editor.object)
+    }
+
+    TagEditor {
+        id: tagEditor
+        onAccepted: {
+            Timeline.addTag(tagEditor.object, tagEditor.tag)
+            editor.object = Timeline.model(tagEditor.object.type).object(tagEditor.object.id)
+        }
     }
 
     SwipeView {

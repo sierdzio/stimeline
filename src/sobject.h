@@ -3,6 +3,7 @@
 #include "sdatetime.h"
 
 #include <QVector>
+#include <QVariantList>
 #include <QByteArray>
 #include <QString>
 #include <QJsonObject>
@@ -11,6 +12,7 @@
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(sevent)
 
+// Unfortunately, QML does not understant QVector :|
 using TagContainer = QVector<uint>;
 
 class SObjectModel;
@@ -34,9 +36,9 @@ class SObject
     friend class SObjectModel;
     friend class SObjectSortProxyModel;
     friend class SObjectTest;
+    friend class STimeline;
 
 public:
-
     enum class ObjectType {
         None = 0,
         Event,
@@ -57,6 +59,8 @@ public:
     void fromJson(const QJsonObject &json);
 
     Q_INVOKABLE SObject me() const;
+    Q_INVOKABLE int tagCount() const;
+    Q_INVOKABLE uint tagIdAt(const int index) const;
 
     static QString typeToString(const QString &type);
     static QString typeToString(const int type);
@@ -78,3 +82,4 @@ private:
 };
 
 Q_DECLARE_METATYPE(SObject*);
+Q_DECLARE_METATYPE(TagContainer);

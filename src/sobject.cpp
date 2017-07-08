@@ -184,6 +184,16 @@ SObject SObject::me() const
     return *this;
 }
 
+int SObject::tagCount() const
+{
+    return mTags.count();
+}
+
+uint SObject::tagIdAt(const int index) const
+{
+    return mTags.at(index);
+}
+
 /*!
  * Returns type name for given type number (QML often passes numbers as strings).
  */
@@ -239,7 +249,8 @@ QString SObject::joinTags(const TagContainer &tags)
         if (!result.isEmpty())
             result += Tags::tagSeparator;
 
-        result += QString::number(value);
+        if (value != 0)
+            result += QString::number(value);
     }
 
     return result;
@@ -251,7 +262,8 @@ TagContainer SObject::splitTags(const QString &tags)
     TagContainer result;
 
     for (const QString &value : list) {
-        result.append(value.toUInt());
+        if (!value.isEmpty())
+            result.append(value.toUInt());
     }
 
     return result;

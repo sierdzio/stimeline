@@ -1,7 +1,9 @@
-import QtQuick 2.8
-import QtQuick.Controls 2.1
+import QtQuick 2.9
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
 import Assistant 1.0
+
+import "../items"
 
 Dialog {
     property var object: Assistant.defaultObject()
@@ -105,10 +107,13 @@ Dialog {
             text: qsTr("Tags")
         }
 
-        TextField {
+        TagContainer {
             id: tagsLabel
-            //text: object.tags
-            //onTextChanged: object.tags
+            object: root.object
+            onTagRemoved: {
+                Timeline.removeTag(object, tagId)
+                root.object = Timeline.model(object.type).object(object.id)
+            }
         }
     }
 }
