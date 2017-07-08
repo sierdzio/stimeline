@@ -241,6 +241,9 @@ SObject::ObjectType SObject::stringToType(const QString &type)
                       .keyToValue(type.toLatin1().constData()));
 }
 
+/*!
+ * Returns all tag IDs in a single string. Used for saving into JSON.
+ */
 QString SObject::joinTags(const TagContainer &tags)
 {
     QString result;
@@ -256,6 +259,9 @@ QString SObject::joinTags(const TagContainer &tags)
     return result;
 }
 
+/*!
+ * Returns list of tags read from \a tags string. Used for reading from JSON.
+ */
 TagContainer SObject::splitTags(const QString &tags)
 {
     const QStringList list(tags.split(Tags::tagSeparator));

@@ -25,3 +25,5 @@ Short and incomplete list of what is left to be done here:
 - add "chapters" - special kind of plot, which organizes objects into
   distinctive, chronological parts. Maybe some other name: Eras, Stories, Parts
 - lower amount of conversion to and from SDateTime
+- go through code paths and verify if they are efficient. Especially C++-QML
+  communication for SObjects, Tags and Plots
