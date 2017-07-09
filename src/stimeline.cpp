@@ -6,7 +6,7 @@
 #include "sassistant.h"
 #include "ssave.h"
 #include "tags.h"
-#include "sobjecttags.h"
+#include "stagsmodel.h"
 
 #include "quazip.h"
 #include "quazipfile.h"
@@ -96,7 +96,7 @@ STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
     qRegisterMetaType<SSettings*>();
     qRegisterMetaType<SCalendar*>();
     qRegisterMetaType<STimeline*>();
-    qRegisterMetaType<SObjectTags*>();
+    qRegisterMetaType<STagsModel*>();
     qRegisterMetaType<SObject>();
     qRegisterMetaType<SDateTime>();
 
@@ -173,6 +173,8 @@ void STimeline::load(const QString &path)
     mTags->fromJson(mainObj.value(Tags::tags).toArray());
 
     mEventModelProxy->sort(0);
+    // TODO: load SPlot information to SObjects.
+    // Each SObject needs to know which SPlots it belongs to.
 }
 
 /*!
@@ -385,5 +387,5 @@ void STimeline::init()
     mArtifactModel = new SObjectModel(this);
     mPlaceModel = new SObjectModel(this);
     mMapModel = new SObjectModel(this);
-    mTags = new SObjectTags(this);
+    mTags = new STagsModel(this);
 }

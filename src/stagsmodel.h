@@ -5,7 +5,10 @@
 #include <QObject>
 #include <QJsonArray>
 
-class SObjectTags : public QObject
+#include <QLoggingCategory>
+Q_DECLARE_LOGGING_CATEGORY(stagsmodel)
+
+class STagsModel : public QObject
 {
     Q_OBJECT
 
@@ -15,7 +18,7 @@ class SObjectTags : public QObject
     };
 
 public:
-    explicit SObjectTags(QObject *parent = nullptr);
+    explicit STagsModel(QObject *parent = nullptr);
 
     QJsonArray toJson() const;
     void fromJson(const QJsonArray &json);

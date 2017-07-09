@@ -1,15 +1,32 @@
-#include "sobjecttags.h"
+#include "stagsmodel.h"
 #include "tags.h"
 
 #include <QJsonValue>
 #include <QJsonObject>
 #include <QDebug>
 
-SObjectTags::SObjectTags(QObject *parent) : QObject(parent)
+Q_LOGGING_CATEGORY(stagsmodel, "STagsModel")
+
+/*!
+ * \class STagsModel
+ * \brief Main tags storage and translation class.
+ *
+ * The purpose of STagsModel is to be the "dictionary" for SObject's tags.
+ * While SObject class stores only tag IDs (essentially a qHash over tag value),
+ * this class provides the strings that these IDs represent.
+ *
+ * Additionally, with toJson() and fromJson(), tag data can be saved to and from
+ * sTimeline JSON file.
+ *
+ * \note While there is "Model" in this class name, it is not derived from
+ * QAbstractItemModel. It won't work as model for QML MVC components.
+ */
+
+STagsModel::STagsModel(QObject *parent) : QObject(parent)
 {
 }
 
-QJsonArray SObjectTags::toJson() const
+QJsonArray STagsModel::toJson() const
 {
     QJsonArray result;
 
@@ -21,7 +38,7 @@ QJsonArray SObjectTags::toJson() const
     return result;
 }
 
-void SObjectTags::fromJson(const QJsonArray &json)
+void STagsModel::fromJson(const QJsonArray &json)
 {
     mTags.clear();
     for (const QJsonValue &i: json) {
@@ -29,36 +46,34 @@ void SObjectTags::fromJson(const QJsonArray &json)
         const QString keyString(obj.keys().first());
         bool ok = false;
 
-        // TODO: categorized logging!
         if (keyString.isEmpty()) {
-            qDebug() << "Empty tag key. This is normal if no tags are set.";
+            qCDebug(stagsmodel) << "Empty tag key. This is normal if no tags are set.";
             return;
         }
 
         const uint key(keyString.toUInt(&ok));
 
         if (!ok) {
-            qDebug() << "ERROR: could not read Tag key" << obj;
+            qCDebug(stagsmodel) << "ERROR: could not read Tag key" << obj;
             return;
         }
 
         const QString value(obj.value(obj.keys().first()).toString());
         mTags.insert(key, Tag{value, 0}); // refCount is populated later
-        //qDebug() << "Reading tag:" << key << value;
     }
 }
 
-void SObjectTags::clear()
+void STagsModel::clear()
 {
     mTags.clear();
 }
 
-QString SObjectTags::value(const uint id) const
+QString STagsModel::value(const uint id) const
 {
     return mTags.value(id).value;
 }
 
-uint SObjectTags::addTag(const QString &tag)
+uint STagsModel::addTag(const QString &tag)
 {
     const QString aTag(tag.toLower()); // TODO: locale-aware toLower()!
     const uint id = qHash(aTag);
@@ -73,10 +88,10 @@ uint SObjectTags::addTag(const QString &tag)
     return id;
 }
 
-void SObjectTags::removeTag(const uint key)
+void STagsModel::removeTag(const uint key)
 {
     if (!mTags.contains(key)) {
-        qDebug() << "Tag not found!" << key;
+        qDebug(stagsmodel) << "Tag not found!" << key;
         return;
     }
 
