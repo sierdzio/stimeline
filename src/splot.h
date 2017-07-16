@@ -3,7 +3,7 @@
 
 #include <QVector>
 #include <QObject>
-#include <QJsonArray>
+#include <QJsonObject>
 
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(splot)
@@ -17,14 +17,15 @@ class SPlot : public QObject
 public:
     explicit SPlot(QObject *parent = nullptr);
 
-    QJsonArray toJson() const;
-    void fromJson(const QJsonArray &json);
+    QJsonObject toJson() const;
+    void fromJson(const QJsonObject &json);
 
 public slots:
     bool contains(const QByteArray &id) const;
     void addObject(const QByteArray &id);
 
 private:
+    uint mId = 0;
     QVector<QByteArray> mPlot;
     QString mName;
     QString mDescription;

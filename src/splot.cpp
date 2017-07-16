@@ -1,8 +1,8 @@
 #include "splot.h"
+#include "sassistant.h"
 #include "tags.h"
 
 #include <QJsonValue>
-#include <QJsonObject>
 #include <QDebug>
 
 Q_LOGGING_CATEGORY(splot, "SPlot")
@@ -22,45 +22,47 @@ Q_LOGGING_CATEGORY(splot, "SPlot")
 
 SPlot::SPlot(QObject *parent) : QObject(parent)
 {
+    mId = qHash(SAssistant::generateId());
 }
 
-QJsonArray SPlot::toJson() const
+QJsonObject SPlot::toJson() const
 {
-    QJsonArray result;
+    QJsonObject result;
 
-//    for (auto it = mTags.constBegin(); it != mTags.constEnd(); ++it) {
-//        result.append(QJsonValue(QJsonObject({{QString::number(it.key()),
-//                                               it.value().value}})));
-//    }
+    result.insert(Tags::id, QJsonValue(qint64(mId)));
+    result.insert(Tags::name, QJsonValue(mName));
+    result.insert(Tags::description, QJsonValue(mDescription));
+
+    QString joined;
+    for (const auto &value : mPlot) {
+        if (!joined.isEmpty())
+            joined += Tags::tagSeparator;
+
+        if (!value.isEmpty())
+            joined += value;
+    }
+
+    result.insert(Tags::tags, QJsonValue(joined));
 
     return result;
 }
 
-void SPlot::fromJson(const QJsonArray &json)
+void SPlot::fromJson(const QJsonObject &json)
 {
+    mId = 0;
     mPlot.clear();
     mName.clear();
     mDescription.clear();
 
-//    for (const QJsonValue &i: json) {
-//        const QJsonObject obj(i.toObject());
-//        const QString keyString(obj.keys().first());
-//        bool ok = false;
+    mId = uint(json.value(Tags::id).toInt(0));
+    mName = json.value(Tags::name).toString();
+    mDescription = json.value(Tags::description).toString();
+    const QString joined(json.value(Tags::tags).toString());
+    const QStringList separated(joined.split(Tags::tagSeparator));
 
-//        if (keyString.isEmpty()) {
-//            qCDebug(splot) << "Empty tag key. This is normal if no tags are set.";
-//            return;
-//        }
-
-//        const uint key(keyString.toUInt(&ok));
-
-//        if (!ok) {
-//            qCDebug(splot) << "ERROR: could not read Tag key" << obj;
-//            return;
-//        }
-
-//        const QString value(obj.value(obj.keys().first()).toString());
-//    }
+    for (const auto &value : separated) {
+        mPlot.append(value.toLatin1());
+    }
 }
 
 bool SPlot::contains(const QByteArray &id) const

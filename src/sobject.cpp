@@ -248,7 +248,7 @@ QString SObject::joinTags(const TagContainer &tags)
 {
     QString result;
 
-    for (const auto value : tags) {
+    for (const auto &value : tags) {
         if (!result.isEmpty())
             result += Tags::tagSeparator;
 

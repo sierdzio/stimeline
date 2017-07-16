@@ -29,7 +29,8 @@ HEADERS += \
     ssave.h \
     tags.h \
     stagsmodel.h \
-    splot.h
+    splot.h \
+    splotsmodel.h
 
 SOURCES += \
     main.cpp \
@@ -44,7 +45,8 @@ SOURCES += \
     sobjectsortproxymodel.cpp \
     ssave.cpp \
     stagsmodel.cpp \
-    splot.cpp
+    splot.cpp \
+    splotsmodel.cpp
 
 RESOURCES += \
     qml.qrc \
