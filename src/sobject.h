@@ -32,6 +32,7 @@ class SObject
     Q_PROPERTY(TagContainer tags MEMBER mTags)
     Q_PROPERTY(TagContainer plots MEMBER mPlots)
     //Q_PROPERTY(Plot chapter MEMBER mChapter)
+    Q_PROPERTY(QByteArray era MEMBER mEra)
 
     friend class SObjectModel;
     friend class SObjectSortProxyModel;
@@ -78,6 +79,7 @@ private:
     SDateTime mTo;
     TagContainer mTags;
     TagContainer mPlots;
+    QByteArray mEra;
     ObjectType mType = ObjectType::None;
 };
 

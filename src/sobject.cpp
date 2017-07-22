@@ -152,6 +152,7 @@ QJsonObject SObject::toJson() const
     result.insert(Tags::to, QJsonValue(mTo.toString()));
     result.insert(Tags::tags, QJsonValue(joinTags(mTags)));
     result.insert(Tags::plots, QJsonValue(joinTags(mPlots)));
+    result.insert(Tags::eras, QJsonValue(QLatin1String(mEra)));
 
     return result;
 }
@@ -170,6 +171,7 @@ void SObject::fromJson(const QJsonObject &json)
     mTo = SDateTime(json.value(Tags::to).toString());
     mTags = splitTags(json.value(Tags::tags).toString());
     mPlots = splitTags(json.value(Tags::plots).toString());
+    mEra = json.value(Tags::eras).toString().toLatin1();
 
     //qCDebug(sevent).noquote() << "Event loaded from JSON. Data:\n" << toString();
 }

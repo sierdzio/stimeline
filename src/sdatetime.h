@@ -22,8 +22,12 @@ public:
     SDateTime();
     SDateTime(const QString &dateTimeString);
 
+    bool operator==(const SDateTime &other) const;
     bool operator!=(const SDateTime &other) const;
     bool operator<(const SDateTime &other) const;
+    bool operator>(const SDateTime &other) const;
+    bool operator<=(const SDateTime &other) const;
+    bool operator>=(const SDateTime &other) const;
 
     static SDateTime fromString(const QByteArray &dateTime);
     Q_INVOKABLE static SDateTime fromString(const QString &dateTime);

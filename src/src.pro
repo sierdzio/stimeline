@@ -30,7 +30,8 @@ HEADERS += \
     tags.h \
     stagsmodel.h \
     splot.h \
-    splotsmodel.h
+    splotsmodel.h \
+    serasmodel.h
 
 SOURCES += \
     main.cpp \
@@ -46,7 +47,8 @@ SOURCES += \
     ssave.cpp \
     stagsmodel.cpp \
     splot.cpp \
-    splotsmodel.cpp
+    splotsmodel.cpp \
+    serasmodel.cpp
 
 RESOURCES += \
     qml.qrc \

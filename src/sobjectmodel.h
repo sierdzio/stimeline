@@ -30,6 +30,9 @@ public:
     QJsonArray toJson() const;
     void fromJson(const QJsonArray &json);
 
+    void setEra(const QByteArray &id, const QByteArray &from,
+                const QByteArray &to);
+
 public slots:
     void addObject(const SObject &obj);
     void removeObject(const QString &id);

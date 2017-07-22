@@ -113,13 +113,18 @@ SDateTime::SDateTime(const QString &dateTimeString)
     //qCDebug(sdatetime) << "Date parsed!" << toString() << "while:" << dateTimeString;
 }
 
+bool SDateTime::operator==(const SDateTime &other) const
+{
+    return (mDay==other.mDay && mMonth==other.mMonth && mYear==other.mYear
+            && mSecond==other.mSecond && mMinute==other.mMinute
+            && mHour==other.mHour);
+}
+
 /*!
  * Returns true if this object and \a other are not the same.
  */
 bool SDateTime::operator!=(const SDateTime &other) const {
-    return !(mDay==other.mDay && mMonth==other.mMonth && mYear==other.mYear
-             && mSecond==other.mSecond && mMinute==other.mMinute
-             && mHour==other.mHour);
+    return !operator==(other);
 }
 
 /*!
@@ -147,6 +152,25 @@ bool SDateTime::operator<(const SDateTime &other) const {
         }
     }
 
+    return false;
+}
+
+bool SDateTime::operator>(const SDateTime &other) const
+{
+    return  !operator<(other);
+}
+
+bool SDateTime::operator<=(const SDateTime &other) const
+{
+    if (operator==(other)) return true;
+    if (operator<(other)) return true;
+    return false;
+}
+
+bool SDateTime::operator>=(const SDateTime &other) const
+{
+    if (operator==(other)) return true;
+    if (!operator<(other)) return true;
     return false;
 }
 

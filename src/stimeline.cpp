@@ -7,10 +7,7 @@
 #include "ssave.h"
 #include "tags.h"
 #include "stagsmodel.h"
-
-#include "quazip.h"
-#include "quazipfile.h"
-#include "JlCompress.h"
+#include "serasmodel.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
@@ -97,6 +94,7 @@ STimeline::STimeline(SSettings *settings, QObject *parent) : QObject (parent),
     qRegisterMetaType<SCalendar*>();
     qRegisterMetaType<STimeline*>();
     qRegisterMetaType<STagsModel*>();
+    qRegisterMetaType<SErasModel*>();
     qRegisterMetaType<SObject>();
     qRegisterMetaType<SDateTime>();
 
@@ -138,6 +136,7 @@ void STimeline::clear()
     mPlaceModel->clear();
     mMapModel->clear();
     mTags->clear();
+    mEras->clear();
 
     mEventModelProxy->sort(0);
 }
@@ -171,6 +170,7 @@ void STimeline::load(const QString &path)
     mPlaceModel->fromJson(mainObj.value(Tags::places).toArray());
     mMapModel->fromJson(mainObj.value(Tags::maps).toArray());
     mTags->fromJson(mainObj.value(Tags::tags).toArray());
+    mEras->fromJson(mainObj.value(Tags::eras).toArray());
 
     mEventModelProxy->sort(0);
     // TODO: load SPlot information to SObjects.
@@ -198,6 +198,7 @@ void STimeline::save(const QString &path) const
     mainObj.insert(Tags::places, mPlaceModel->toJson());
     mainObj.insert(Tags::maps, mMapModel->toJson());
     mainObj.insert(Tags::tags, mTags->toJson());
+    mainObj.insert(Tags::eras, mEras->toJson());
 
     SSave save(mRuntimeDataPath);
     save.setJson(mainObj);
@@ -388,4 +389,5 @@ void STimeline::init()
     mPlaceModel = new SObjectModel(this);
     mMapModel = new SObjectModel(this);
     mTags = new STagsModel(this);
+    mEras = new SErasModel(this);
 }

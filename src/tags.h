@@ -49,8 +49,10 @@ static const QByteArray from("from");
 static const QByteArray to("to");
 // Tags
 static const QByteArray tags("tags");
-//Plots
+// Plots
 static const QByteArray plots("plots");
+// Eras
+static const QByteArray eras("eras");
 // Settings
 static const QByteArray autoLoadLastFile("autoLoadLastFile");
 static const QByteArray autoSaveOnExit("autoSaveOnExit");

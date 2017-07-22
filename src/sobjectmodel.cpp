@@ -107,6 +107,33 @@ void SObjectModel::fromJson(const QJsonArray &json)
 }
 
 /*!
+ * Sets the SEra \a id for all objects which begin after (and including) \a from
+ * SObject, and before (including) \a to SObject. To determine when a SObject
+ * begins, we take SObject::from value.
+ *
+ * \a id is SEra id.
+ * \a from is SObject id.
+ * \a to is SObject id.
+ */
+void SObjectModel::setEra(const QByteArray &id, const QByteArray &from,
+                          const QByteArray &to)
+{
+    // TODO: can we do it in single pass?
+    const int fromObjectIndex = findObjectIndex(from);
+    const int toObjectIndex = findObjectIndex(to);
+    const SDateTime &fromDate = mObjects.at(fromObjectIndex).mFrom;
+    const SDateTime &toDate = mObjects.at(toObjectIndex).mTo;
+
+    // We will modify SObjects, so we can't use const iterator!
+    for (auto it = mObjects.begin(); it < mObjects.end(); ++it) {
+        const SDateTime &date = it->mFrom;
+        if (date >= fromDate && date <= toDate) {
+            it->mEra = id;
+        }
+    }
+}
+
+/*!
  * Adds a new event, filling it with data: \a name, \a description, \a from and
  * \a to and returns the ID of newly created event.
  *
