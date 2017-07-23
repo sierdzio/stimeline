@@ -24,7 +24,11 @@ Q_LOGGING_CATEGORY(sobjectmodel, "SObjectModel")
  * Default constructor using \a parent. Move along.
  */
 SObjectModel::SObjectModel(QObject *parent) : QAbstractListModel(parent),
-    mRoleNames({{Tags::sobjectRole, Tags::sobject}})
+    mRoleNames({
+        {Tags::sobjectRole, Tags::sobject},
+        {Tags::selectedRole, Tags::selected},
+        {Tags::selectedCountRole, Tags::selectedCount}
+        })
 {
 }
 
@@ -50,12 +54,38 @@ int SObjectModel::rowCount(const QModelIndex &parent) const
  */
 QVariant SObjectModel::data(const QModelIndex &index, int role) const
 {
-    const int row = index.row();
+    const auto row = index.row();
+    const auto roleName = mRoleNames.value(role);
 
-    if (mRoleNames.value(role) == Tags::sobject)
+    if (roleName == Tags::sobject)
         return QVariant::fromValue(mObjects.at(row));
+    else if (roleName == Tags::selected)
+        return mObjects.at(row).mSelected;
+    else if (roleName == Tags::selectedCount)
+        return mSelectedCount;
 
     return QVariant();
+}
+
+bool SObjectModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    const auto row = index.row();
+    const auto roleName = mRoleNames.value(role);
+
+    if (roleName == Tags::selected) {
+        auto obj = mObjects.at(row);
+        const auto selected = value.toBool();
+        if (obj.mSelected != selected) {
+            obj.mSelected = selected;
+            selected? mSelectedCount++ : mSelectedCount--;
+            emit dataChanged(index, index);
+        }
+        mObjects.replace(row, obj);
+        //qDebug(sobjectmodel) << "Selected count:" << mSelectedCount;
+        return true;
+    }
+
+    return false;
 }
 
 bool SObjectModel::removeRows(int row, int count, const QModelIndex &parent)

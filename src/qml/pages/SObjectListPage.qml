@@ -25,7 +25,10 @@ Page {
             object: sobject.me()
             width: (view.width > Assistant.cardWidth)? Assistant.cardWidth : view.width
             height: 200
+            selectionMode: model.selectedCount
+            selected: model.selected
             onEdit: openEditor(object)
+            onSelectedChanged: model.selected = selected
         }
     }
 

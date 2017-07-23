@@ -20,12 +20,16 @@ static const QByteArray timestamp("timestamp");
 static const QByteArray author("author");
 // Objects:
 static const QByteArray sobject("sobject");
-static const int        sobjectRole(Qt::UserRole + 1);
 static const QByteArray id("id");
 static const QByteArray type("type");
 static const QByteArray name("name");
 static const QByteArray description("description");
 static const QByteArray picturePath("picturePath");
+static const QByteArray selected("selected");
+static const QByteArray selectedCount("selectedCount");
+static const int        sobjectRole(Qt::UserRole + 1);
+static const int        selectedRole(Qt::UserRole + 2);
+static const int        selectedCountRole(Qt::UserRole + 3);
 // Object types:
 static const QByteArray events("Events");
 static const QByteArray people("People");

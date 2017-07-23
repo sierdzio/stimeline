@@ -34,6 +34,11 @@ class SObject
     //Q_PROPERTY(Plot chapter MEMBER mChapter)
     Q_PROPERTY(QByteArray era MEMBER mEra)
 
+    /*! This property is for GUI selection. It is not saved into JSON. That is
+     *  intentional!
+     */
+    Q_PROPERTY(bool selected MEMBER mSelected)
+
     friend class SObjectModel;
     friend class SObjectSortProxyModel;
     friend class SObjectTest;
@@ -81,6 +86,8 @@ private:
     TagContainer mPlots;
     QByteArray mEra;
     ObjectType mType = ObjectType::None;
+
+    bool mSelected = false;
 };
 
 Q_DECLARE_METATYPE(SObject*);

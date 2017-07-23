@@ -1,13 +1,23 @@
 import QtQuick 2.8
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
+import QtQuick.Controls.Material 2.2
 import Assistant 1.0
 import "../items"
 
 Frame {
     property var object: Assistant.defaultObject()
+    property bool selectionMode: false
+    property bool selected: false
 
     signal edit()
+
+    background: Rectangle {
+        color: selected? Material.accent : Material.background
+        border.width: 1
+        border.color: Material.primary
+        radius: 5
+    }
 
     ColumnLayout {
         anchors.fill: parent
@@ -66,7 +76,12 @@ Frame {
 
     MouseArea {
         anchors.fill: parent
-        onDoubleClicked: edit();
+        onDoubleClicked: edit()
+        onPressAndHold: selected = true
+        onClicked: {
+            if (selected) selected = false
+            else if (selectionMode) selected = true
+        }
     }
 
     Button {
