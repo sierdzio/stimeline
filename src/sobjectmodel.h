@@ -40,10 +40,13 @@ public slots:
     void updateObject(const SObject &obj);
     SObject object(const QString &id) const;
 
+signals:
+    void selectionModeChanged(const bool selectionMode) const;
+
 protected:
     int findObjectIndex(const QByteArray &id) const;
 
-    uint mSelectedCount = 0;
+    QVector<QByteArray> mSelected;
     QVector<SObject> mObjects;
     const QHash<int, QByteArray> mRoleNames;
 };

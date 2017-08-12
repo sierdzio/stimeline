@@ -62,7 +62,7 @@ QVariant SObjectModel::data(const QModelIndex &index, int role) const
     else if (roleName == Tags::selected)
         return mObjects.at(row).mSelected;
     else if (roleName == Tags::selectedCount)
-        return mSelectedCount;
+        return mSelected.size();
 
     return QVariant();
 }
@@ -72,12 +72,15 @@ bool SObjectModel::setData(const QModelIndex &index, const QVariant &value, int 
     const auto row = index.row();
     const auto roleName = mRoleNames.value(role);
 
+    // Handle item selection
     if (roleName == Tags::selected) {
         auto obj = mObjects.at(row);
         const auto selected = value.toBool();
         if (obj.mSelected != selected) {
             obj.mSelected = selected;
-            selected? mSelectedCount++ : mSelectedCount--;
+            if (selected) mSelected.append(obj.mId);
+            else mSelected.removeOne(obj.mId);
+
             emit dataChanged(index, index);
         }
         mObjects.replace(row, obj);

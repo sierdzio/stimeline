@@ -59,7 +59,9 @@ void STagsModel::fromJson(const QJsonArray &json)
         }
 
         const QString value(obj.value(obj.keys().first()).toString());
-        mTags.insert(key, Tag{value, 0}); // refCount is populated later
+        Tag tag;
+        tag.value = value;
+        mTags.insert(key, tag); // refCount is populated later
     }
 }
 

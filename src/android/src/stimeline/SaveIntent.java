@@ -24,7 +24,7 @@ public class SaveIntent extends QtActivity
         startActivity(Intent.createChooser(shareIntent, "Send file to"));
     }
 
-    public bool isWritableStorage() {
+    public boolean isWritableStorage() {
         // https://developer.android.com/training/permissions/requesting.html
         int permissionCheck = ContextCompat.checkSelfPermission(thisActivity,
             Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -35,7 +35,7 @@ public class SaveIntent extends QtActivity
         return false;
     }
 
-    public bool requestWritableStorage() {
+    public boolean requestWritableStorage() {
         // https://developer.android.com/training/permissions/requesting.html
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(thisActivity,
