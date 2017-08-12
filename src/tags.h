@@ -30,6 +30,7 @@ static const QByteArray selectedCount("selectedCount");
 static const int        sobjectRole(Qt::UserRole + 1);
 static const int        selectedRole(Qt::UserRole + 2);
 static const int        selectedCountRole(Qt::UserRole + 3);
+static const int        eraRole(Qt::UserRole + 4);
 // Object types:
 static const QByteArray events("Events");
 static const QByteArray people("People");
@@ -56,6 +57,7 @@ static const QByteArray tags("tags");
 // Plots
 static const QByteArray plots("plots");
 // Eras
+static const QByteArray era("era");
 static const QByteArray eras("eras");
 // Settings
 static const QByteArray autoLoadLastFile("autoLoadLastFile");

@@ -6,6 +6,7 @@ import Assistant 1.0
 import "../cards"
 
 Page {
+    property int type: -1
     property alias model: listView.model
     property alias buttonVisible: button.visible
     signal addObjectRequest()
@@ -24,6 +25,27 @@ Page {
             policy: ScrollBar.AlwaysOn
         }
 
+        Component {
+            id: sectionHeading
+            Rectangle {
+                width: listView.width
+                height: childrenRect.height
+                color: "lightsteelblue"
+
+                Text {
+                    text: Timeline.eras.name(section)
+                    font.bold: true
+                    font.pixelSize: 20
+                }
+            }
+        }
+
+        section {
+            property: "era"
+            criteria: ViewSection.FullString
+            delegate: sectionHeading
+        }
+
         delegate: ObjectCard {
             object: sobject.me()
             width: (ListView.view.width > Assistant.cardWidth)? Assistant.cardWidth : ListView.view.width
@@ -31,8 +53,8 @@ Page {
             selectionMode: ListView.view.selectionMode
             selected: model.selected
             onEdit: openEditor(object)
-            onSelectedChanged: {
-                model.selected = selected
+            onSelectionSignal: {
+                model.selected = isSelected
                 ListView.view.selectionMode = (model.selectedCount !== 0)
             }
         }
@@ -43,7 +65,8 @@ Page {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         anchors.margins: Assistant.buttonMargin
-        text: "+" // No translation needed.
+        // No translation needed.
+        text: "+"
         font.bold: true
         radius: 15
 
@@ -57,13 +80,10 @@ Page {
         anchors.right: parent.right
         anchors.margins: Assistant.buttonMargin
         anchors.bottomMargin: Assistant.buttonMargin * 3
-        text: "Add era"
+        text: qsTr("Add era")
         font.bold: true
         radius: 25
 
-        onClicked: {
-            //Timeline.model(model.type)
-            Timeline.eras.insert("Test1", from, to)
-        }
+        onClicked: Timeline.model(root.type).createEraFromSelection("Test1")
     }
 }

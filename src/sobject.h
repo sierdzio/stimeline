@@ -12,8 +12,12 @@
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(sevent)
 
+class SObject;
+struct SObjectIndex;
+
 // Unfortunately, QML does not understant QVector :|
 using TagContainer = QVector<uint>;
+using SObjectContainer = QVector<SObject>;
 
 class SObjectModel;
 class SObjectSortProxyModel;
@@ -64,6 +68,11 @@ public:
     QJsonObject toJson() const;
     void fromJson(const QJsonObject &json);
 
+    bool operator<(const SObject &other) const;
+    bool operator>(const SObject &other) const;
+    bool operator>=(const SObject &other) const;
+    bool operator<=(const SObject &other) const;
+
     Q_INVOKABLE SObject me() const;
     Q_INVOKABLE int tagCount() const;
     Q_INVOKABLE uint tagIdAt(const int index) const;
@@ -74,6 +83,11 @@ public:
     static ObjectType stringToType(const QString &type);
     static QString joinTags(const TagContainer &tags);
     static TagContainer splitTags(const QString &tags);
+
+    // SObjectContainer searching
+    static SObjectIndex takeObject(SObjectContainer &objects, const QByteArray &id);
+    static SObjectIndex findObject(const SObjectContainer &objects, const QByteArray &id);
+    static int findObjectIndex(const SObjectContainer &objects, const QByteArray &id);
 
 private:
     QByteArray mId;
@@ -88,6 +102,11 @@ private:
     ObjectType mType = ObjectType::None;
 
     bool mSelected = false;
+};
+
+struct SObjectIndex {
+    int index = -1;
+    SObject object;
 };
 
 Q_DECLARE_METATYPE(SObject*);

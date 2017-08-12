@@ -176,6 +176,26 @@ void SObject::fromJson(const QJsonObject &json)
     //qCDebug(sevent).noquote() << "Event loaded from JSON. Data:\n" << toString();
 }
 
+bool SObject::operator<(const SObject &other) const
+{
+    return mFrom < other.mFrom;
+}
+
+bool SObject::operator>(const SObject &other) const
+{
+    return mFrom > other.mFrom;
+}
+
+bool SObject::operator>=(const SObject &other) const
+{
+    return mFrom >= other.mFrom;
+}
+
+bool SObject::operator<=(const SObject &other) const
+{
+    return mFrom <= other.mFrom;
+}
+
 /*!
  * Returns this object. This method looks silly, I know, but the reason for its
  * existence is that this is the only way to interact with SObject directly
@@ -275,4 +295,38 @@ TagContainer SObject::splitTags(const QString &tags)
     }
 
     return result;
+}
+
+SObjectIndex SObject::takeObject(SObjectContainer &objects, const QByteArray &id)
+{
+    SObjectIndex index;
+    index.index = findObjectIndex(objects, id);
+    index.object = objects.takeAt(index.index);
+    return index;
+}
+
+SObjectIndex SObject::findObject(const SObjectContainer &objects, const QByteArray &id)
+{
+    SObjectIndex index;
+    index.index = findObjectIndex(objects, id);
+    index.object = objects.at(index.index);
+    return index;
+}
+
+/*!
+ * Returns object index in \a objects vector, denoting location of object with \a id,
+ * or -1 if no such object is found.
+ */
+int SObject::findObjectIndex(const SObjectContainer &objects, const QByteArray &id)
+{
+    int index = 0;
+    for (const auto &e: objects) {
+        if (e.id() == id) {
+            return index;
+        }
+
+        ++index;
+    }
+
+    return -1;
 }

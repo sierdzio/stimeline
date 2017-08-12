@@ -92,12 +92,12 @@ QString SErasModel::name(const QByteArray &id) const
     return mEras.value(id).name;
 }
 
-void SErasModel::insert(const QString &name, const QByteArray &from, const QByteArray &to)
+QByteArray SErasModel::insert(const QString &name, const QByteArray &from, const QByteArray &to)
 {
     const QByteArray id(SAssistant::generateId());
 
-    if (mEras.contains(id))
-        return;
+    //if (mEras.contains(id))
+    //    ??;
 
     SEra era;
     era.id = id;
@@ -105,7 +105,8 @@ void SErasModel::insert(const QString &name, const QByteArray &from, const QByte
     era.from = from;
     era.to = to;
 
-    mEras.insert(era.id, era);
+    mEras.insert(id, era);
+    return id;
 }
 
 void SErasModel::remove(const QByteArray &id)

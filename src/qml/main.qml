@@ -66,6 +66,7 @@ ApplicationWindow {
 
         SObjectListPage {
             id: pageEvents
+            type: SObject.Event
             model: Timeline.eventModelProxy
             onEditRequest: openEditor(object)
             onAddObjectRequest: openEmptyEditor(SObject.Event)

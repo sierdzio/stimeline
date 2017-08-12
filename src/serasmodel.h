@@ -30,7 +30,7 @@ public:
 
 public slots:
     QString name(const QByteArray &id) const;
-    void insert(const QString &name, const QByteArray &from, const QByteArray &to);
+    QByteArray insert(const QString &name, const QByteArray &from, const QByteArray &to);
     void remove(const QByteArray &id);
 
 private:

@@ -11,6 +11,7 @@ Frame {
     property bool selected: false
 
     signal edit()
+    signal selectionSignal(bool isSelected)
 
     background: Rectangle {
         color: selected? Material.accent : Material.background
@@ -77,10 +78,10 @@ Frame {
     MouseArea {
         anchors.fill: parent
         onDoubleClicked: edit()
-        onPressAndHold: selected = true
+        onPressAndHold: selectionSignal(true)
         onClicked: {
-            if (selected) selected = false
-            else if (selectionMode) selected = true
+            if (selected) selectionSignal(false)
+            else if (selectionMode) selectionSignal(true)
         }
     }
 

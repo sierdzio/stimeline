@@ -13,6 +13,7 @@
 Q_DECLARE_LOGGING_CATEGORY(sobjectmodel)
 
 class QModelIndex;
+class SErasModel;
 
 class SObjectModel : public QAbstractListModel
 {
@@ -31,6 +32,7 @@ public:
     QJsonArray toJson() const;
     void fromJson(const QJsonArray &json);
 
+    void setErasModel(SErasModel *model);
     void setEra(const QByteArray &id, const QByteArray &from,
                 const QByteArray &to);
 
@@ -38,7 +40,7 @@ public slots:
     void addObject(const SObject &obj);
     void removeObject(const QString &id);
     void updateObject(const SObject &obj);
-    SObject object(const QString &id) const;
+    void createEraFromSelection(const QString &name);
 
 signals:
     void selectionModeChanged(const bool selectionMode) const;
@@ -47,6 +49,7 @@ protected:
     int findObjectIndex(const QByteArray &id) const;
 
     QVector<QByteArray> mSelected;
-    QVector<SObject> mObjects;
+    SObjectContainer mObjects;
+    SErasModel *mErasModel = nullptr;
     const QHash<int, QByteArray> mRoleNames;
 };

@@ -1,4 +1,5 @@
 #include "sobjectmodel.h"
+#include "serasmodel.h"
 #include "sobject.h"
 #include "tags.h"
 
@@ -27,7 +28,8 @@ SObjectModel::SObjectModel(QObject *parent) : QAbstractListModel(parent),
     mRoleNames({
         {Tags::sobjectRole, Tags::sobject},
         {Tags::selectedRole, Tags::selected},
-        {Tags::selectedCountRole, Tags::selectedCount}
+        {Tags::selectedCountRole, Tags::selectedCount},
+        {Tags::eraRole, Tags::era}
         })
 {
 }
@@ -63,6 +65,8 @@ QVariant SObjectModel::data(const QModelIndex &index, int role) const
         return mObjects.at(row).mSelected;
     else if (roleName == Tags::selectedCount)
         return mSelected.size();
+    else if (roleName == Tags::era)
+        return mObjects.at(row).mEra;
 
     return QVariant();
 }
@@ -81,9 +85,9 @@ bool SObjectModel::setData(const QModelIndex &index, const QVariant &value, int 
             if (selected) mSelected.append(obj.mId);
             else mSelected.removeOne(obj.mId);
 
+            mObjects.replace(row, obj);
             emit dataChanged(index, index);
         }
-        mObjects.replace(row, obj);
         //qDebug(sobjectmodel) << "Selected count:" << mSelectedCount;
         return true;
     }
@@ -139,6 +143,11 @@ void SObjectModel::fromJson(const QJsonArray &json)
     endResetModel();
 }
 
+void SObjectModel::setErasModel(SErasModel *model)
+{
+    mErasModel = model;
+}
+
 /*!
  * Sets the SEra \a id for all objects which begin after (and including) \a from
  * SObject, and before (including) \a to SObject. To determine when a SObject
@@ -152,8 +161,8 @@ void SObjectModel::setEra(const QByteArray &id, const QByteArray &from,
                           const QByteArray &to)
 {
     // TODO: can we do it in single pass?
-    const int fromObjectIndex = findObjectIndex(from);
-    const int toObjectIndex = findObjectIndex(to);
+    const int fromObjectIndex = SObject::findObjectIndex(mObjects, from);
+    const int toObjectIndex = SObject::findObjectIndex(mObjects, to);
     const SDateTime &fromDate = mObjects.at(fromObjectIndex).mFrom;
     const SDateTime &toDate = mObjects.at(toObjectIndex).mTo;
 
@@ -188,7 +197,7 @@ void SObjectModel::addObject(const SObject &obj)
 void SObjectModel::removeObject(const QString &id)
 {
     qDebug() << "REMOVE:" << id;
-    const int index = findObjectIndex(id.toLatin1());
+    const int index = SObject::findObjectIndex(mObjects, id.toLatin1());
 
     if (index == -1) {
         qDebug(sobjectmodel) << "Can't remove object with ID:" << id
@@ -205,7 +214,7 @@ void SObjectModel::updateObject(const SObject &obj)
 {
     qDebug() << "UPDATE:" << obj.mId << obj.mType << obj.mName;
 
-    const int index = findObjectIndex(obj.mId);
+    const int index = SObject::findObjectIndex(mObjects, obj.mId);
 
     // Event does not exist - create it instead
     if (index == -1) {
@@ -219,25 +228,49 @@ void SObjectModel::updateObject(const SObject &obj)
     emit dataChanged(modelIndex, modelIndex);
 }
 
-SObject SObjectModel::object(const QString &id) const
-{
-    return mObjects.at(findObjectIndex(id.toLatin1()));
-}
-
 /*!
- * Returns event index in mEvents vector, denoting location of event with \a id,
- * or -1 if no such event is found.
+ * Creates a new Era called \a name. All objects between first and last selected
+ * (chronologically by "from" date and time) are assogmed to the new Era.
+ *
+ * This is shown in SObjectListPage by means of a new section in the ListView.
  */
-int SObjectModel::findObjectIndex(const QByteArray &id) const
+void SObjectModel::createEraFromSelection(const QString &name)
 {
-    int index = 0;
-    for (const SObject &e: qAsConst(mObjects)) {
-        if (e.id() == id) {
-            return index;
-        }
-
-        ++index;
+    if (!mErasModel) {
+        qDebug(sobjectmodel) << "Cannot create an Era when era model is not available";
+        return;
     }
 
-    return -1;
+    SObjectContainer selectedObjects;
+    for (const auto &id : qAsConst(mSelected)) {
+        SObjectIndex index = SObject::findObject(mObjects, id);
+        selectedObjects.append(index.object);
+        // TODO: Consider switching to pointers to Sobjects instead of making
+        // copies all the time.
+    }
+
+    // dataChanged() will be emitted later.
+    mSelected.clear();
+
+    // sort selectedObjects based on "from" date
+    std::sort(selectedObjects.begin(), selectedObjects.end());
+    const SObject &first = selectedObjects.first();
+    const SObject &last = selectedObjects.last();
+    const QByteArray eraId = mErasModel->insert(name, first.mId, last.mId);
+
+    for (int i = 0; i < mObjects.size(); ++i) {
+        const SObject &object = mObjects.at(i);
+        if (object >= first && object <= last) {
+            if (object.mEra != eraId) {
+                SObject toReplace = object;
+                toReplace.mEra = eraId;
+                toReplace.mSelected = false;
+                const QModelIndex midx(createIndex(i, 0));
+                mObjects.replace(i, toReplace);
+                emit dataChanged(midx, midx);
+            }
+        }
+    }
+
+    // TODO: add cleaning of existing eras
 }

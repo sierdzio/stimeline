@@ -390,4 +390,6 @@ void STimeline::init()
     mMapModel = new SObjectModel(this);
     mTags = new STagsModel(this);
     mEras = new SErasModel(this);
+
+    mEventModel->setErasModel(mEras);
 }
