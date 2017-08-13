@@ -211,7 +211,7 @@ int SObject::tagCount() const
     return mTags.count();
 }
 
-uint SObject::tagIdAt(const int index) const
+QByteArray SObject::tagIdAt(const int index) const
 {
     return mTags.at(index);
 }
@@ -274,8 +274,8 @@ QString SObject::joinTags(const TagContainer &tags)
         if (!result.isEmpty())
             result += Tags::tagSeparator;
 
-        if (value != 0)
-            result += QString::number(value);
+        if (!value.isEmpty())
+            result += value;
     }
 
     return result;
@@ -291,7 +291,7 @@ TagContainer SObject::splitTags(const QString &tags)
 
     for (const QString &value : list) {
         if (!value.isEmpty())
-            result.append(value.toUInt());
+            result.append(value.toLatin1());
     }
 
     return result;

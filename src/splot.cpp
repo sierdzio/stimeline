@@ -22,14 +22,14 @@ Q_LOGGING_CATEGORY(splot, "SPlot")
 
 SPlot::SPlot(QObject *parent) : QObject(parent)
 {
-    mId = qHash(SAssistant::generateId());
+    mId = SAssistant::generateId();
 }
 
 QJsonObject SPlot::toJson() const
 {
     QJsonObject result;
 
-    result.insert(Tags::id, QJsonValue(qint64(mId)));
+    result.insert(Tags::id, QJsonValue(QString(mId)));
     result.insert(Tags::name, QJsonValue(mName));
     result.insert(Tags::description, QJsonValue(mDescription));
 
@@ -54,7 +54,7 @@ void SPlot::fromJson(const QJsonObject &json)
     mName.clear();
     mDescription.clear();
 
-    mId = uint(json.value(Tags::id).toInt(0));
+    mId = json.value(Tags::id).toString().toLatin1();
     mName = json.value(Tags::name).toString();
     mDescription = json.value(Tags::description).toString();
     const QString joined(json.value(Tags::tags).toString());
@@ -63,6 +63,24 @@ void SPlot::fromJson(const QJsonObject &json)
     for (const auto &value : separated) {
         mPlot.append(value.toLatin1());
     }
+}
+
+QByteArray SPlot::id() const
+{
+    return mId;
+}
+
+void SPlot::setName(const QString &name)
+{
+    if (name != mName) {
+        mName = name;
+        emit nameChanged(name);
+    }
+}
+
+void SPlot::setObjects(const QVector<QByteArray> &ids)
+{
+    mPlot = ids;
 }
 
 bool SPlot::contains(const QByteArray &id) const

@@ -352,9 +352,9 @@ SObjectModel *STimeline::model(const int type) const
     }
 }
 
-void STimeline::addTag(SObject object, const QString &tag)
+void STimeline::addTag(SObject object, const QByteArray &tag)
 {
-    const uint id = mTags->addTag(tag);
+    const QByteArray id = mTags->addTag(tag);
     if (!object.mTags.contains(id)) {
         object.mTags.append(id);
         model(int(object.mType))->updateObject(object);
@@ -363,7 +363,7 @@ void STimeline::addTag(SObject object, const QString &tag)
     qDebug() << "Add tag" << id << tag;
 }
 
-void STimeline::removeTag(SObject object, const uint id)
+void STimeline::removeTag(SObject object, const QByteArray &id)
 {
     mTags->removeTag(id);
     if (!object.mTags.removeOne(id))

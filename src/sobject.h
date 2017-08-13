@@ -16,7 +16,7 @@ class SObject;
 struct SObjectIndex;
 
 // Unfortunately, QML does not understant QVector :|
-using TagContainer = QVector<uint>;
+using TagContainer = QVector<QByteArray>;
 using SObjectContainer = QVector<SObject>;
 
 class SObjectModel;
@@ -75,7 +75,7 @@ public:
 
     Q_INVOKABLE SObject me() const;
     Q_INVOKABLE int tagCount() const;
-    Q_INVOKABLE uint tagIdAt(const int index) const;
+    Q_INVOKABLE QByteArray tagIdAt(const int index) const;
 
     static QString typeToString(const QString &type);
     static QString typeToString(const int type);

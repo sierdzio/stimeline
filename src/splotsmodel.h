@@ -1,7 +1,9 @@
-#ifndef SPLOTSMODEL_H
-#define SPLOTSMODEL_H
+#pragma once
 
+#include <QVector>
 #include <QObject>
+
+class SPlot;
 
 class SPlotsModel : public QObject
 {
@@ -9,9 +11,9 @@ class SPlotsModel : public QObject
 public:
     explicit SPlotsModel(QObject *parent = nullptr);
 
-signals:
-
 public slots:
-};
+    QByteArray insert(const QVector<QByteArray> &ids, const QString &name);
 
-#endif // SPLOTSMODEL_H
+private:
+    QVector<SPlot *> mPlots;
+};

@@ -14,6 +14,7 @@ Q_DECLARE_LOGGING_CATEGORY(sobjectmodel)
 
 class QModelIndex;
 class SErasModel;
+class SPlotsModel;
 
 class SObjectModel : public QAbstractListModel
 {
@@ -42,6 +43,7 @@ public slots:
     void removeSelectedObjects();
     void updateObject(const SObject &obj);
     void createEraFromSelection(const QString &name);
+    void createPlotFromSelection(const QString &name, const QString &description = QString::null);
 
 signals:
     void selectionModeChanged(const bool selectionMode) const;
@@ -52,5 +54,6 @@ protected:
     QVector<QByteArray> mSelected;
     SObjectContainer mObjects;
     SErasModel *mErasModel = nullptr;
+    SPlotsModel *mPlotsModel = nullptr;
     const QHash<int, QByteArray> mRoleNames;
 };

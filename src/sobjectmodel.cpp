@@ -1,5 +1,6 @@
 #include "sobjectmodel.h"
 #include "serasmodel.h"
+#include "splotsmodel.h"
 #include "sobject.h"
 #include "tags.h"
 
@@ -26,11 +27,11 @@ Q_LOGGING_CATEGORY(sobjectmodel, "SObjectModel")
  */
 SObjectModel::SObjectModel(QObject *parent) : QAbstractListModel(parent),
     mRoleNames({
-        {Tags::sobjectRole, Tags::sobject},
-        {Tags::selectedRole, Tags::selected},
-        {Tags::selectedCountRole, Tags::selectedCount},
-        {Tags::eraRole, Tags::era}
-        })
+{Tags::sobjectRole, Tags::sobject},
+{Tags::selectedRole, Tags::selected},
+{Tags::selectedCountRole, Tags::selectedCount},
+{Tags::eraRole, Tags::era}
+               })
 {
 }
 
@@ -282,4 +283,36 @@ void SObjectModel::createEraFromSelection(const QString &name)
     }
 
     // TODO: add cleaning of existing eras
+}
+
+/*!
+ * Creates a new Plot called \a name. Events in the plot are set in the same
+ * order as user selected the SObjects.
+ */
+void SObjectModel::createPlotFromSelection(const QString &name, const QString &description)
+{
+    Q_UNUSED(description);
+
+    if (!mPlotsModel) {
+        qDebug(sobjectmodel) << "Cannot create a Plot when plot model is not available";
+        return;
+    }
+
+    const QVector<QByteArray> selected(mSelected);
+    const QByteArray id(mPlotsModel->insert(mSelected, name));
+    mSelected.clear();
+
+    for (int i = 0; i < mObjects.size(); ++i) {
+        const SObject &object = mObjects.at(i);
+        if (selected.contains(object.mId)) {
+            if (!object.mPlots.contains(id)) {
+                SObject toReplace = object;
+                toReplace.mPlots.append(id);
+                toReplace.mSelected = false;
+                const QModelIndex midx(createIndex(i, 0));
+                mObjects.replace(i, toReplace);
+                emit dataChanged(midx, midx);
+            }
+        }
+    }
 }

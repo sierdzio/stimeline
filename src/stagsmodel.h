@@ -26,10 +26,10 @@ public:
     void clear();
 
 public slots:
-    QString value(const uint key) const;
-    uint addTag(const QString &value);
-    void removeTag(const uint key);
+    QString value(const QByteArray &key) const;
+    QByteArray addTag(const QByteArray &value);
+    void removeTag(const QByteArray &key);
 
 private:
-    QHash<uint, Tag> mTags;
+    QHash<QByteArray, Tag> mTags;
 };

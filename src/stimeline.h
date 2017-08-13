@@ -52,8 +52,8 @@ public slots:
     SObjectModel *model(const QString &type) const;
     SObjectModel *model(const int type) const;
 
-    void addTag(SObject object, const QString &tag);
-    void removeTag(SObject object, const uint id);
+    void addTag(SObject object, const QByteArray &tag);
+    void removeTag(SObject object, const QByteArray &id);
 
 private:
     void init();

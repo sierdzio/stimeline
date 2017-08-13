@@ -96,6 +96,18 @@ Page {
         }
 
         RoundButton {
+            id: buttonTempPlot
+            text: qsTr("Add plot")
+            radius: Assistant.buttonMargin
+            opacity: listView.selectionMode? 1.0 : 0.0
+            Behavior on opacity {
+                NumberAnimation {}
+            }
+
+            onClicked: Timeline.model(root.type).createPlotFromSelection("Test1")
+        }
+
+        RoundButton {
             id: button
             // No translation needed.
             text: "+"

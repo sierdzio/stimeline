@@ -1,6 +1,7 @@
 #include "stagsmodel.h"
 #include "tags.h"
 
+#include <QCryptographicHash>
 #include <QJsonValue>
 #include <QJsonObject>
 #include <QDebug>
@@ -31,7 +32,7 @@ QJsonArray STagsModel::toJson() const
     QJsonArray result;
 
     for (auto it = mTags.constBegin(); it != mTags.constEnd(); ++it) {
-        result.append(QJsonValue(QJsonObject({{QString::number(it.key()),
+        result.append(QJsonValue(QJsonObject({{it.key(),
                                                it.value().value}})));
     }
 
@@ -51,7 +52,7 @@ void STagsModel::fromJson(const QJsonArray &json)
             return;
         }
 
-        const uint key(keyString.toUInt(&ok));
+        const QByteArray key(keyString.toLatin1());
 
         if (!ok) {
             qCDebug(stagsmodel) << "ERROR: could not read Tag key" << obj;
@@ -70,15 +71,15 @@ void STagsModel::clear()
     mTags.clear();
 }
 
-QString STagsModel::value(const uint id) const
+QString STagsModel::value(const QByteArray &id) const
 {
     return mTags.value(id).value;
 }
 
-uint STagsModel::addTag(const QString &tag)
+QByteArray STagsModel::addTag(const QByteArray &tag)
 {
-    const QString aTag(tag.toLower()); // TODO: locale-aware toLower()!
-    const uint id = qHash(aTag);
+    const QByteArray aTag(tag.toLower()); // TODO: locale-aware toLower()!
+    const QByteArray id(QCryptographicHash::hash(aTag, QCryptographicHash::Md5));
 
     Tag t = mTags.take(id);
 
@@ -90,7 +91,7 @@ uint STagsModel::addTag(const QString &tag)
     return id;
 }
 
-void STagsModel::removeTag(const uint key)
+void STagsModel::removeTag(const QByteArray &key)
 {
     if (!mTags.contains(key)) {
         qDebug(stagsmodel) << "Tag not found!" << key;
