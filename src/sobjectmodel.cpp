@@ -194,10 +194,10 @@ void SObjectModel::addObject(const SObject &obj)
 /*!
  * Removes the object recognised by \a id.
  */
-void SObjectModel::removeObject(const QString &id)
+void SObjectModel::removeObject(const QByteArray &id)
 {
     qDebug() << "REMOVE:" << id;
-    const int index = SObject::findObjectIndex(mObjects, id.toLatin1());
+    const int index = SObject::findObjectIndex(mObjects, id);
 
     if (index == -1) {
         qDebug(sobjectmodel) << "Can't remove object with ID:" << id
@@ -208,6 +208,15 @@ void SObjectModel::removeObject(const QString &id)
     beginRemoveRows(QModelIndex(), index, index);
     mObjects.remove(index);
     endRemoveRows();
+}
+
+void SObjectModel::removeSelectedObjects()
+{
+    const QVector<QByteArray> selected(mSelected);
+    mSelected.clear();
+    for (const auto &id : selected) {
+        removeObject(id);
+    }
 }
 
 void SObjectModel::updateObject(const SObject &obj)

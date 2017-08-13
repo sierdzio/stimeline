@@ -38,7 +38,8 @@ public:
 
 public slots:
     void addObject(const SObject &obj);
-    void removeObject(const QString &id);
+    void removeObject(const QByteArray &id);
+    void removeSelectedObjects();
     void updateObject(const SObject &obj);
     void createEraFromSelection(const QString &name);
 

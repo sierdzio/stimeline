@@ -84,18 +84,4 @@ Frame {
             else if (selectionMode) selectionSignal(true)
         }
     }
-
-    Button {
-        anchors {
-            top: parent.top
-            right: parent.right
-            margins: 5
-        }
-        width: 35
-        height: width
-        text: qsTr("DEL")
-        font.pointSize: 8
-
-        onClicked: Timeline.model(object.type).removeObject(object.id)
-    }
 }

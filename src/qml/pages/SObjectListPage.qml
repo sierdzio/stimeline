@@ -60,30 +60,50 @@ Page {
         }
     }
 
-    RoundButton {
-        id: button
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        anchors.margins: Assistant.buttonMargin
-        // No translation needed.
-        text: "+"
-        font.bold: true
-        radius: 15
+    ColumnLayout {
+        spacing: 15
+        width: buttonTempEra.width
 
-        onClicked: root.addObjectRequest()
-    }
+        anchors {
+            bottom: parent.bottom
+            right: parent.right
+            margins: Assistant.buttonMargin
+        }
 
-    // TODO: add context menu to header. Not here.
-    RoundButton {
-        id: buttonTempEra
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        anchors.margins: Assistant.buttonMargin
-        anchors.bottomMargin: Assistant.buttonMargin * 3
-        text: qsTr("Add era")
-        font.bold: true
-        radius: 25
+        RoundButton {
+            width: 35
+            height: width
+            text: qsTr("Delete")
+            radius: Assistant.buttonMargin
+            opacity: listView.selectionMode? 1.0 : 0.0
+            Behavior on opacity {
+                NumberAnimation {}
+            }
 
-        onClicked: Timeline.model(root.type).createEraFromSelection("Test1")
+            onClicked: Timeline.model(root.type).removeSelectedObjects()
+        }
+
+        RoundButton {
+            id: buttonTempEra
+            text: qsTr("Add era")
+            radius: Assistant.buttonMargin
+            opacity: listView.selectionMode? 1.0 : 0.0
+            Behavior on opacity {
+                NumberAnimation {}
+            }
+
+            onClicked: Timeline.model(root.type).createEraFromSelection("Test1")
+        }
+
+        RoundButton {
+            id: button
+            // No translation needed.
+            text: "+"
+            font.bold: true
+            radius: 15
+
+            onClicked: root.addObjectRequest()
+        }
+
     }
 }
