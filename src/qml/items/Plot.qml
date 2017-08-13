@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls.Material 2.2
 
 Rectangle {
-    property string tagId
+    property string plotId
     signal close()
 
     color: Material.color(Material.Green)
@@ -19,7 +19,7 @@ Rectangle {
 
         Label {
             // TODO: bad conversion...
-            text: Timeline.tags.value(tagId)
+            text: Timeline.plots.value(plotId)
             font.pointSize: 9
             color: "#ffffff"
             verticalAlignment: Text.AlignVCenter

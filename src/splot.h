@@ -1,5 +1,4 @@
-#ifndef SPLOT_H
-#define SPLOT_H
+#pragma once
 
 #include <QVector>
 #include <QObject>
@@ -8,26 +7,23 @@
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(splot)
 
-class SPlot : public QObject
+class SPlot
 {
-    Q_OBJECT
-    Q_PROPERTY(QString name MEMBER mName NOTIFY nameChanged)
-    Q_PROPERTY(QString description MEMBER mDescription NOTIFY descriptionChanged)
+    Q_GADGET
+    Q_PROPERTY(QString name MEMBER mName)
+    Q_PROPERTY(QString description MEMBER mDescription)
 
 public:
-    explicit SPlot(QObject *parent = nullptr);
+    explicit SPlot();
 
     QJsonObject toJson() const;
     void fromJson(const QJsonObject &json);
 
     QByteArray id() const;
 
+    QString name() const;
     void setName(const QString &name);
     void setObjects(const QVector<QByteArray> &ids);
-
-signals:
-    void nameChanged(const QString &name) const;
-    void descriptionChanged(const QString &description) const;
 
 public slots:
     bool contains(const QByteArray &id) const;
@@ -39,5 +35,3 @@ private:
     QString mName;
     QString mDescription;
 };
-
-#endif // SPLOT_H

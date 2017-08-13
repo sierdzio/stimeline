@@ -77,6 +77,9 @@ public:
     Q_INVOKABLE int tagCount() const;
     Q_INVOKABLE QByteArray tagIdAt(const int index) const;
 
+    Q_INVOKABLE int plotCount() const;
+    Q_INVOKABLE QByteArray plotIdAt(const int index) const;
+
     static QString typeToString(const QString &type);
     static QString typeToString(const int type);
     static QString typeToString(const ObjectType type);

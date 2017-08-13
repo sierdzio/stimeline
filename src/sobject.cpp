@@ -216,6 +216,16 @@ QByteArray SObject::tagIdAt(const int index) const
     return mTags.at(index);
 }
 
+int SObject::plotCount() const
+{
+    return mPlots.count();
+}
+
+QByteArray SObject::plotIdAt(const int index) const
+{
+    return mPlots.at(index);
+}
+
 /*!
  * Returns type name for given type number (QML often passes numbers as strings).
  */

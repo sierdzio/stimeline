@@ -115,5 +115,19 @@ Dialog {
                 root.object = Timeline.model(object.type).object(object.id)
             }
         }
+
+        Label {
+            text: qsTr("Plots")
+        }
+
+        PlotContainer {
+            id: plotsLabel
+            object: root.object
+            onPlotRemoved: {
+                // TODO: implement
+                Timeline.removePlot(object, plotId)
+                root.object = Timeline.model(object.type).object(object.id)
+            }
+        }
     }
 }

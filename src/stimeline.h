@@ -16,6 +16,7 @@ class SObjectModel;
 class SObjectSortProxyModel;
 class STagsModel;
 class SErasModel;
+class SPlotsModel;
 
 class STimeline : public QObject
 {
@@ -31,6 +32,7 @@ class STimeline : public QObject
     Q_PROPERTY(SCalendar* calendar MEMBER mCalendar CONSTANT)
     Q_PROPERTY(STagsModel* tags MEMBER mTags CONSTANT)
     Q_PROPERTY(SErasModel* eras MEMBER mEras CONSTANT)
+    Q_PROPERTY(SPlotsModel* plots MEMBER mPlots CONSTANT)
 
 public:
     STimeline(SSettings *settings = nullptr, QObject *parent = nullptr);
@@ -70,4 +72,5 @@ private:
     SObjectModel *mMapModel = nullptr;
     STagsModel *mTags = nullptr;
     SErasModel *mEras = nullptr;
+    SPlotsModel *mPlots = nullptr;
 };

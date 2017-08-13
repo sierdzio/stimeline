@@ -176,6 +176,11 @@ void SObjectModel::setEra(const QByteArray &id, const QByteArray &from,
     }
 }
 
+void SObjectModel::setPlotsModel(SPlotsModel *model)
+{
+    mPlotsModel = model;
+}
+
 /*!
  * Adds a new event, filling it with data: \a name, \a description, \a from and
  * \a to and returns the ID of newly created event.

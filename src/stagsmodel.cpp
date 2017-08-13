@@ -45,7 +45,6 @@ void STagsModel::fromJson(const QJsonArray &json)
     for (const QJsonValue &i: json) {
         const QJsonObject obj(i.toObject());
         const QString keyString(obj.keys().first());
-        bool ok = false;
 
         if (keyString.isEmpty()) {
             qCDebug(stagsmodel) << "Empty tag key. This is normal if no tags are set.";
@@ -53,12 +52,6 @@ void STagsModel::fromJson(const QJsonArray &json)
         }
 
         const QByteArray key(keyString.toLatin1());
-
-        if (!ok) {
-            qCDebug(stagsmodel) << "ERROR: could not read Tag key" << obj;
-            return;
-        }
-
         const QString value(obj.value(obj.keys().first()).toString());
         Tag tag;
         tag.value = value;

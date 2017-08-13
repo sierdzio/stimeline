@@ -20,5 +20,7 @@
         <file>qml/items/TagContainer.qml</file>
         <file>qml/items/Tag.qml</file>
         <file>qml/editors/TagEditor.qml</file>
+        <file>qml/items/PlotContainer.qml</file>
+        <file>qml/items/Plot.qml</file>
     </qresource>
 </RCC>

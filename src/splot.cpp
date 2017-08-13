@@ -20,7 +20,7 @@ Q_LOGGING_CATEGORY(splot, "SPlot")
  * author to represent telling multiple stories simultaneously.
  */
 
-SPlot::SPlot(QObject *parent) : QObject(parent)
+SPlot::SPlot()
 {
     mId = SAssistant::generateId();
 }
@@ -70,11 +70,16 @@ QByteArray SPlot::id() const
     return mId;
 }
 
+QString SPlot::name() const
+{
+    return mName;
+}
+
 void SPlot::setName(const QString &name)
 {
     if (name != mName) {
         mName = name;
-        emit nameChanged(name);
+        //emit nameChanged(name);
     }
 }
 

@@ -36,6 +36,7 @@ public:
     void setErasModel(SErasModel *model);
     void setEra(const QByteArray &id, const QByteArray &from,
                 const QByteArray &to);
+    void setPlotsModel(SPlotsModel *model);
 
 public slots:
     void addObject(const SObject &obj);
