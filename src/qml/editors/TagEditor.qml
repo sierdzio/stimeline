@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.1
 import Assistant 1.0
 
 Dialog {
+    property int type: -1
     property alias tag: result.text
     property var object
 

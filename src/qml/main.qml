@@ -39,6 +39,13 @@ ApplicationWindow {
         }
     }
 
+    TagEditor {
+        id: plotEditor
+        onAccepted: {
+            Timeline.model(plotEditor.type).createPlotFromSelection(plotEditor.tag)
+        }
+    }
+
     SwipeView {
         focus: true
         Keys.onPressed: {

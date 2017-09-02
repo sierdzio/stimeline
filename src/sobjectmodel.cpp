@@ -181,6 +181,11 @@ void SObjectModel::setPlotsModel(SPlotsModel *model)
     mPlotsModel = model;
 }
 
+SObject SObjectModel::object(const QByteArray &id) const
+{
+    return SObject::findObject(mObjects, id).object;
+}
+
 /*!
  * Adds a new event, filling it with data: \a name, \a description, \a from and
  * \a to and returns the ID of newly created event.

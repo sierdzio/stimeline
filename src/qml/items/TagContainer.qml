@@ -32,16 +32,19 @@ Frame {
             }
         }
 
-        Frame {
+        Rectangle {
             id: btn
-            width: 10
-            height: 10
+            width: 14
+            height: 14
+            radius: 3
+            border.width: 1
+
             Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 
             Text {
                 anchors.fill: parent
                 text: "+"
-                font.pointSize: 10
+                font.pixelSize: 12
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -49,6 +52,7 @@ Frame {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
+                    console.log("Opening tag editor with: " + object.name)
                     tagEditor.object = object
                     tagEditor.open()
                 }

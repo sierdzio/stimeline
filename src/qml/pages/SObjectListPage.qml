@@ -6,6 +6,7 @@ import Assistant 1.0
 import "../cards"
 
 Page {
+    // TODO: use type enum
     property int type: -1
     property alias model: listView.model
     property alias buttonVisible: button.visible
@@ -104,7 +105,11 @@ Page {
                 NumberAnimation {}
             }
 
-            onClicked: Timeline.model(root.type).createPlotFromSelection("Test1")
+            onClicked: {
+                console.log("Opening plot editor")
+                plotEditor.type = root.type
+                plotEditor.open()
+            }
         }
 
         RoundButton {

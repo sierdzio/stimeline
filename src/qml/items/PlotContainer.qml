@@ -32,27 +32,31 @@ Frame {
             }
         }
 
-        Frame {
-            id: btn
-            width: 10
-            height: 10
-            Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+//        Rectangle {
+//            id: btn
+//            width: 14
+//            height: 14
+//            radius: 3
+//            border.width: 1
 
-            Text {
-                anchors.fill: parent
-                text: "+"
-                font.pointSize: 10
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-            }
+//            Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    tagEditor.object = object
-                    tagEditor.open()
-                }
-            }
-        }
+//            Text {
+//                anchors.fill: parent
+//                text: "+"
+//                font.pixelSize: 12
+//                verticalAlignment: Text.AlignVCenter
+//                horizontalAlignment: Text.AlignHCenter
+//            }
+
+//            MouseArea {
+//                anchors.fill: parent
+//                onClicked: {
+//                    console.log("Opening plot editor with: " + object.name)
+//                    plotEditor.object = object
+//                    plotEditor.open()
+//                }
+//            }
+//        }
     }
 }

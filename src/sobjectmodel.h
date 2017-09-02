@@ -39,6 +39,7 @@ public:
     void setPlotsModel(SPlotsModel *model);
 
 public slots:
+    SObject object(const QByteArray &id) const;
     void addObject(const SObject &obj);
     void removeObject(const QByteArray &id);
     void removeSelectedObjects();
@@ -50,8 +51,6 @@ signals:
     void selectionModeChanged(const bool selectionMode) const;
 
 protected:
-    int findObjectIndex(const QByteArray &id) const;
-
     QVector<QByteArray> mSelected;
     SObjectContainer mObjects;
     SErasModel *mErasModel = nullptr;
