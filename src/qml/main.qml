@@ -31,19 +31,25 @@ ApplicationWindow {
         onAccepted: Timeline.model(editor.object.type).updateObject(editor.object)
     }
 
-    TagEditor {
+    NameEditor {
         id: tagEditor
+        label: qsTr("New tag name")
         onAccepted: {
-            Timeline.addTag(tagEditor.object, tagEditor.tag)
-            editor.object = Timeline.model(tagEditor.object.type).object(tagEditor.object.id)
+            Timeline.addTag(object, text)
+            editor.object = Timeline.model(object.type).object(object.id)
         }
     }
 
-    TagEditor {
+    NameEditor {
         id: plotEditor
-        onAccepted: {
-            Timeline.model(plotEditor.type).createPlotFromSelection(plotEditor.tag)
-        }
+        label: qsTr("New plot name")
+        onAccepted: Timeline.model(type).createPlotFromSelection(text)
+    }
+
+    NameEditor {
+        id: eraEditor
+        label: qsTr("New era name")
+        onAccepted: Timeline.model(type).createEraFromSelection(text)
     }
 
     SwipeView {

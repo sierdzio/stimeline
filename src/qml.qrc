@@ -4,22 +4,22 @@
         <file>qml/main.qml</file>
         <file>qml/EventTimeline.qml</file>
         <file>qml/cards/ObjectCard.qml</file>
-        <file>qml/items/SImage.qml</file>
-        <file>qml/items/STumbler.qml</file>
         <file>qml/editors/ImageChooser.qml</file>
         <file>qml/editors/DateTimeEditor.qml</file>
         <file>qml/editors/ObjectEditor.qml</file>
         <file>qml/editors/SimpleLoadDialog.qml</file>
         <file>qml/editors/SimpleSaveDialog.qml</file>
         <file>qml/editors/FileDialogLoader.qml</file>
+        <file>qml/editors/NameEditor.qml</file>
         <file>qml/pages/SObjectListPage.qml</file>
         <file>qml/pages/ObjectsPage.qml</file>
         <file>qml/pages/CalendarPage.qml</file>
         <file>qml/pages/SettingsPage.qml</file>
         <file>qml/pages/AboutPage.qml</file>
+        <file>qml/items/SImage.qml</file>
+        <file>qml/items/STumbler.qml</file>
         <file>qml/items/TagContainer.qml</file>
         <file>qml/items/Tag.qml</file>
-        <file>qml/editors/TagEditor.qml</file>
         <file>qml/items/PlotContainer.qml</file>
         <file>qml/items/Plot.qml</file>
     </qresource>

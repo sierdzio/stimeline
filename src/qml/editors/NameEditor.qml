@@ -5,7 +5,8 @@ import Assistant 1.0
 
 Dialog {
     property int type: -1
-    property alias tag: result.text
+    property alias label: labelControl.text
+    property alias text: result.text
     property var object
 
     id: root
@@ -15,8 +16,10 @@ Dialog {
 
     ColumnLayout {
         Label {
-            text: qsTr("New tag name")
+            id: labelControl
+            text: qsTr("Name")
         }
+
         TextField {
             id: result
         }

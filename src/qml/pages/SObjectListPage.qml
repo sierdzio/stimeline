@@ -63,7 +63,7 @@ Page {
 
     ColumnLayout {
         spacing: 15
-        width: buttonTempEra.width
+        width: buttonEra.width
 
         anchors {
             bottom: parent.bottom
@@ -85,7 +85,7 @@ Page {
         }
 
         RoundButton {
-            id: buttonTempEra
+            id: buttonEra
             text: qsTr("Add era")
             radius: Assistant.buttonMargin
             opacity: listView.selectionMode? 1.0 : 0.0
@@ -93,11 +93,15 @@ Page {
                 NumberAnimation {}
             }
 
-            onClicked: Timeline.model(root.type).createEraFromSelection("Test1")
+            onClicked: {
+                console.log("Opening era editor")
+                eraEditor.type = root.type
+                eraEditor.open()
+            }
         }
 
         RoundButton {
-            id: buttonTempPlot
+            id: buttonPlot
             text: qsTr("Add plot")
             radius: Assistant.buttonMargin
             opacity: listView.selectionMode? 1.0 : 0.0
