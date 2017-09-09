@@ -15,15 +15,11 @@ Short and incomplete list of what is left to be done here:
 - prompt for storage permission
 - "event folding" into "chapters". Add ability to group events together
   and fold (hide) all these events under single item. User can click "+" button
-- add tags for events/ objects
 - add searching/ filtering
 - close event editor when Enter is pressed
 - Check dirty before exiting (do you want to save changes?)
 - add undo/ redo
-- plots need to have order (because sometimes an author would like to present
-  plots in different order than chronologically)
-- add "chapters" - special kind of plot, which organizes objects into
-  distinctive, chronological parts. Maybe some other name: Eras, Stories, Parts
 - lower amount of conversion to and from SDateTime
 - go through code paths and verify if they are efficient. Especially C++-QML
   communication for SObjects, Tags and Plots
+- use MLog and MConfig from Milo Code Database

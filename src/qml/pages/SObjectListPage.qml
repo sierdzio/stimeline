@@ -28,15 +28,26 @@ Page {
 
         Component {
             id: sectionHeading
-            Rectangle {
+            Item {
+                height: eraRectangle.height + 16
                 width: listView.width
-                height: childrenRect.height
-                color: "lightsteelblue"
 
-                Text {
-                    text: Timeline.eras.name(section)
-                    font.bold: true
-                    font.pixelSize: 20
+                Rectangle {
+                    id: eraRectangle
+                    //listView.width
+                    width: eraText.paintedWidth * 2
+                    height: childrenRect.height
+                    radius: 8
+                    color: "lightsteelblue"
+                    anchors.centerIn: parent
+
+                    Text {
+                        id: eraText
+                        text: Timeline.eras.name(section)
+                        font.bold: true
+                        font.pixelSize: 20
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
             }
         }
