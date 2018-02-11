@@ -97,6 +97,12 @@ Page {
                     Timeline.exportSave()
                 }
             }
+            Button {
+                text: qsTr("Quit")
+                onClicked: {
+                    Qt.quit()
+                }
+            }
             CheckBox {
                 text: qsTr("Automatically load last opened file on startup")
                 checked: Timeline.settings.autoLoadLastFile

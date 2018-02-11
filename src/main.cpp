@@ -1,3 +1,8 @@
+/*i
+ qt core gui qml quick quickcontrols2
+ tool rcc qml.qrc defaults.qrc
+ */
+
 #include "stimeline.h"
 #include "sobject.h"
 #include "ssettings.h"
