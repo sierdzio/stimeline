@@ -1,3 +1,10 @@
+/*i
+ target name sTimeline
+ qt core gui qml quick quickcontrols2
+ lib -lz
+ includes 3rdParty/quazip/quazip
+ */
+
 #include "stimeline.h"
 #include "sobject.h"
 #include "ssettings.h"
