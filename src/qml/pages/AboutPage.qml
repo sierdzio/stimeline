@@ -18,7 +18,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
 
             Text {
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.alignment: Qt.AlignHCenter
                 text: "sTimeline"
                 font {
                     bold: true
@@ -26,7 +26,7 @@ Page {
                 }
             }
             Text {
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Version %1").arg(Qt.application.version)
             }
             Item { height: 25; width: 1 } // Invisible padding

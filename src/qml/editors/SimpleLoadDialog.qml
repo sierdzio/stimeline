@@ -14,6 +14,7 @@ Dialog {
     standardButtons: Dialog.Ok | Dialog.Cancel
 
     ColumnLayout {
+        id: layout
         anchors.fill: parent
 
         Label {
@@ -37,7 +38,16 @@ Dialog {
                 color: "#552222ff"
                 width: folderView.width
             }
-            delegate: Text { text: fileName }
+            delegate: Text {
+                text: fileName
+                height: contentHeight
+                width: parent.width
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: folderView.currentIndex = index
+                }
+            }
             model: FolderListModel {
                 showDirs: false
                 folder: "file://" + dirPath
@@ -47,13 +57,6 @@ Dialog {
 
             Layout.fillHeight: true
             Layout.fillWidth: true
-        }
-
-        MouseArea {
-            anchors.fill: folderView
-            onClicked: {
-                folderView.currentIndex = folderView.indexAt(mouse.x, mouse.y)
-            }
         }
 
         Label {
